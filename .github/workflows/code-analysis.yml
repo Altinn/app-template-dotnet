@@ -49,21 +49,15 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Altinn_app-template-dotnet" /o:"altinn" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="**/*.trx"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"Altinn_app-template-dotnet" /o:"altinn" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vstest.reportsPaths="**/*.trx" /d:sonar.cs.opencover.reportsPaths="**/*.cobertura.xml"
 
           dotnet build src/AppRef.sln
+
+          dotnet tool install --global coverlet.console
+
           dotnet test src/AppRef.sln `
-          --collect:"Code Coverage" `
+          --collect:"XPlat Code Coverage" `
           --results-directory TestResults/ `
           --logger "trx;LogFileName=unittests.trx" `
-
-          $ver = (Get-ChildItem $env:USERPROFILE/.nuget/packages/microsoft.codecoverage | Select-Object -Property Name | Sort-Object -Descending | Select-Object -First 1).Name
-
-          Get-ChildItem -Recurse -Filter "*.coverage" | % {
-          $outfile = "$([System.IO.Path]::GetFileNameWithoutExtension($_.FullName)).coveragexml"
-          $output = [System.IO.Path]::Combine([System.IO.Path]::GetDirectoryName($_.FullName), $outfile)
-          "Analyse '$($_.FullName)' with output '$output'..."
-          . $env:USERPROFILE\.nuget\packages\microsoft.codecoverage\$ver\build\netstandard1.0\CodeCoverage\CodeCoverage.exe analyze /output:$output $_.FullName
-          }
 
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
