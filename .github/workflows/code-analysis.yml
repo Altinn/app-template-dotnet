@@ -53,8 +53,6 @@ jobs:
 
           dotnet build src/AppRef.sln
 
-          dotnet tool install --global coverlet.console
-
           dotnet test src/AppRef.sln `
           --results-directory TestResults/ `
           --logger "trx;LogFileName=unittests.trx" `
