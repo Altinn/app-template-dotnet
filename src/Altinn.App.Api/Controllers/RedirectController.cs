@@ -42,6 +42,11 @@ namespace Altinn.App.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<string> ValidateUrl([BindRequired, FromQuery] string url)
         {
+            if (string.IsNullOrEmpty(url))
+            {
+                return BadRequest($"Invalid value of query parameter {nameof(url)}. The query parameter {nameof(url)} must not be empty or null.");
+            }
+
             try
             {
                 var byteArrayUri = Convert.FromBase64String(url);
