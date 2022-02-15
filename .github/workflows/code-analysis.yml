@@ -53,14 +53,14 @@ jobs:
 
           dotnet build src/AppRef.sln
           dotnet test src/Altinn.App.PlatformServices.Tests/Altinn.App.PlatformServices.Tests.csproj `
-          --collect:"Code Coverage" `
+          --collect:"XPlat Code Coverage" `
           --results-directory TestResults/ `
           --logger "trx;LogFileName=PlatformServicesTest.trx" `
           --configuration debug `
           -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
           dotnet test src/App.IntegrationTests/App.IntegrationTestsRef.csproj `
-          --collect:"Code Coverage" `
+          --collect:"XPlat Code Coverage" `
           --results-directory TestResults/ `
           --logger "trx;LogFileName=IntegrationTestsRef.trx" `
           --configuration debug `
