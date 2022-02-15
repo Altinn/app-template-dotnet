@@ -52,6 +52,8 @@ namespace App.IntegrationTestsRef.ApiTests
         [Theory]
         [InlineData("")]
         [InlineData("?url=")]
+        [InlineData("?url=null")]
+        [InlineData("?url=''")]
         public async Task ValidateUrl_QueryParameter_Missing(string queryParameter)
         {
             string token = PrincipalUtil.GetToken(1337);
