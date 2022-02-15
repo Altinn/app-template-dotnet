@@ -52,17 +52,10 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"Altinn_app-template-dotnet" /o:"altinn" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
 
           dotnet build src/AppRef.sln
-          dotnet test src/Altinn.App.PlatformServices.Tests/Altinn.App.PlatformServices.Tests.csproj `
-          --collect:"XPlat Code Coverage" `
+          dotnet test src/AppRef.sln `
+          --collect:"Code Coverage" `
           --results-directory TestResults/ `
-          --logger "trx;LogFileName=PlatformServicesTest.trx" `
-          --configuration debug `
-          -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-
-          dotnet test src/App.IntegrationTests/App.IntegrationTestsRef.csproj `
-          --collect:"XPlat Code Coverage" `
-          --results-directory TestResults/ `
-          --logger "trx;LogFileName=IntegrationTestsRef.trx" `
+          --logger "trx;LogFileName=unittests.trx" `
           --configuration debug `
           -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
 
