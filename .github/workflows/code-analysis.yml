@@ -29,12 +29,12 @@ jobs:
           dotnet test src/Altinn.App.PlatformServices.Tests/Altinn.App.PlatformServices.Tests.csproj `
           --results-directory TestResults/PlatformServices/ `
           --logger "trx;LogFileName=unittests.trx" `
-          --collect:"XPlat Code Coverage" `
+          --collect:"XPlat Code Coverage" 
 
           dotnet test src/App.IntegrationTests/App.IntegrationTestsRef.csproj `
           --results-directory TestResults/IntegrationTests/ `
           --logger "trx;LogFileName=unittests.trx" `
-          --collect:"XPlat Code Coverage" `
+          --collect:"XPlat Code Coverage" 
 
       - name: Copy PlatformServices Coverage
         run: cp TestResults/PlatformServices/**/coverage.cobertura.xml platform.coverage.cobertura.xml
