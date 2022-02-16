@@ -4,7 +4,7 @@ using Altinn.App.Common.Models;
 using Altinn.App.PlatformServices.Models;
 using Altinn.App.PlatformServices.Options;
 
-namespace Altinn.App.PlatformServices.Implementation
+namespace Altinn.App.Services.Implementation
 {
     /// <summary>
     /// Service for handling app options aka code lists.
