@@ -47,7 +47,7 @@ jobs:
       - name: Make directory
         run: mkdir TestResults
       - name: Move results
-        run: cp --backup=t ./dist/*/TestResults ./TestResults
+        run: cp --backup=t dist/TestResults ./TestResults
       - name: List results
         id: results
         run: |
