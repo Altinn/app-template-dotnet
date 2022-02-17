@@ -7,8 +7,8 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
 jobs:
-  if: (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
   test:
+    if: (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
     name: Build and Test 
     runs-on: windows-latest
     steps:
@@ -35,6 +35,7 @@ jobs:
           path: TestResults/Output/CoverageReport/
 
   code-coverage:
+    if: (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
     name: Report code coverage
     runs-on: ubuntu-latest
     needs: test
