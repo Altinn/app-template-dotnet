@@ -1,12 +1,17 @@
+## only for fork PR
+
 name: Code test and analysis (fork)
 on:
+  push:
+      branches: [ main ]
+  if: (github.event_name == 'pull_request' && github.event.pull_request.head.repo.fork == false)
   pull_request:
     branches: [ main ]
     types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
 jobs:
   test:
-    name: Build and Test AppRef.csproj
+    name: Build and Test 
     runs-on: windows-latest
     steps:
       - name: Setup .NET
@@ -22,9 +27,7 @@ jobs:
       - name: Build & test
         run: |
           dotnet test src/AppRef.sln --results-directory TestResults/ --collect:"XPlat Code Coverage"
-
           dotnet tool install --global dotnet-reportgenerator-globaltool
-
           reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:TestResults/Output/CoverageReport -reporttypes:Cobertura
 
       - name: Archive code coverage results
@@ -38,11 +41,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - uses: actions/download-artifact@master
+      - name: Download Coverage Results
+        uses: actions/download-artifact@master
         with:
           name: code-coverage-report
           path: dist/ 
-      - name: PlatformServices Coverage Summary Report
+      - name: Create Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.2.0
         with:
           filename: dist/Cobertura.xml
