@@ -46,9 +46,13 @@ jobs:
           path: dist/
       - name: List results1
         id: results1
-        run: ls -a          
-      - name: Make directory
-        run: mkdir TestResults
+        run: |
+          cd dist
+          ls -a      
+          cd ..
+          mkdir TestResults
+          ls -a      
+          find . -type d
       - name: Move results
         run: cp --backup=t dist/*/TestResults/ ./    
       - name: List results
