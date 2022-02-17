@@ -19,19 +19,19 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-      - name: Build
-        run: dotnet build src/AppRef.sln
-
-      - name: Build, test and analyze
+      - name: Build & test
         run: |
-          dotnet test src/Altinn.App.PlatformServices.Tests/Altinn.App.PlatformServices.Tests.csproj --results-directory TestResults/PlatformServices/ --logger "trx;LogFileName=unittests.trx" --collect:"XPlat Code Coverage"
+          dotnet test src/AppRef.sln --results-directory TestResults/ --collect:"XPlat Code Coverage"
 
-          dotnet test src/App.IntegrationTests/App.IntegrationTestsRef.csproj --results-directory TestResults/IntegrationTests/ --logger "trx;LogFileName=unittests.trx" --collect:"XPlat Code Coverage"
+          dotnet tool install --global dotnet-reportgenerator-globaltool
+
+          reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:TestResults/Output/CoverageReport -reporttypes:Cobertura
+
       - name: Archive code coverage results
         uses: actions/upload-artifact@v2
         with:
           name: code-coverage-report
-          path: TestResults/
+          path: TestResults/Output/CoverageReport/
 
   code-coverage:
     runs-on: ubuntu-latest
@@ -54,38 +54,10 @@ jobs:
         id: results
         run: |
           ls -a
-      - name: Copy PlatformServices Coverage
-        run: cp PlatformServices/**/coverage.cobertura.xml platform.coverage.cobertura.xml
-
       - name: PlatformServices Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.2.0
         with:
-          filename: platform.coverage.cobertura.xml
-          badge: true
-          fail_below_min: true
-          format: markdown
-          hide_branch_rate: false
-          hide_complexity: true
-          indicators: true
-          output: both
-          thresholds: '60 80'
-
-      - name: Add Coverage PR Comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        if: github.event_name == 'pull_request' && always()
-        with:
-          append: true
-          path: code-coverage-results.md
-
-      - name: Copy IntegrationTests
-        if: always()
-        run: cp IntegrationTests/**/coverage.cobertura.xml integration.coverage.cobertura.xml
-
-      - name: IntegrationTests Coverage Summary Report
-        if: always()
-        uses: irongut/CodeCoverageSummary@v1.2.0
-        with:
-          filename: integration.coverage.cobertura.xml
+          filename: Cobertura.xml
           badge: true
           fail_below_min: true
           format: markdown
