@@ -44,10 +44,15 @@ jobs:
         with:
           name: code-coverage-report
           path: dist/
+      - name: List results1
+        id: results1
+        run: |
+          FOLDERS=`ls -1p | grep -v / | xargs echo | sed 's/ /,/g'`
+          echo "::set-output name=RESULTS::$FOLDERS"
       - name: Make directory
         run: mkdir TestResults
       - name: Move results
-        run: cp --backup=t dist/TestResults ./TestResults
+        run: cp --backup=t dist/ TestResults/
       - name: List results
         id: results
         run: |
