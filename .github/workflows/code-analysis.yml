@@ -46,18 +46,15 @@ jobs:
           path: dist/
       - name: List results1
         id: results1
-        run: |
-          FOLDERS=`ls -1p | grep -v / | xargs echo | sed 's/ /,/g'`
-          echo "::set-output name=RESULTS::$FOLDERS"
+        run: ls -a          
       - name: Make directory
         run: mkdir TestResults
       - name: Move results
-        run: cp --backup=t dist/ TestResults/
+        run: cp --backup=t dist/*/TestResults/ ./    
       - name: List results
         id: results
         run: |
-          FOLDERS=`ls -1p | grep -v / | xargs echo | sed 's/ /,/g'`
-          echo "::set-output name=RESULTS::$FOLDERS"
+          ls -a
       - name: Copy PlatformServices Coverage
         run: cp TestResults/PlatformServices/**/coverage.cobertura.xml platform.coverage.cobertura.xml
 
