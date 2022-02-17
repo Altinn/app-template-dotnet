@@ -51,7 +51,7 @@ jobs:
           ls -a      
           find . -type d
       - name: Move results
-        run: cp --backup=t dist/ ./    
+        run: cp -a --backup=t dist/. ./    
       - name: List results
         id: results
         run: |
