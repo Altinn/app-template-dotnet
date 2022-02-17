@@ -47,20 +47,17 @@ jobs:
       - name: List results1
         id: results1
         run: |
-          cd dist
-          ls -a      
-          cd ..
           mkdir TestResults
           ls -a      
           find . -type d
       - name: Move results
-        run: cp --backup=t dist/*/TestResults/ ./    
+        run: cp --backup=t dist/ ./    
       - name: List results
         id: results
         run: |
           ls -a
       - name: Copy PlatformServices Coverage
-        run: cp TestResults/PlatformServices/**/coverage.cobertura.xml platform.coverage.cobertura.xml
+        run: cp PlatformServices/**/coverage.cobertura.xml platform.coverage.cobertura.xml
 
       - name: PlatformServices Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.2.0
@@ -83,7 +80,7 @@ jobs:
           path: code-coverage-results.md
 
       - name: Copy IntegrationTests
-        run: cp TestResults/IntegrationTests/**/coverage.cobertura.xml integration.coverage.cobertura.xml
+        run: cp IntegrationTests/**/coverage.cobertura.xml integration.coverage.cobertura.xml
 
       - name: IntegrationTests Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.2.0
