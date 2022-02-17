@@ -74,15 +74,17 @@ jobs:
 
       - name: Add Coverage PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && always()
         with:
           append: true
           path: code-coverage-results.md
 
       - name: Copy IntegrationTests
+        if: always()
         run: cp IntegrationTests/**/coverage.cobertura.xml integration.coverage.cobertura.xml
 
       - name: IntegrationTests Coverage Summary Report
+        if: always()
         uses: irongut/CodeCoverageSummary@v1.2.0
         with:
           filename: integration.coverage.cobertura.xml
@@ -97,7 +99,7 @@ jobs:
 
       - name: Add Coverage PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && always()
         with:
           append: true
           path: code-coverage-results.md
