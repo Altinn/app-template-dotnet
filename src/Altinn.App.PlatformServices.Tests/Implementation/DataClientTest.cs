@@ -79,7 +79,7 @@ namespace Altinn.App.PlatformServices.Tests.Implementation
             DataElement actual = await target.InsertBinaryData("instanceId", "catstories", "application/pdf", "a cats story.pdf", stream);
 
             // Assert
-            Assert.NotNull(actual);
+            Assert.Null(actual);
 
             Assert.NotNull(platformRequest);
             Assert.Equal(HttpMethod.Post, platformRequest.Method);
