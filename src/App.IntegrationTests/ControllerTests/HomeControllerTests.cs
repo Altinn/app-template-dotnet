@@ -57,7 +57,7 @@ namespace App.IntegrationTests.ControllerTests
             IEnumerable<string> cookieHeaders = response.Headers.GetValues("Set-Cookie");
 
             // Verify that 
-            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Equal(2, cookieHeaders.Count());
             Assert.StartsWith("AS-", cookieHeaders.ElementAt(0));
             Assert.StartsWith("XSR", cookieHeaders.ElementAt(1));
