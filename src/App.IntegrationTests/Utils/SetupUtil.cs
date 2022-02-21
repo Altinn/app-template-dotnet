@@ -19,7 +19,7 @@ using AltinnCore.Authentication.JwtCookie;
 using App.IntegrationTests.Mocks.Services;
 using App.IntegrationTestsRef.Data.apps.tdd.sirius.services;
 using App.IntegrationTestsRef.Mocks.Services;
-
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
@@ -31,20 +31,20 @@ namespace App.IntegrationTests.Utils
     public static class SetupUtil
     {
         public static HttpClient GetTestClient(
-            CustomWebApplicationFactory<Startup> customFactory,
+            CustomWebApplicationFactory<Altinn.App.AppLogic.App> customFactory,
             string org,
             string app)
         {
-            WebApplicationFactory<Startup> factory = customFactory.WithWebHostBuilder(builder =>
+            WebApplicationFactory<Altinn.App.AppLogic.App> factory = customFactory.WithWebHostBuilder(builder =>
             {
                 string path = GetAppPath(org, app);
                 builder.ConfigureAppConfiguration((context, conf) =>
                     {
                         conf.AddJsonFile(path + "appsettings.json");
                     });
-
+   
                 var configuration = new ConfigurationBuilder()
-                    .AddJsonFile(path + "appsettings.json")
+                    .AddJsonFile("appsettings.json")
                     .Build();
 
                 configuration.GetSection("AppSettings:AppBasePath").Value = path;
@@ -54,7 +54,7 @@ namespace App.IntegrationTests.Utils
                 builder.ConfigureTestServices(services =>
                 {
                     services.Configure<AppSettings>(appSettingSection);
-
+     
                     services.AddSingleton<Altinn.Common.PEP.Interfaces.IPDP, PepWithPDPAuthorizationMockSI>();
 
                     services.AddTransient<IValidation, ValidationAppSI>();
