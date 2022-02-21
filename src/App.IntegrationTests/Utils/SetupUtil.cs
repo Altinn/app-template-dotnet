@@ -44,7 +44,7 @@ namespace App.IntegrationTests.Utils
                     });
    
                 var configuration = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json")
+                    .AddJsonFile(path + "appsettings.json")
                     .Build();
 
                 configuration.GetSection("AppSettings:AppBasePath").Value = path;
