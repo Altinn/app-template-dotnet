@@ -33,7 +33,8 @@ namespace App.IntegrationTests.Utils
         public static HttpClient GetTestClient(
             CustomWebApplicationFactory<Altinn.App.AppLogic.App> customFactory,
             string org,
-            string app)
+            string app,
+            bool allowRedirect = true)
         {
             WebApplicationFactory<Altinn.App.AppLogic.App> factory = customFactory.WithWebHostBuilder(builder =>
             {
@@ -147,7 +148,11 @@ namespace App.IntegrationTests.Utils
                 });
             });
             factory.Server.AllowSynchronousIO = true;
-            return factory.CreateClient();
+            var opts = new WebApplicationFactoryClientOptions
+            {
+                AllowAutoRedirect = allowRedirect
+            };
+            return factory.CreateClient(opts);
         }
 
         public static void AddAuthCookie(HttpRequestMessage requestMessage, string token, string xsrfToken = null)
