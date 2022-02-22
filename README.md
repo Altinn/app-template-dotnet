@@ -7,7 +7,7 @@ Altinn application template using .NET 6
 The goal for this template is to give application owners using Altinn Studio a application template that covers common functional and technical needs.
 
 - BPMN Process Support
-- Api for app-frontend and end user system
+- API for app-frontend and end user system
 
 
 ## Architecture
