@@ -27,8 +27,6 @@ jobs:
 
       - name: Generate coverage results
         run: |
-          dotnet build src/AppRef.sln -v m
-          dotnet test src/AppRef.sln --results-directory TestResults/ --collect:"XPlat Code Coverage" -v m `
           dotnet tool install --global dotnet-reportgenerator-globaltool
           reportgenerator -reports:TestResults/**/coverage.cobertura.xml -targetdir:TestResults/Output/CoverageReport -reporttypes:Cobertura
 

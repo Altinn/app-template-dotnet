@@ -61,7 +61,7 @@ jobs:
 
           dotnet build src/AppRef.sln
           dotnet test src/AppRef.sln `
-          -v m `
+          --no-build `
           --results-directory TestResults/ `
           --collect:"XPlat Code Coverage" `
           -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
