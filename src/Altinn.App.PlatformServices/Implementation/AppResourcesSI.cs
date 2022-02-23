@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using Altinn.App.Common.Models;
 using Altinn.App.PlatformServices.Helpers;
+using Altinn.App.PlatformServices.Models;
 using Altinn.App.PlatformServices.Options;
 using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Interface;
@@ -296,13 +297,6 @@ namespace Altinn.App.Services.Implementation
         }
 
         /// <inheritdoc />
-        [Obsolete("GetOptions method is obsolete and will be removed in the future. Use the corresponding method in IAppOptions interface instead.", false)]
-        public List<AppOption> GetOptions(string optionId)
-        {
-            return _appOptionsService.GetOptionsAsync(optionId, string.Empty, new Dictionary<string, string>()).Result.Options;
-        }
-
-        /// <inheritdoc />
         public string GetLayouts()
         {
           Dictionary<string, object> layouts = new Dictionary<string, object>();
@@ -436,6 +430,25 @@ namespace Altinn.App.Services.Implementation
             }
 
             return null;
+        }
+        
+        /// <inheritdoc />
+        [Obsolete("GetOptions method is obsolete and will be removed in the future. Use the corresponding method in IAppOptions interface instead.", false)]
+        public List<AppOption> GetOptions(string optionId)
+        {
+            return _appOptionsService.GetOptions(optionId);
+        }
+
+        /// <inheritdoc/>
+        public async Task<AppOptions> GetOptionsAsync(string optionId, string language, Dictionary<string, string> keyValuePairs)
+        {
+            return await _appOptionsService.GetOptionsAsync(optionId, language, keyValuePairs);
+        }
+
+        /// <inheritdoc/>
+        public async Task<AppOptions> GetOptionsAsync(InstanceIdentifier instanceIdentifier, string optionId, string language, Dictionary<string, string> keyValuePairs)
+        {
+            return await _appOptionsService.GetOptionsAsync(instanceIdentifier, optionId, language, keyValuePairs);
         }
     }
 }

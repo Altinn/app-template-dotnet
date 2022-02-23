@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -31,6 +32,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Altinn.App.Services.Implementation
 {
@@ -491,9 +493,10 @@ namespace Altinn.App.Services.Implementation
             }
 
             string textResourcesString = JsonConvert.SerializeObject(textResource);
-            Dictionary<string, Dictionary<string, string>> optionsDictionary = await GetOptionsDictionary(formLayoutsFileContent);
+            Dictionary<string, Dictionary<string, string>> optionsDictionary = 
+                await GetOptionsDictionary(formLayoutsFileContent, language, Encoding.Default.GetString(Convert.FromBase64String(encodedXml)));
 
-            PDFContext pdfContext = new PDFContext
+            var pdfContext = new PDFContext
             {
                 Data = encodedXml,
                 FormLayouts = JsonConvert.DeserializeObject<Dictionary<string, object>>(formLayoutsFileContent),
@@ -562,16 +565,27 @@ namespace Altinn.App.Services.Implementation
             return optionsIds;
         }
 
-        private async Task<Dictionary<string, Dictionary<string, string>>> GetOptionsDictionary(string formLayout)
+        private async Task<Dictionary<string, Dictionary<string, string>>> GetOptionsDictionary(string formLayout, string language, string xmlData)
         {
+            var mappings = new Dictionary<string, string>();
+            JObject formLayoutObject = JObject.Parse(formLayout);
+
+            // ? = Current object, ? = Filter, the rest is just dot notation ref. https://goessner.net/articles/JsonPath/
+            IEnumerable<JToken> components = formLayoutObject.SelectTokens("FormLayout.data.layout[?(@.mapping)]");
+            foreach (JToken component in components)
+            {
+                string componentId = component.SelectToken("id").ToString();
+                string optionsId = component.SelectToken("optionsId").ToString();
+                mappings.Add(componentId, optionsId);
+            }
+
             Dictionary<string, Dictionary<string, string>> dictionary = new Dictionary<string, Dictionary<string, string>>();
             List<string> optionsIdsList = GetOptionIdsFromFormLayout(formLayout);
 
             foreach (string optionsId in optionsIdsList)
             {
-                AppOptions appOptions = new AppOptions();
+                AppOptions appOptions = await _resourceService.GetOptionsAsync(optionsId, language, new Dictionary<string, string>());
 
-                appOptions.Options = _resourceService.GetOptions(optionsId);
 #pragma warning disable CS0618 // Type or member is obsolete
                 appOptions = await GetOptions(optionsId, appOptions);
 #pragma warning restore CS0618 // Type or member is obsolete
