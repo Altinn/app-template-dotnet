@@ -567,7 +567,7 @@ namespace Altinn.App.Services.Implementation
 
         private async Task<Dictionary<string, Dictionary<string, string>>> GetOptionsDictionary(string formLayout, string language, string xmlData)
         {
-            var mappings = new Dictionary<string, string>();
+            var mappings = new Dictionary<string, object>();
             JObject formLayoutObject = JObject.Parse(formLayout);
 
             // ? = Current object, ? = Filter, the rest is just dot notation ref. https://goessner.net/articles/JsonPath/
@@ -576,7 +576,14 @@ namespace Altinn.App.Services.Implementation
             {
                 string componentId = component.SelectToken("id").ToString();
                 string optionsId = component.SelectToken("optionsId").ToString();
-                mappings.Add(componentId, optionsId);
+                
+                var maps = new Dictionary<string, string>();
+                foreach (JProperty map in component.SelectToken("mapping").Children())
+                {
+                    maps.Add(map.Name, map.Value.ToString());
+                }
+
+                mappings.Add(componentId, new { OptionsId = optionsId, Maps = maps });
             }
 
             Dictionary<string, Dictionary<string, string>> dictionary = new Dictionary<string, Dictionary<string, string>>();
