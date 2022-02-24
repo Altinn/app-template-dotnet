@@ -62,8 +62,10 @@ namespace Altinn.App.PlatformServices.Options.Altinn2Provider
             _codeListVersion = codeListVersion;
         }
 
-        /// <inheritdoc/>
-        public async Task<AppOptions> GetAppOptionsAsync(string language, Dictionary<string, string> keyValuePairs)
+        /// <summary>
+        /// Utility method if you need the raw codelist for dataprocessinghandler
+        /// </summary>
+        public async Task<MetadataCodelistResponse> GetRawAltinn2CodelistAsync(string language)
         {
             var langCode = language switch
             {
@@ -72,12 +74,19 @@ namespace Altinn.App.PlatformServices.Options.Altinn2Provider
                 "en" => "1033",
                 _ => "1044", // default to norwegian bokmål
             };
-            var codelist = await _cache.GetOrCreateAsync($"{_metadataApiId}{langCode}{_codeListVersion}", async (entry) =>
+
+            return await _cache.GetOrCreateAsync($"{_metadataApiId}{langCode}{_codeListVersion}", async (entry) =>
             {
                 entry.Priority = CacheItemPriority.NeverRemove;
                 entry.AbsoluteExpiration = DateTimeOffset.MaxValue;
                 return await _client.GetAltinn2Codelist(_metadataApiId, langCode, _codeListVersion);
             });
+        }
+
+        /// <inheritdoc/>
+        public async Task<AppOptions> GetAppOptionsAsync(string language, Dictionary<string, string> keyValuePairs)
+        {
+            var codelist = await GetRawAltinn2CodelistAsync(language);
 
             AppOptions options = new()
             {
