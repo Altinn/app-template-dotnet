@@ -49,7 +49,7 @@ namespace Altinn.App.PlatformServices.Options.Altinn2Provider
         public string Id { get;  private set; }
 
         /// <summary>
-        /// <see cref="Altinn.App.PlatformServices.Options.Altinn2Provider.Altinn2CodeListOptionsBuilder.Add(string, Func{MetadataCodeListCodes, AppOption}, Func{MetadataCodeListCodes, bool}?, string?, int?)" />
+        /// <see cref="Altinn.App.PlatformServices.Options.CommonOptionProviderServiceCollectionExtensions.AddAltinn2CodeList(Microsoft.Extensions.DependencyInjection.IServiceCollection, string, Func{MetadataCodeListCodes, AppOption}, Func{MetadataCodeListCodes, bool}?, string?, int?)" />
         /// </summary>
         public Altinn2CodeListProvider(IMemoryCache cache, Altinn2MetadataApiClient client, string id, Func<MetadataCodeListCodes, AppOption> transform, Func<MetadataCodeListCodes, bool>? filter, string? metadataApiId = null, int? codeListVersion = null)
         {
