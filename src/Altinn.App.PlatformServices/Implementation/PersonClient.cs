@@ -24,8 +24,8 @@ using Microsoft.Extensions.Options;
 namespace Altinn.App.PlatformServices.Implementation
 {
     /// <summary>
-    /// Represents an implementation of <see cref="IPersonRetriever"/> that will call the 
-    /// Altinn 3 Register component to retrieve person information.
+    /// Represents an implementation of <see cref="IPersonRetriever"/> that will call the Register
+    /// component to retrieve person information.
     /// </summary>
     public class PersonClient : IPersonRetriever
     {
