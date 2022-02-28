@@ -89,6 +89,8 @@ namespace Altinn.App.Api.Controllers
 
             AppOptions appOptions = await _appOptionsService.GetOptionsAsync(instanceIdentifier, optionsId, language, queryParams);
 
+            // Only return NotFound if we can't find an options provider.
+            // If we find the options provider, but it doesnt' have values, return empty list.
             if (appOptions.Options == null)
             {
                 return NotFound();
