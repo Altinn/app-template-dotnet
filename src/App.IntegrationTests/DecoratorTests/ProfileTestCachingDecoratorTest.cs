@@ -96,6 +96,5 @@ namespace App.IntegrationTestsRef.DecoratorTests
             Assert.Null(actual);
             Assert.False(memoryCache.TryGetValue("User_UserId_12345", out UserProfile _));
         }
-
     }
 }
