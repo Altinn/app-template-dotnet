@@ -8,6 +8,7 @@ using Altinn.App.PlatformServices.Interface;
 using Altinn.App.PlatformServices.Options;
 using Altinn.App.Services;
 using Altinn.App.Services.Configuration;
+using Altinn.App.Services.Decorators;
 using Altinn.App.Services.Implementation;
 using Altinn.App.Services.Interface;
 using Altinn.Common.AccessTokenClient.Configuration;
@@ -42,6 +43,7 @@ namespace Altinn.App.PlatformServices.Extensions
             services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
             services.Configure<GeneralSettings>(configuration.GetSection("GeneralSettings"));
             services.Configure<PlatformSettings>(configuration.GetSection("PlatformSettings"));
+            services.Configure<CacheSettings>(configuration.GetSection("CacheSettings"));
 
             services.AddHttpClient<IApplication, ApplicationClient>();
             services.AddHttpClient<IAuthentication, AuthenticationClient>();
@@ -54,6 +56,7 @@ namespace Altinn.App.PlatformServices.Extensions
             services.AddHttpClient<IEvents, EventsClient>();
             services.AddHttpClient<IPDF, PDFClient>();
             services.AddHttpClient<IProfile, ProfileClient>();
+            services.Decorate<IProfile, ProfileClientCachingDecorator>();
             services.AddHttpClient<IRegister, RegisterClient>();
             services.AddHttpClient<IText, TextClient>();
             services.AddHttpClient<IProcess, ProcessAppSI>();
