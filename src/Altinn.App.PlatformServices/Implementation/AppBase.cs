@@ -567,24 +567,18 @@ namespace Altinn.App.Services.Implementation
 
         private async Task<Dictionary<string, Dictionary<string, string>>> GetOptionsDictionary(string formLayout, string language, string xmlData)
         {
-            var mappings = new Dictionary<string, object>();
-            JObject formLayoutObject = JObject.Parse(formLayout);
+            // Get the mappings
+            IEnumerable<JToken> components = GetFormComponentsWithMappingDefined(formLayout);
 
-            // ? = Current object, ? = Filter, the rest is just dot notation ref. https://goessner.net/articles/JsonPath/
-            IEnumerable<JToken> components = formLayoutObject.SelectTokens("FormLayout.data.layout[?(@.mapping)]");
-            foreach (JToken component in components)
-            {
-                string componentId = component.SelectToken("id").ToString();
-                string optionsId = component.SelectToken("optionsId").ToString();
-                
-                var maps = new Dictionary<string, string>();
-                foreach (JProperty map in component.SelectToken("mapping").Children())
-                {
-                    maps.Add(map.Name, map.Value.ToString());
-                }
+            Dictionary<string, object> componentMappings = GetComponentMappings(components);
 
-                mappings.Add(componentId, new { OptionsId = optionsId, Maps = maps });
-            }
+            // Get the corresponding datavalues based on databinding eg. Innrapportoer.geek.epost or someField.someArray[0].someProp
+            // Alternatives:
+            // JObject/JsonPath (needs the data as Json, easy to use the path)
+            // dynamic/manual resolving (doable, but more work)
+            // Xml/XPath (needs metadata but allready have the data as xml)
+
+            // Build the option calls passing the required key/value pairs
 
             Dictionary<string, Dictionary<string, string>> dictionary = new Dictionary<string, Dictionary<string, string>>();
             List<string> optionsIdsList = GetOptionIdsFromFormLayout(formLayout);
@@ -613,6 +607,41 @@ namespace Altinn.App.Services.Implementation
             }
 
             return dictionary;
+        }
+
+        private static Dictionary<string, object> GetComponentMappings(IEnumerable<JToken> components)
+        {
+            var componentMappings = new Dictionary<string, object>();
+            foreach (JToken component in components)
+            {
+                string componentId = component.SelectToken("id").ToString();
+                string optionsId = component.SelectToken("optionsId").ToString();
+
+                Dictionary<string, string> mappings = GetMappingsForComponent(component);
+
+                componentMappings.Add(componentId, new { OptionsId = optionsId, Mappings = mappings });
+            }
+
+            return componentMappings;
+        }
+
+        private static Dictionary<string, string> GetMappingsForComponent(JToken component)
+        {
+            var maps = new Dictionary<string, string>();
+            foreach (JProperty map in component.SelectToken("mapping").Children())
+            {
+                maps.Add(map.Name, map.Value.ToString());
+            }
+
+            return maps;
+        }
+
+        private static IEnumerable<JToken> GetFormComponentsWithMappingDefined(string formLayout)
+        {
+            JObject formLayoutObject = JObject.Parse(formLayout);
+
+            // ? = Current object, ? = Filter, the rest is just dot notation ref. https://goessner.net/articles/JsonPath/
+            return formLayoutObject.SelectTokens("FormLayout.data.layout[?(@.mapping)]");
         }
 
         private async Task SendInstanceData(Instance instance, Dictionary<string, string> requestHeaders)
