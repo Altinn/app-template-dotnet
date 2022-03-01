@@ -494,7 +494,7 @@ namespace Altinn.App.Services.Implementation
 
             string textResourcesString = JsonConvert.SerializeObject(textResource);
             Dictionary<string, Dictionary<string, string>> optionsDictionary = 
-                await GetOptionsDictionary(formLayoutsFileContent, language, Encoding.Default.GetString(Convert.FromBase64String(encodedXml)));
+                await GetOptionsDictionary(formLayoutsFileContent, language, data);
 
             var pdfContext = new PDFContext
             {
@@ -565,12 +565,13 @@ namespace Altinn.App.Services.Implementation
             return optionsIds;
         }
 
-        private async Task<Dictionary<string, Dictionary<string, string>>> GetOptionsDictionary(string formLayout, string language, string xmlData)
+        private async Task<Dictionary<string, Dictionary<string, string>>> GetOptionsDictionary(string formLayout, string language, object data)
         {
-            // Get the mappings
-            IEnumerable<JToken> components = GetFormComponentsWithMappingDefined(formLayout);
+            IEnumerable<JToken> componentsWithMappingDefined = GetFormComponentsWithMappingDefined(formLayout);
 
-            Dictionary<string, object> componentMappings = GetComponentMappings(components);
+            Dictionary<string, object> componentMappingDefinitions = GetComponentMappingDefinitions(componentsWithMappingDefined);
+
+            Dictionary<string, Dictionary<string, string>> componentKeyValuePairs = GetComponentKeyValuePairs(componentMappingDefinitions, data);
 
             // Get the corresponding datavalues based on databinding eg. Innrapportoer.geek.epost or someField.someArray[0].someProp
             // Alternatives:
@@ -585,7 +586,8 @@ namespace Altinn.App.Services.Implementation
 
             foreach (string optionsId in optionsIdsList)
             {
-                AppOptions appOptions = await _resourceService.GetOptionsAsync(optionsId, language, new Dictionary<string, string>());
+                var hasMappings = componentKeyValuePairs.TryGetValue(optionsId, out Dictionary<string, string> optionsKeyValuePairs);
+                AppOptions appOptions = await _resourceService.GetOptionsAsync(optionsId, language, hasMappings ? optionsKeyValuePairs : new Dictionary<string, string>());
 
 #pragma warning disable CS0618 // Type or member is obsolete
                 appOptions = await GetOptions(optionsId, appOptions);
@@ -609,7 +611,29 @@ namespace Altinn.App.Services.Implementation
             return dictionary;
         }
 
-        private static Dictionary<string, object> GetComponentMappings(IEnumerable<JToken> components)
+        private static Dictionary<string, Dictionary<string, string>> GetComponentKeyValuePairs(Dictionary<string, object> componentMappingDefinitions, object data)
+        {
+            JObject jsonData = JObject.FromObject(data);
+            var componentKeyValuePairs = new Dictionary<string, Dictionary<string, string>>();
+
+            foreach (var mappingDef in componentMappingDefinitions)
+            {
+                Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
+
+                dynamic mappings = mappingDef.Value;
+                foreach (var pair in mappings.Mappings)
+                {
+                    JToken selectedData = jsonData.SelectToken(pair.Key);
+                    keyValuePairs.Add(pair.Value, selectedData.ToString());
+                }
+
+                componentKeyValuePairs.Add(mappings.OptionsId, keyValuePairs);
+            }
+
+            return componentKeyValuePairs;
+        }
+
+        private static Dictionary<string, object> GetComponentMappingDefinitions(IEnumerable<JToken> components)
         {
             var componentMappings = new Dictionary<string, object>();
             foreach (JToken component in components)
