@@ -109,7 +109,7 @@ namespace Altinn.App.PlatformServices.Implementation
             throw await PlatformHttpException.CreateAsync(response);
         }
 
-        private string ConvertToBase64(string text)
+        private static string ConvertToBase64(string text)
         {
             var bytes = Encoding.UTF8.GetBytes(text);
             return Convert.ToBase64String(bytes);
