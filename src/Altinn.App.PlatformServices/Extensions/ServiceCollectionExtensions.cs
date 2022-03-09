@@ -7,11 +7,8 @@ using Altinn.App.PlatformServices.Interface;
 using Altinn.App.PlatformServices.Options;
 using Altinn.App.Services;
 using Altinn.App.Services.Configuration;
-<<<<<<< HEAD
 using Altinn.App.Services.Decorators;
-=======
 using Altinn.App.Services.Filters;
->>>>>>> main
 using Altinn.App.Services.Implementation;
 using Altinn.App.Services.Interface;
 using Altinn.Common.AccessTokenClient.Configuration;
@@ -78,7 +75,7 @@ namespace Altinn.App.PlatformServices.Extensions
         /// <param name="env">A reference to the current <see cref="IWebHostEnvironment"/> object.</param>
         public static void AddAppServices(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment env)
         {
-            // Services for Altinn App 
+            // Services for Altinn App
             services.AddTransient<IPDP, PDPAppSI>();
             services.AddTransient<IValidation, ValidationAppSI>();
             services.AddTransient<IPrefill, PrefillSI>();
