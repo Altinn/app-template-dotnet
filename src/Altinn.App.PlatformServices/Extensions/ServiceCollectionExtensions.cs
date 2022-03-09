@@ -2,13 +2,16 @@ using System;
 
 using Altinn.App.Core.Implementation;
 using Altinn.App.Core.Interface;
-using Altinn.App.PlatformServices.Filters;
 using Altinn.App.PlatformServices.Implementation;
 using Altinn.App.PlatformServices.Interface;
 using Altinn.App.PlatformServices.Options;
 using Altinn.App.Services;
 using Altinn.App.Services.Configuration;
+<<<<<<< HEAD
 using Altinn.App.Services.Decorators;
+=======
+using Altinn.App.Services.Filters;
+>>>>>>> main
 using Altinn.App.Services.Implementation;
 using Altinn.App.Services.Interface;
 using Altinn.Common.AccessTokenClient.Configuration;
@@ -110,6 +113,7 @@ namespace Altinn.App.PlatformServices.Extensions
             {
                 services.AddApplicationInsightsTelemetry(applicationInsightsKey);
                 services.AddApplicationInsightsTelemetryProcessor<IdentityTelemetryFilter>();
+                services.AddApplicationInsightsTelemetryProcessor<HealthTelemetryFilter>();
                 services.AddSingleton<ITelemetryInitializer, CustomTelemetryInitializer>();
             }
         }
