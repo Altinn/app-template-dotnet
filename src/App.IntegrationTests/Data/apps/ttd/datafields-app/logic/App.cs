@@ -6,6 +6,7 @@ using Altinn.App.AppLogic.Validation;
 using Altinn.App.Common.Enums;
 using Altinn.App.Common.Models;
 using Altinn.App.PlatformServices.Helpers;
+using Altinn.App.PlatformServices.Interface;
 using Altinn.App.PlatformServices.Models;
 using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
@@ -48,7 +49,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DataFieldsApp
             ILogger<App> logger,
             IData dataService,
             IProcess processService,
-            IPDF pdfService,
+            IPdfService pdfService,
             IProfile profileService,
             IRegister registerService,
             IPrefill prefillService,

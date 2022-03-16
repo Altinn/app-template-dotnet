@@ -43,7 +43,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
             ILogger<App> logger,
             IData dataService,
             IProcess processService,
-            IPDF pdfService,
+            IPdfService pdfService,
             IProfile profileService,
             IRegister registerService,
             IPrefill prefillService,

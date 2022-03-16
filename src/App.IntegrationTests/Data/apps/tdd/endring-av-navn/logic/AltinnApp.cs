@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 using Altinn.App.Common.Enums;
 using Altinn.App.Common.Models;
+using Altinn.App.PlatformServices.Interface;
 using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
 using Altinn.App.Services.Interface;
@@ -24,7 +25,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.endring_av_navn
             ILogger<AltinnApp> logger,
             IData dataService,
             IProcess processService,
-            IPDF pdfService,
+            IPdfService pdfService,
             IPrefill prefillService,
             IInstance instanceService,
             IOptions<GeneralSettings> settings,

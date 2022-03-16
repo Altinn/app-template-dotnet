@@ -90,6 +90,7 @@ namespace Altinn.App.PlatformServices.Extensions
             services.Configure<Altinn.Common.EFormidlingClient.Configuration.EFormidlingClientSettings>(configuration.GetSection("EFormidlingClientSettings"));
             services.Configure<FrontEndSettings>(configuration.GetSection(nameof(FrontEndSettings)));
             AddAppOptions(services);
+            services.AddTransient<IPdfService, PdfService>();
 
             if (!env.IsDevelopment())
             {
