@@ -53,8 +53,7 @@ namespace App.IntegrationTests.Mocks.Apps.Tdd.Frontendtest
             settings,
             profileService,
             textService,
-            httpContextAccessor,
-            new NullPdfHandler())
+            httpContextAccessor)
             {
                 _logger = logger;
                 _validationHandler = new ValidationHandler(httpContextAccessor);

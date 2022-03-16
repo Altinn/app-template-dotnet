@@ -49,8 +49,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.contributer_restriction
                 settings, 
                 profileService, 
                 textService, 
-                httpContextAccessor, 
-                new NullPdfHandler())
+                httpContextAccessor)
         {
             _validationHandler = new ValidationHandler();
             _calculationHandler = new CalculationHandler();

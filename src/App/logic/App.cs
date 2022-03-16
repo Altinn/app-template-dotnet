@@ -57,8 +57,7 @@ namespace Altinn.App.AppLogic
             IInstance instanceService,
             IOptions<GeneralSettings> settings,
             IText textService,
-            IHttpContextAccessor httpContextAccessor,
-            ICustomPdfHandler customPdfHandler) : base(
+            IHttpContextAccessor httpContextAccessor) : base(
                 appResourcesService,
                 logger,
                 dataService,
@@ -70,8 +69,7 @@ namespace Altinn.App.AppLogic
                 settings,
                 profileService,
                 textService,
-                httpContextAccessor,
-                customPdfHandler)
+                httpContextAccessor)
         {
             _logger = logger;
             _validationHandler = new ValidationHandler(httpContextAccessor);

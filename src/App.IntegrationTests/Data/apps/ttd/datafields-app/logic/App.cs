@@ -69,8 +69,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DataFieldsApp
                 settings,
                 profileService,
                 textService,
-                httpContextAccessor,
-                new NullPdfHandler())
+                httpContextAccessor)
         {
             _logger = logger;
             _instanceService = instanceService;

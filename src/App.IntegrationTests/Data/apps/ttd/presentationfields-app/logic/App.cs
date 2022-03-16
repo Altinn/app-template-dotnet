@@ -63,8 +63,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
                 settings,
                 profileService,
                 textService,
-                httpContextAccessor,
-                new NullPdfHandler())
+                httpContextAccessor)
         {
             _logger = logger;
         }

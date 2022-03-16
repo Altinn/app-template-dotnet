@@ -61,8 +61,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.sirius
                 settings, 
                 profileService, 
                 textService, 
-                httpContextAccessor, 
-                new NullPdfHandler())
+                httpContextAccessor)
         {
             _logger = logger;
             _validationHandler = new ValidationHandler(instanceService);

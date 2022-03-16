@@ -83,7 +83,6 @@ namespace Altinn.App.Services.Implementation
             IProfile profileClient,
             IText textClient,
             IHttpContextAccessor httpContextAccessor,
-            ICustomPdfHandler customPdfHandler,
             IEFormidlingClient eFormidlingClient = null,
             IOptions<AppSettings> appSettings = null,
             IOptions<PlatformSettings> platformSettings = null,
@@ -102,7 +101,6 @@ namespace Altinn.App.Services.Implementation
             _profileClient = profileClient;
             _textClient = textClient;
             _httpContextAccessor = httpContextAccessor;
-            _customPdfHandler = customPdfHandler;
             _appSettings = appSettings?.Value;
             _eFormidlingClient = eFormidlingClient;
             _tokenGenerator = tokenGenerator;

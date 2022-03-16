@@ -50,8 +50,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
                 settings, 
                 profileService, 
                 textService, 
-                httpContextAccessor, 
-                new NullPdfHandler())
+                httpContextAccessor)
         {
             _validationHandler = new ValidationHandler(settings.Value, httpContextAccessor);
             _calculationHandler = new CalculationHandler();

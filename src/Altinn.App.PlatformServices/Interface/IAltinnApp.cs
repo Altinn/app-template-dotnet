@@ -102,7 +102,7 @@ namespace Altinn.App.Services.Interface
         /// Is called to run custom calculation events defined by app developer. Obsolete Replaced by RunProcessDataRead and RunProcessDataWrite
         /// </summary>
         /// <param name="data">The data to perform calculations on</param>
-        [Obsolete]
+        [Obsolete("The RunCalculation method is obsolete and will be removed in the future.", false, UrlFormat = "https://docs.altinn.studio/app/development/logic/dataprocessing/")]
         Task<bool> RunCalculation(object data);
 
         /// <summary>
@@ -169,14 +169,7 @@ namespace Altinn.App.Services.Interface
         /// <param name="taskId">The taskId</param>
         /// <param name="instance">The instance</param>
         Task RunProcessTaskEnd(string taskId, Instance instance);
-
-        /// <summary>
-        /// Format layoutsettings
-        /// </summary>
-        /// //TODO: Insert correct link to doc
-        //[Obsolete("FormatPdf method is obsolete and will be removed in the future.", false, UrlFormat = "https://docs.altinn.studio/app/development/")]
-        //Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data);
-
+        
         /// <summary>
         /// Gets a list of eFormidling shipment receivers
         /// </summary>
@@ -196,7 +189,7 @@ namespace Altinn.App.Services.Interface
         /// The metadata file should be parsed to XML before assigning it to the stream.
         /// </remarks>
         /// <returns>A touple containing the metadata file name and the metadata in a stream.</returns>
-        virtual async Task<(string, Stream)> GenerateEFormidlingMetadata(Instance instance)
+        virtual async Task<(string MetadataFilename, Stream Metadata)> GenerateEFormidlingMetadata(Instance instance)
         {
             await Task.CompletedTask;
             return (null, null);

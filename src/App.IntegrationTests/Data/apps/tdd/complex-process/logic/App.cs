@@ -56,8 +56,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.complex_process
                 settings, 
                 profileService, 
                 textService, 
-                httpContextAccessor, 
-                new NullPdfHandler())
+                httpContextAccessor)
         {
             _logger = logger;
             _validationHandler = new ValidationHandler(instanceService);

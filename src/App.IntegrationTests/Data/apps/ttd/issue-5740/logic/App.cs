@@ -75,8 +75,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.Issue5740
                 settings,
                 profileService,
                 textService,
-                httpContextAccessor, 
-                new NullPdfHandler())
+                httpContextAccessor)
         {
             _logger = logger;
             _validationHandler = new ValidationHandler(httpContextAccessor);

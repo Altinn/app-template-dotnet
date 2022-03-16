@@ -44,8 +44,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.platform_fails
                 settings, 
                 profileService, 
                 textService, 
-                httpContextAccessor, 
-                new NullPdfHandler())
+                httpContextAccessor)
         {
         }
 

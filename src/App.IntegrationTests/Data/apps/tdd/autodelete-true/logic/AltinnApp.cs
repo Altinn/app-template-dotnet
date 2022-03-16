@@ -44,8 +44,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.autodelete_true
                 settings, 
                 profileService, 
                 textService, 
-                httpContextAccessor, 
-                new NullPdfHandler())
+                httpContextAccessor)
         {
         }
 

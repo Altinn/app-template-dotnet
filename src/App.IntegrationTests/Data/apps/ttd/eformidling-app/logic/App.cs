@@ -88,7 +88,6 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidling
                 profileService,
                 textService,
                 httpContextAccessor,
-                new NullPdfHandler(),
                 efor,
                 appsettings,
                 platformSettings,

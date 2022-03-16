@@ -45,8 +45,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.endring_av_navn
                 settings, 
                 profileService, 
                 textService, 
-                httpContextAccessor, 
-                new NullPdfHandler())
+                httpContextAccessor)
         {
         }
 

@@ -65,8 +65,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.Dayplanner
                 settings,
                 profileService,
                 textService,
-                httpContextAccessor,
-                new NullPdfHandler())
+                httpContextAccessor)
         {
             _logger = logger;
             _validationHandler = new ValidationHandler(httpContextAccessor);

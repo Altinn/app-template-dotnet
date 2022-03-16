@@ -71,8 +71,7 @@ namespace App.IntegrationTests.Mocks.Apps.nsm.klareringsportalen.AppLogic
                 settings,
                 profileService,
                 textService,
-                httpContextAccessor, 
-                new NullPdfHandler())
+                httpContextAccessor)
         {
             _logger = logger;
             _validationHandler = new ValidationHandler(httpContextAccessor);

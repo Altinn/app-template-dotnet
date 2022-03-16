@@ -49,8 +49,7 @@ namespace App.IntegrationTests.Mocks.Apps.dibk.nabovarsel
                 settings, 
                 profileService, 
                 textService, 
-                httpContextAccessor, 
-                new NullPdfHandler())
+                httpContextAccessor)
         {
             _validationHandler = new ValidationHandler();
             _calculationHandler = new CalculationHandler();
