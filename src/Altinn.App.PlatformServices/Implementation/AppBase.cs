@@ -67,7 +67,7 @@ namespace Altinn.App.Services.Implementation
         /// <param name="logger">A logging service.</param>
         /// <param name="dataClient">The data client.</param>
         /// <param name="processService">The service giving access the App process.</param>
-        /// <param name="pdfClient">The pdf client.</param>
+        /// <param name="pdfService">The pdf service responsible for creating the pdf.</param>
         /// <param name="prefillService">The service giving access to prefill mechanisms.</param>
         /// <param name="instanceClient">The instance client</param>
         /// <param name="registerClient">The register client</param>
@@ -172,6 +172,8 @@ namespace Altinn.App.Services.Implementation
         public abstract Task RunProcessTaskEnd(string taskId, Instance instance);
 
         /// <inheritdoc />
+        //TODO: Insert correct link to doc
+        [Obsolete("FormatPdf method is obsolete and will be removed in the future.", false, UrlFormat = "https://docs.altinn.studio/app/development/")]
         public abstract Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data);
 
         /// <inheritdoc />
