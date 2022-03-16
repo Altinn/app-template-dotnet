@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using Altinn.App.Common.Enums;
 using Altinn.App.Common.Models;
+using Altinn.App.PlatformServices.Implementation;
 using Altinn.App.PlatformServices.Interface;
 using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
@@ -27,7 +28,6 @@ namespace App.IntegrationTests.Mocks.Apps.Tdd.Frontendtest
         private readonly ValidationHandler _validationHandler;
         private readonly CalculationHandler _calculationHandler;
         private readonly InstantiationHandler _instantiationHandler;
-        private readonly PdfHandler _pdfHandler;
 
         public App(
         IAppResources appResourcesService,
@@ -53,13 +53,13 @@ namespace App.IntegrationTests.Mocks.Apps.Tdd.Frontendtest
             settings,
             profileService,
             textService,
-            httpContextAccessor)
+            httpContextAccessor,
+            new NullPdfHandler())
             {
                 _logger = logger;
                 _validationHandler = new ValidationHandler(httpContextAccessor);
                 _calculationHandler = new CalculationHandler();
                 _instantiationHandler = new InstantiationHandler(profileService, registerService);
-                _pdfHandler = new PdfHandler();
             }
 
         public override object CreateNewAppModel(string classRef)
@@ -153,17 +153,6 @@ namespace App.IntegrationTests.Mocks.Apps.Tdd.Frontendtest
         {
             await Task.CompletedTask;
             return;
-        }
-
-        /// <summary>
-        /// Hook to run logic to hide pages or components when generatring PDF
-        /// </summary>
-        /// <param name="layoutSettings">The layoutsettings. Can be null and need to be created in method</param>
-        /// <param name="data">The data that there is generated PDF from</param>
-        /// <returns>Layoutsetting with possible hidden fields or pages</returns>
-        public override async Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data)
-        {
-            return await _pdfHandler.FormatPdf(layoutSettings, data);
         }
     }
 }

@@ -174,8 +174,8 @@ namespace Altinn.App.Services.Interface
         /// Format layoutsettings
         /// </summary>
         /// //TODO: Insert correct link to doc
-        [Obsolete("FormatPdf method is obsolete and will be removed in the future.", false, UrlFormat = "https://docs.altinn.studio/app/development/")]
-        Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data);
+        //[Obsolete("FormatPdf method is obsolete and will be removed in the future.", false, UrlFormat = "https://docs.altinn.studio/app/development/")]
+        //Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data);
 
         /// <summary>
         /// Gets a list of eFormidling shipment receivers

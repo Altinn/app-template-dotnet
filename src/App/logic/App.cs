@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using Altinn.App.AppLogic.DataProcessing;
-using Altinn.App.AppLogic.Print;
 using Altinn.App.AppLogic.Validation;
 using Altinn.App.Common.Enums;
 using Altinn.App.Common.Models;
@@ -28,7 +27,6 @@ namespace Altinn.App.AppLogic
         private readonly ILogger<App> _logger;
         private readonly ValidationHandler _validationHandler;
         private readonly InstantiationHandler _instantiationHandler;
-        private readonly PdfHandler _pdfHandler;
         private readonly DataProcessingHandler _dataProcessingHandler;
 
         /// <summary>
@@ -46,6 +44,7 @@ namespace Altinn.App.AppLogic
         /// <param name="settings">General settings</param>
         /// <param name="textService">A service with access to text</param>
         /// <param name="httpContextAccessor">A context accessor</param>
+        /// <param name="customPdfHandler">Class for dynamically customize the pdf formatting.</param>
         public App(
             IAppResources appResourcesService,
             ILogger<App> logger,
@@ -58,7 +57,8 @@ namespace Altinn.App.AppLogic
             IInstance instanceService,
             IOptions<GeneralSettings> settings,
             IText textService,
-            IHttpContextAccessor httpContextAccessor) : base(
+            IHttpContextAccessor httpContextAccessor,
+            ICustomPdfHandler customPdfHandler) : base(
                 appResourcesService,
                 logger,
                 dataService,
@@ -70,13 +70,13 @@ namespace Altinn.App.AppLogic
                 settings,
                 profileService,
                 textService,
-                httpContextAccessor)
+                httpContextAccessor,
+                customPdfHandler)
         {
             _logger = logger;
             _validationHandler = new ValidationHandler(httpContextAccessor);
             _dataProcessingHandler = new DataProcessingHandler();
             _instantiationHandler = new InstantiationHandler(profileService, registerService);
-            _pdfHandler = new PdfHandler();
         }
 
         /// <inheritdoc />
@@ -192,17 +192,6 @@ namespace Altinn.App.AppLogic
         public override async Task RunProcessTaskEnd(string taskId, Instance instance)
         {
             await Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// Hook to run logic to hide pages or components when generatring PDF
-        /// </summary>
-        /// <param name="layoutSettings">The layoutsettings.</param>
-        /// <param name="data">The data that there is generated PDF from</param>
-        /// <returns>Layoutsetting with possible hidden fields or pages</returns>
-        public override async Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data)
-        {
-            return await _pdfHandler.FormatPdf(layoutSettings, data);
         }
     }
 }

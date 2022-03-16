@@ -31,14 +31,20 @@ namespace Altinn.App.PlatformServices.Implementation
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IProfile _profileClient;
         private readonly IRegister _registerClient;
-
+        private readonly ICustomPdfHandler _customPdfHandler;
         private readonly string pdfElementType = "ref-data-as-pdf";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PDFService"/> class.
+        /// Initializes a new instance of the <see cref="PdfService"/> class.
         /// </summary>
         /// <param name="pdfClient">Client for communicating with the Platform PDF service.</param>
-        public PdfService(IPDF pdfClient, IAppResources appResources, IData dataClient, IHttpContextAccessor httpContextAccessor, IProfile profileClient, IRegister registerClient)
+        /// <param name="appResources">The service giving access to local resources.</param>
+        /// <param name="dataClient">The data client.</param>
+        /// <param name="httpContextAccessor">The httpContextAccessor</param>
+        /// <param name="profileClient">The profile client</param>
+        /// <param name="registerClient">The register client</param>
+        /// <param name="customPdfHandler">Class for customizing pdf formatting and layout.</param>
+        public PdfService(IPDF pdfClient, IAppResources appResources, IData dataClient, IHttpContextAccessor httpContextAccessor, IProfile profileClient, IRegister registerClient, ICustomPdfHandler customPdfHandler)
         {
             _pdfClient = pdfClient;
             _resourceService = appResources;
@@ -46,6 +52,7 @@ namespace Altinn.App.PlatformServices.Implementation
             _httpContextAccessor = httpContextAccessor;
             _profileClient = profileClient;
             _registerClient = registerClient;
+            _customPdfHandler = customPdfHandler;
         }
 
         /// <inheritdoc/>
@@ -83,8 +90,7 @@ namespace Altinn.App.PlatformServices.Implementation
 
             object data = await _dataClient.GetFormData(instanceGuid, dataElementModelType, org, app, instanceOwnerId, new Guid(dataElement.Id));
 
-            //TODO: Figure out how to handle the current override without breaking
-            //layoutSettings = await FormatPdf(layoutSettings, data);
+            layoutSettings = await _customPdfHandler.FormatPdf(layoutSettings, data);
             XmlSerializer serializer = new XmlSerializer(dataElementModelType);
             using MemoryStream stream = new MemoryStream();
 
@@ -204,18 +210,8 @@ namespace Altinn.App.PlatformServices.Implementation
         private async Task<Dictionary<string, Dictionary<string, string>>> GetOptionsDictionary(string formLayout, string language, object data)
         {
             IEnumerable<JToken> componentsWithMappingDefined = GetFormComponentsWithMappingDefined(formLayout);
-
             Dictionary<string, object> componentMappingDefinitions = GetComponentMappingDefinitions(componentsWithMappingDefined);
-
             Dictionary<string, Dictionary<string, string>> componentKeyValuePairs = GetComponentKeyValuePairs(componentMappingDefinitions, data);
-
-            // Get the corresponding datavalues based on databinding eg. Innrapportoer.geek.epost or someField.someArray[0].someProp
-            // Alternatives:
-            // JObject/JsonPath (needs the data as Json, easy to use the path)
-            // dynamic/manual resolving (doable, but more work)
-            // Xml/XPath (needs metadata but allready have the data as xml)
-
-            // Build the option calls passing the required key/value pairs
 
             Dictionary<string, Dictionary<string, string>> dictionary = new Dictionary<string, Dictionary<string, string>>();
             List<string> optionsIdsList = GetOptionIdsFromFormLayout(formLayout);
@@ -224,12 +220,6 @@ namespace Altinn.App.PlatformServices.Implementation
             {
                 var hasMappings = componentKeyValuePairs.TryGetValue(optionsId, out Dictionary<string, string> optionsKeyValuePairs);
                 AppOptions appOptions = await _resourceService.GetOptionsAsync(optionsId, language, hasMappings ? optionsKeyValuePairs : new Dictionary<string, string>());
-
-#pragma warning disable CS0618 // Type or member is obsolete
-
-                // TODO: Figure out how to call this
-                // appOptions = await GetOptions(optionsId, appOptions);
-#pragma warning restore CS0618 // Type or member is obsolete
 
                 if (appOptions.Options != null && !dictionary.ContainsKey(optionsId))
                 {

@@ -6,6 +6,7 @@ using Altinn.App.AppLogic.Validation;
 using Altinn.App.Common.Enums;
 using Altinn.App.Common.Models;
 using Altinn.App.PlatformServices.Helpers;
+using Altinn.App.PlatformServices.Implementation;
 using Altinn.App.PlatformServices.Interface;
 using Altinn.App.PlatformServices.Models;
 using Altinn.App.Services.Configuration;
@@ -68,7 +69,8 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DataFieldsApp
                 settings,
                 profileService,
                 textService,
-                httpContextAccessor)
+                httpContextAccessor,
+                new NullPdfHandler())
         {
             _logger = logger;
             _instanceService = instanceService;
@@ -180,17 +182,6 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DataFieldsApp
             await _instanceService.UpdateDataValues(instanceIdentifier.InstanceOwnerPartyId, instanceIdentifier.InstanceGuid, customDataValues);
 
             await Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// Hook to run logic to hide pages or components when generatring PDF
-        /// </summary>
-        /// <param name="layoutSettings">The layoutsettings. Can be null and need to be created in method</param>
-        /// <param name="data">The data that there is generated PDF from</param>
-        /// <returns>Layoutsetting with possible hidden fields or pages</returns>
-        public override async Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data)
-        {
-            return await PdfHandler.FormatPdf(layoutSettings, data);
         }
     }
 }

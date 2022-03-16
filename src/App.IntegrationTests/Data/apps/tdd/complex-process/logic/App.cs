@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 using Altinn.App.Common.Enums;
 using Altinn.App.Common.Models;
+using Altinn.App.PlatformServices.Implementation;
 using Altinn.App.PlatformServices.Interface;
 using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
@@ -43,7 +44,20 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.complex_process
             IHttpContextAccessor accessor,
             IOptions<GeneralSettings> settings,
             IText textService,
-            IHttpContextAccessor httpContextAccessor) : base(appResourcesService, logger, dataService, processService, pdfService, prefillService, instanceService, registerService, settings, profileService, textService, httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor) : base(
+                appResourcesService, 
+                logger, 
+                dataService, 
+                processService, 
+                pdfService, 
+                prefillService, 
+                instanceService, 
+                registerService, 
+                settings, 
+                profileService, 
+                textService, 
+                httpContextAccessor, 
+                new NullPdfHandler())
         {
             _logger = logger;
             _validationHandler = new ValidationHandler(instanceService);
@@ -124,11 +138,6 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.complex_process
         public override Task RunProcessTaskEnd(string taskId, Instance instance)
         {
             return Task.CompletedTask;
-        }
-
-        public override async Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data)
-        {
-            return await Task.FromResult(layoutSettings);
         }
     }
 }

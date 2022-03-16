@@ -5,6 +5,7 @@ using Altinn.App.AppLogic.Print;
 using Altinn.App.AppLogic.Validation;
 using Altinn.App.Common.Enums;
 using Altinn.App.Common.Models;
+using Altinn.App.PlatformServices.Implementation;
 using Altinn.App.PlatformServices.Interface;
 using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
@@ -32,7 +33,6 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidlingInvalid
         private readonly ILogger<App> _logger;
         private readonly ValidationHandler _validationHandler;
         private readonly InstantiationHandler _instantiationHandler;
-        private readonly PdfHandler _pdfHandler;
 
         /// <summary>
         /// Initialize a new instance of the <see cref="App"/> class.
@@ -83,6 +83,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidlingInvalid
                 profileService,
                 textService,
                 httpContextAccessor,
+                new NullPdfHandler(),
                 efor,
                 appsettings,
                 platformSettings,
@@ -91,7 +92,6 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidlingInvalid
             _logger = logger;
             _validationHandler = new ValidationHandler(httpContextAccessor);
             _instantiationHandler = new InstantiationHandler(profileService, registerService);
-            _pdfHandler = new PdfHandler();
         }
 
         /// <inheritdoc />
@@ -185,17 +185,6 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidlingInvalid
         public override async Task RunProcessTaskEnd(string taskId, Instance instance)
         {
             await Task.CompletedTask;
-        }
-
-        /// <summary>
-        /// Hook to run logic to hide pages or components when generatring PDF
-        /// </summary>
-        /// <param name="layoutSettings">The layoutsettings. Can be null and need to be created in method</param>
-        /// <param name="data">The data that there is generated PDF from</param>
-        /// <returns>Layoutsetting with possible hidden fields or pages</returns>
-        public override async Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data)
-        {
-            return await _pdfHandler.FormatPdf(layoutSettings, data);
         }
     }
 }

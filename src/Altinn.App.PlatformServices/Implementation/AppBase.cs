@@ -38,6 +38,7 @@ namespace Altinn.App.Services.Implementation
         private readonly IEFormidlingClient _eFormidlingClient;        
         private readonly UserHelper _userHelper;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly ICustomPdfHandler _customPdfHandler;
         private readonly AppSettings _appSettings;
         private readonly IData _dataClient;
         private readonly IPdfService _pdfService;
@@ -60,10 +61,11 @@ namespace Altinn.App.Services.Implementation
         /// <param name="prefillService">The service giving access to prefill mechanisms.</param>
         /// <param name="instanceClient">The instance client</param>
         /// <param name="registerClient">The register client</param>
-        /// <param name="settings">the general settings</param>
-        /// <param name="profileClient">the profile client</param>
+        /// <param name="settings">The general settings</param>
+        /// <param name="profileClient">The profile client</param>
         /// <param name="textClient">The text client</param>
-        /// <param name="httpContextAccessor">the httpContextAccessor</param>
+        /// <param name="httpContextAccessor">The httpContextAccessor</param>
+        /// <param name="customPdfHandler">Use to customize pdf formatting/layout</param>
         /// <param name="eFormidlingClient">The eFormidling client</param>
         /// <param name="appSettings">The appsettings</param>
         /// <param name="platformSettings">The platform settings</param>
@@ -81,6 +83,7 @@ namespace Altinn.App.Services.Implementation
             IProfile profileClient,
             IText textClient,
             IHttpContextAccessor httpContextAccessor,
+            ICustomPdfHandler customPdfHandler,
             IEFormidlingClient eFormidlingClient = null,
             IOptions<AppSettings> appSettings = null,
             IOptions<PlatformSettings> platformSettings = null,
@@ -99,6 +102,7 @@ namespace Altinn.App.Services.Implementation
             _profileClient = profileClient;
             _textClient = textClient;
             _httpContextAccessor = httpContextAccessor;
+            _customPdfHandler = customPdfHandler;
             _appSettings = appSettings?.Value;
             _eFormidlingClient = eFormidlingClient;
             _tokenGenerator = tokenGenerator;
@@ -159,11 +163,6 @@ namespace Altinn.App.Services.Implementation
 
         /// <inheritdoc />
         public abstract Task RunProcessTaskEnd(string taskId, Instance instance);
-
-        /// <inheritdoc />
-        //TODO: Insert correct link to doc
-        [Obsolete("FormatPdf method is obsolete and will be removed in the future.", false, UrlFormat = "https://docs.altinn.studio/app/development/")]
-        public abstract Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data);
 
         /// <inheritdoc />
         public Task<string> OnInstantiateGetStartEvent()
