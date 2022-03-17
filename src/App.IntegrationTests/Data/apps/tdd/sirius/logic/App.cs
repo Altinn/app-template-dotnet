@@ -57,9 +57,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.sirius
                 pdfService, 
                 prefillService, 
                 instanceService, 
-                registerService, 
                 settings, 
-                profileService, 
                 textService, 
                 httpContextAccessor)
         {

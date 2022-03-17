@@ -71,9 +71,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.Issue5740
                 pdfService,
                 prefillService,
                 instanceService,
-                registerService,
                 settings,
-                profileService,
                 textService,
                 httpContextAccessor)
         {

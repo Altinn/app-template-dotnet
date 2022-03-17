@@ -46,9 +46,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
                 pdfService, 
                 prefillService, 
                 instanceService, 
-                registerService, 
                 settings, 
-                profileService, 
                 textService, 
                 httpContextAccessor)
         {

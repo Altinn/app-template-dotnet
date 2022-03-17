@@ -45,9 +45,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.contributer_restriction
                 pdfService, 
                 prefillService, 
                 instanceService, 
-                registerService, 
                 settings, 
-                profileService, 
                 textService, 
                 httpContextAccessor)
         {

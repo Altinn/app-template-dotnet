@@ -45,8 +45,6 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
             IData dataService,
             IProcess processService,
             IPdfService pdfService,
-            IProfile profileService,
-            IRegister registerService,
             IPrefill prefillService,
             IInstance instanceService,
             IOptions<GeneralSettings> settings,
@@ -59,9 +57,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
                 pdfService,
                 prefillService,
                 instanceService,
-                registerService,
                 settings,
-                profileService,
                 textService,
                 httpContextAccessor)
         {

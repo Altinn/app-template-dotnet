@@ -67,9 +67,7 @@ namespace App.IntegrationTests.Mocks.Apps.nsm.klareringsportalen.AppLogic
                 pdfService,
                 prefillService,
                 instanceService,
-                registerService,
                 settings,
-                profileService,
                 textService,
                 httpContextAccessor)
         {

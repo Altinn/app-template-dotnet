@@ -61,9 +61,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.Dayplanner
                 pdfService,
                 prefillService,
                 instanceService,
-                registerService,
                 settings,
-                profileService,
                 textService,
                 httpContextAccessor)
         {

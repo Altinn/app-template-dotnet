@@ -40,9 +40,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.platform_fails
                 pdfService, 
                 prefillService, 
                 instanceService, 
-                registerService, 
                 settings, 
-                profileService, 
                 textService, 
                 httpContextAccessor)
         {

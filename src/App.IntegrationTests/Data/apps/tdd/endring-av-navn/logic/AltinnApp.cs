@@ -41,9 +41,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.endring_av_navn
                 pdfService, 
                 prefillService, 
                 instanceService, 
-                registerService, 
                 settings, 
-                profileService, 
                 textService, 
                 httpContextAccessor)
         {

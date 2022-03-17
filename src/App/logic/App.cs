@@ -44,7 +44,6 @@ namespace Altinn.App.AppLogic
         /// <param name="settings">General settings</param>
         /// <param name="textService">A service with access to text</param>
         /// <param name="httpContextAccessor">A context accessor</param>
-        /// <param name="customPdfHandler">Class for dynamically customize the pdf formatting.</param>
         public App(
             IAppResources appResourcesService,
             ILogger<App> logger,
@@ -65,9 +64,7 @@ namespace Altinn.App.AppLogic
                 pdfService,
                 prefillService,
                 instanceService,
-                registerService,
                 settings,
-                profileService,
                 textService,
                 httpContextAccessor)
         {

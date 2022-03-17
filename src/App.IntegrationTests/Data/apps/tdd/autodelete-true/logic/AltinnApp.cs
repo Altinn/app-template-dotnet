@@ -40,9 +40,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.autodelete_true
                 pdfService, 
                 prefillService, 
                 instanceService, 
-                registerService, 
                 settings, 
-                profileService, 
                 textService, 
                 httpContextAccessor)
         {

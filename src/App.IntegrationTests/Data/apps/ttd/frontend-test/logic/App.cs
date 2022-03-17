@@ -49,9 +49,7 @@ namespace App.IntegrationTests.Mocks.Apps.Tdd.Frontendtest
             pdfService,
             prefillService,
             instanceService,
-            registerService,
             settings,
-            profileService,
             textService,
             httpContextAccessor)
             {

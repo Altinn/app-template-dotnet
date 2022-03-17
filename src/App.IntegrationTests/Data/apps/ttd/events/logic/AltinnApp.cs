@@ -45,9 +45,7 @@ namespace App.IntegrationTests.Mocks.Apps.ttd.events
                 pdfService, 
                 prefillService, 
                 instanceService, 
-                registerService, 
                 settings, 
-                profileService, 
                 textService, 
                 httpContextAccessor)
         {

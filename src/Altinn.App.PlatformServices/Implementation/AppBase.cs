@@ -36,16 +36,12 @@ namespace Altinn.App.Services.Implementation
         private readonly IProcess _processService;
         private readonly ILogger<AppBase> _logger;
         private readonly IEFormidlingClient _eFormidlingClient;        
-        private readonly UserHelper _userHelper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly ICustomPdfHandler _customPdfHandler;
         private readonly AppSettings _appSettings;
         private readonly IData _dataClient;
         private readonly IPdfService _pdfService;
         private readonly IPrefill _prefillService;
         private readonly IInstance _instanceClient;
-        private readonly IRegister _registerClient;
-        private readonly IProfile _profileClient;
         private readonly IText _textClient;
         private readonly IAccessTokenGenerator _tokenGenerator;
         private readonly PlatformSettings _platformSettings;
@@ -60,12 +56,9 @@ namespace Altinn.App.Services.Implementation
         /// <param name="pdfService">The pdf service responsible for creating the pdf.</param>
         /// <param name="prefillService">The service giving access to prefill mechanisms.</param>
         /// <param name="instanceClient">The instance client</param>
-        /// <param name="registerClient">The register client</param>
         /// <param name="settings">The general settings</param>
-        /// <param name="profileClient">The profile client</param>
         /// <param name="textClient">The text client</param>
         /// <param name="httpContextAccessor">The httpContextAccessor</param>
-        /// <param name="customPdfHandler">Use to customize pdf formatting/layout</param>
         /// <param name="eFormidlingClient">The eFormidling client</param>
         /// <param name="appSettings">The appsettings</param>
         /// <param name="platformSettings">The platform settings</param>
@@ -78,9 +71,7 @@ namespace Altinn.App.Services.Implementation
             IPdfService pdfService,
             IPrefill prefillService,
             IInstance instanceClient,
-            IRegister registerClient,
             IOptions<GeneralSettings> settings,
-            IProfile profileClient,
             IText textClient,
             IHttpContextAccessor httpContextAccessor,
             IEFormidlingClient eFormidlingClient = null,
@@ -96,9 +87,6 @@ namespace Altinn.App.Services.Implementation
             _pdfService = pdfService;
             _prefillService = prefillService;
             _instanceClient = instanceClient;
-            _registerClient = registerClient;
-            _userHelper = new UserHelper(profileClient, registerClient, settings);
-            _profileClient = profileClient;
             _textClient = textClient;
             _httpContextAccessor = httpContextAccessor;
             _appSettings = appSettings?.Value;

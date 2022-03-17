@@ -52,9 +52,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.complex_process
                 pdfService, 
                 prefillService, 
                 instanceService, 
-                registerService, 
                 settings, 
-                profileService, 
                 textService, 
                 httpContextAccessor)
         {

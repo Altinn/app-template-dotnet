@@ -45,9 +45,7 @@ namespace App.IntegrationTests.Mocks.Apps.dibk.nabovarsel
                 pdfService, 
                 prefillService, 
                 instanceService, 
-                registerService, 
                 settings, 
-                profileService, 
                 textService, 
                 httpContextAccessor)
         {

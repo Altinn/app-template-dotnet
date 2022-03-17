@@ -65,9 +65,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.Externalprefil
                 pdfService,
                 prefillService,
                 instanceService,
-                registerService,
                 settings,
-                profileService,
                 textService,
                 httpContextAccessor)
         {
