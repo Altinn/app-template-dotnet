@@ -184,15 +184,15 @@ namespace Altinn.App.PlatformServices.Implementation
                 pdfStream);
         }
 
-        private string GetValidFileName(string fileName)
+        private static string GetValidFileName(string fileName)
         {
             fileName = Uri.EscapeDataString(fileName.AsFileName(false));
             return fileName;
         }
 
-        private List<string> GetOptionIdsFromFormLayout(string formLayout)
+        private static List<string> GetOptionIdsFromFormLayout(string formLayout)
         {
-            List<string> optionsIds = new List<string>();
+            var optionsIds = new List<string>();
             string matchString = "\"optionsId\":\"";
 
             string[] formLayoutSubstrings = formLayout.Replace(" ", string.Empty).Split(new string[] { matchString }, StringSplitOptions.None);
