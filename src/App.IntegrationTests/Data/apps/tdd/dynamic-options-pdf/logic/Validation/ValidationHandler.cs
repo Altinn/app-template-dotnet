@@ -12,7 +12,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Validation
     /// </summary>
     public class ValidationHandler
     {
-        private IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         /// <summary>
         /// Initialize a new instance of the <see cref="ValidationHandler"/> class with access to the Http Context.
@@ -45,7 +45,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Validation
         ///     }
         /// }
         /// </example>
-        public async Task ValidateData(object data, ModelStateDictionary validationResults)
+        public static async Task ValidateData(object data, ModelStateDictionary validationResults)
         {
             await Task.CompletedTask;
         }
@@ -70,7 +70,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Validation
         ///     }
         ///   }
         /// </example>
-        public async Task ValidateTask(Instance instance, string taskId, ModelStateDictionary validationResults)
+        public static async Task ValidateTask(Instance instance, string taskId, ModelStateDictionary validationResults)
         {
             await Task.CompletedTask;
         }
