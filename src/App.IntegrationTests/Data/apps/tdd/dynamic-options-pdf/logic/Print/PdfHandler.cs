@@ -8,6 +8,10 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Print
     /// </summary>
     public class PdfHandler
     {
+        protected PdfHandler()
+        {
+        }
+
         /// <summary>
         /// Method to format PDF dynamic
         /// </summary>
@@ -20,7 +24,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Print
         /// </example>
         /// <param name="layoutSettings">the layoutsettings</param>
         /// <param name="data">data object</param>
-        public async Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data)
+        public static async Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data)
         {
             return await Task.FromResult(layoutSettings);
         }

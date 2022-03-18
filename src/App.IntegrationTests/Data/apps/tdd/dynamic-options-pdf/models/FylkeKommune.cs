@@ -21,6 +21,5 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Models
     [JsonProperty("Land")]
     [JsonPropertyName("Land")]
     public string Land { get; set; }
-
   }
 }

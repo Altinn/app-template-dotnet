@@ -11,6 +11,10 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.DataProcessing
     /// </summary>
     public class DataProcessingHandler
     {
+        protected DataProcessingHandler()
+        {
+        }
+
         /// <summary>
         /// Perform data processing on data read. When reading data from App API
         /// </summary>
@@ -24,7 +28,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.DataProcessing
         /// <param name="instance">The instance that data belongs to</param>
         /// <param name="dataId">The dataId for data if available</param>
         /// <param name="data">The data as object</param>
-        public async Task<bool> ProcessDataRead(Instance instance, Guid? dataId, object data)
+        public static async Task<bool> ProcessDataRead(Instance instance, Guid? dataId, object data)
         {
             return await Task.FromResult(false);
         }
@@ -42,7 +46,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.DataProcessing
         /// <param name="instance">The instance that data belongs to</param>
         /// <param name="dataId">The dataId for data if available</param>
         /// <param name="data">The data as object</param>
-        public async Task<bool> ProcessDataWrite(Instance instance, Guid? dataId, object data)
+        public static async Task<bool> ProcessDataWrite(Instance instance, Guid? dataId, object data)
         {
             return await Task.FromResult(false);
         }

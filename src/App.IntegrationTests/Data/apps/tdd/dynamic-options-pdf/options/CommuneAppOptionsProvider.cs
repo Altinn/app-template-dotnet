@@ -23,7 +23,6 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Options
             var appOptions = new AppOptions();
             if (!fylkesNummerProvided || fylkesNummer == "undefined")
             {
-                //appOptions.Options = await _appOptionsFileHandler.ReadOptionsFromFileAsync("kommuner");
                 appOptions.Options = new List<AppOption>();
                 
                 return appOptions;

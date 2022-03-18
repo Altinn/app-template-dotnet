@@ -160,7 +160,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf
         /// <returns>Task with validation results</returns>
         public override async Task<InstantiationValidationResult> RunInstantiationValidation(Instance instance)
         {
-            return await _instantiationHandler.RunInstantiationValidation(instance);
+            return await InstantiationHandler.RunInstantiationValidation(instance);
         }
 
         /// <summary>
@@ -171,32 +171,16 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf
         /// <param name="prefill">External prefill available under instansiation</param>
         public override async Task RunDataCreation(Instance instance, object data, Dictionary<string, string> prefill)
         {
-           await _instantiationHandler.DataCreation(instance, data, prefill);
+           await InstantiationHandler.DataCreation(instance, data, prefill);
         }
 
         /// <inheritdoc />
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override Task<AppOptions> GetOptions(string id, AppOptions options)
+#pragma warning restore CS0672 // Member overrides obsolete member
         {
             if (id.ToLowerInvariant() == "land")
             {
-                //var dynamicOptions = new AppOptions
-                //{
-                //    Options = new List<AppOption>
-                //    {
-                //        new AppOption
-                //        {
-                //            Label = "Norge",
-                //            Value = "47"
-                //        },
-                //        new AppOption
-                //        {
-                //            Label = "Sverige",
-                //            Value = "46"
-                //        }
-                //    }
-                //};
-
-                //return Task.FromResult(dynamicOptions);
                 return Task.FromResult(options);
             }
             else
