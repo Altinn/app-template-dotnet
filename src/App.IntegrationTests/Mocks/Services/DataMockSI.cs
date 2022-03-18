@@ -250,6 +250,7 @@ namespace App.IntegrationTests.Mocks.Services
 
             using (Stream streamToWriteTo = File.Open(dataPath + @"blob\" + dataGuid.ToString(), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
             {
+                stream.Seek(0, SeekOrigin.Begin);
                 await stream.CopyToAsync(streamToWriteTo);
                 streamToWriteTo.Flush();
                 filesize = streamToWriteTo.Length;

@@ -1,0 +1,210 @@
+{
+  "fylkesnavn": "Viken",
+  "fylkesnummer": "30",
+  "kommuner": [
+    {
+      "kommunenavn": "Aremark",
+      "kommunenummer": "3012"
+    },
+    {
+      "kommunenavn": "Asker",
+      "kommunenummer": "3025"
+    },
+    {
+      "kommunenavn": "Aurskog-Høland",
+      "kommunenummer": "3026"
+    },
+    {
+      "kommunenavn": "Bærum",
+      "kommunenummer": "3024"
+    },
+    {
+      "kommunenavn": "Drammen",
+      "kommunenummer": "3005"
+    },
+    {
+      "kommunenavn": "Eidsvoll",
+      "kommunenummer": "3035"
+    },
+    {
+      "kommunenavn": "Enebakk",
+      "kommunenummer": "3028"
+    },
+    {
+      "kommunenavn": "Flesberg",
+      "kommunenummer": "3050"
+    },
+    {
+      "kommunenavn": "Flå",
+      "kommunenummer": "3039"
+    },
+    {
+      "kommunenavn": "Fredrikstad",
+      "kommunenummer": "3004"
+    },
+    {
+      "kommunenavn": "Frogn",
+      "kommunenummer": "3022"
+    },
+    {
+      "kommunenavn": "Gjerdrum",
+      "kommunenummer": "3032"
+    },
+    {
+      "kommunenavn": "Gol",
+      "kommunenummer": "3041"
+    },
+    {
+      "kommunenavn": "Halden",
+      "kommunenummer": "3001"
+    },
+    {
+      "kommunenavn": "Hemsedal",
+      "kommunenummer": "3042"
+    },
+    {
+      "kommunenavn": "Hol",
+      "kommunenummer": "3044"
+    },
+    {
+      "kommunenavn": "Hole",
+      "kommunenummer": "3038"
+    },
+    {
+      "kommunenavn": "Hurdal",
+      "kommunenummer": "3037"
+    },
+    {
+      "kommunenavn": "Hvaler",
+      "kommunenummer": "3011"
+    },
+    {
+      "kommunenavn": "Indre Østfold",
+      "kommunenummer": "3014"
+    },
+    {
+      "kommunenavn": "Jevnaker",
+      "kommunenummer": "3053"
+    },
+    {
+      "kommunenavn": "Kongsberg",
+      "kommunenummer": "3006"
+    },
+    {
+      "kommunenavn": "Krødsherad",
+      "kommunenummer": "3046"
+    },
+    {
+      "kommunenavn": "Lier",
+      "kommunenummer": "3049"
+    },
+    {
+      "kommunenavn": "Lillestrøm",
+      "kommunenummer": "3030"
+    },
+    {
+      "kommunenavn": "Lunner",
+      "kommunenummer": "3054"
+    },
+    {
+      "kommunenavn": "Lørenskog",
+      "kommunenummer": "3029"
+    },
+    {
+      "kommunenavn": "Marker",
+      "kommunenummer": "3013"
+    },
+    {
+      "kommunenavn": "Modum",
+      "kommunenummer": "3047"
+    },
+    {
+      "kommunenavn": "Moss",
+      "kommunenummer": "3002"
+    },
+    {
+      "kommunenavn": "Nannestad",
+      "kommunenummer": "3036"
+    },
+    {
+      "kommunenavn": "Nes",
+      "kommunenummer": "3034"
+    },
+    {
+      "kommunenavn": "Nesbyen",
+      "kommunenummer": "3040"
+    },
+    {
+      "kommunenavn": "Nesodden",
+      "kommunenummer": "3023"
+    },
+    {
+      "kommunenavn": "Nittedal",
+      "kommunenummer": "3031"
+    },
+    {
+      "kommunenavn": "Nordre Follo",
+      "kommunenummer": "3020"
+    },
+    {
+      "kommunenavn": "Nore og Uvdal",
+      "kommunenummer": "3052"
+    },
+    {
+      "kommunenavn": "Rakkestad",
+      "kommunenummer": "3016"
+    },
+    {
+      "kommunenavn": "Ringerike",
+      "kommunenummer": "3007"
+    },
+    {
+      "kommunenavn": "Rollag",
+      "kommunenummer": "3051"
+    },
+    {
+      "kommunenavn": "Rælingen",
+      "kommunenummer": "3027"
+    },
+    {
+      "kommunenavn": "Råde",
+      "kommunenummer": "3017"
+    },
+    {
+      "kommunenavn": "Sarpsborg",
+      "kommunenummer": "3003"
+    },
+    {
+      "kommunenavn": "Sigdal",
+      "kommunenummer": "3045"
+    },
+    {
+      "kommunenavn": "Skiptvet",
+      "kommunenummer": "3015"
+    },
+    {
+      "kommunenavn": "Ullensaker",
+      "kommunenummer": "3033"
+    },
+    {
+      "kommunenavn": "Vestby",
+      "kommunenummer": "3019"
+    },
+    {
+      "kommunenavn": "Våler",
+      "kommunenummer": "3018"
+    },
+    {
+      "kommunenavn": "Øvre Eiker",
+      "kommunenummer": "3048"
+    },
+    {
+      "kommunenavn": "Ål",
+      "kommunenummer": "3043"
+    },
+    {
+      "kommunenavn": "Ås",
+      "kommunenummer": "3021"
+    }
+  ]
+}

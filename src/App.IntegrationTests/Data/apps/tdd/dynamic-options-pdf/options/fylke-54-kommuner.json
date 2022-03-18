@@ -1,0 +1,162 @@
+{
+  "fylkesnavn": "Troms og Finnmark",
+  "fylkesnummer": "54",
+  "kommuner": [
+    {
+      "kommunenavn": "Alta",
+      "kommunenummer": "5403"
+    },
+    {
+      "kommunenavn": "Balsfjord",
+      "kommunenummer": "5422"
+    },
+    {
+      "kommunenavn": "Bardu",
+      "kommunenummer": "5416"
+    },
+    {
+      "kommunenavn": "Berlevåg",
+      "kommunenummer": "5440"
+    },
+    {
+      "kommunenavn": "Båtsfjord",
+      "kommunenummer": "5443"
+    },
+    {
+      "kommunenavn": "Deatnu",
+      "kommunenummer": "5441"
+    },
+    {
+      "kommunenavn": "Dielddanuorri",
+      "kommunenummer": "5412"
+    },
+    {
+      "kommunenavn": "Dyrøy",
+      "kommunenummer": "5420"
+    },
+    {
+      "kommunenavn": "Gáivuotna",
+      "kommunenummer": "5426"
+    },
+    {
+      "kommunenavn": "Gamvik",
+      "kommunenummer": "5439"
+    },
+    {
+      "kommunenavn": "Gratangen",
+      "kommunenummer": "5414"
+    },
+    {
+      "kommunenavn": "Guovdageaidnu",
+      "kommunenummer": "5430"
+    },
+    {
+      "kommunenavn": "Hammerfest",
+      "kommunenummer": "5406"
+    },
+    {
+      "kommunenavn": "Harstad",
+      "kommunenummer": "5402"
+    },
+    {
+      "kommunenavn": "Hasvik",
+      "kommunenummer": "5433"
+    },
+    {
+      "kommunenavn": "Ibestad",
+      "kommunenummer": "5413"
+    },
+    {
+      "kommunenavn": "Kárášjohka",
+      "kommunenummer": "5437"
+    },
+    {
+      "kommunenavn": "Karlsøy",
+      "kommunenummer": "5423"
+    },
+    {
+      "kommunenavn": "Kvæfjord",
+      "kommunenummer": "5411"
+    },
+    {
+      "kommunenavn": "Kvænangen",
+      "kommunenummer": "5429"
+    },
+    {
+      "kommunenavn": "Lebesby",
+      "kommunenummer": "5438"
+    },
+    {
+      "kommunenavn": "Loabák",
+      "kommunenummer": "5415"
+    },
+    {
+      "kommunenavn": "Loppa",
+      "kommunenummer": "5432"
+    },
+    {
+      "kommunenavn": "Lyngen",
+      "kommunenummer": "5424"
+    },
+    {
+      "kommunenavn": "Målselv",
+      "kommunenummer": "5418"
+    },
+    {
+      "kommunenavn": "Måsøy",
+      "kommunenummer": "5434"
+    },
+    {
+      "kommunenavn": "Nordkapp",
+      "kommunenummer": "5435"
+    },
+    {
+      "kommunenavn": "Nordreisa",
+      "kommunenummer": "5428"
+    },
+    {
+      "kommunenavn": "Porsanger",
+      "kommunenummer": "5436"
+    },
+    {
+      "kommunenavn": "Salangen",
+      "kommunenummer": "5417"
+    },
+    {
+      "kommunenavn": "Senja",
+      "kommunenummer": "5421"
+    },
+    {
+      "kommunenavn": "Skjervøy",
+      "kommunenummer": "5427"
+    },
+    {
+      "kommunenavn": "Storfjord",
+      "kommunenummer": "5425"
+    },
+    {
+      "kommunenavn": "Sør-Varanger",
+      "kommunenummer": "5444"
+    },
+    {
+      "kommunenavn": "Sørreisa",
+      "kommunenummer": "5419"
+    },
+    {
+      "kommunenavn": "Tromsø",
+      "kommunenummer": "5401"
+    },
+    {
+      "kommunenavn": "Unjárga",
+      "kommunenummer": "5442"
+    },
+    {
+      "kommunenavn": "Vadsø",
+      "kommunenummer": "5405"
+    },
+    {
+      "kommunenavn": "Vardø",
+      "kommunenummer": "5404"
+    }
+  ]
+}

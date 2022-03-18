@@ -1,0 +1,98 @@
+{
+  "fylkesnavn": "Vestfold og Telemark",
+  "fylkesnummer": "38",
+  "kommuner": [
+    {
+      "kommunenavn": "Bamble",
+      "kommunenummer": "3813"
+    },
+    {
+      "kommunenavn": "Drangedal",
+      "kommunenummer": "3815"
+    },
+    {
+      "kommunenavn": "Fyresdal",
+      "kommunenummer": "3823"
+    },
+    {
+      "kommunenavn": "Færder",
+      "kommunenummer": "3811"
+    },
+    {
+      "kommunenavn": "Hjartdal",
+      "kommunenummer": "3819"
+    },
+    {
+      "kommunenavn": "Holmestrand",
+      "kommunenummer": "3802"
+    },
+    {
+      "kommunenavn": "Horten",
+      "kommunenummer": "3801"
+    },
+    {
+      "kommunenavn": "Kragerø",
+      "kommunenummer": "3814"
+    },
+    {
+      "kommunenavn": "Kviteseid",
+      "kommunenummer": "3821"
+    },
+    {
+      "kommunenavn": "Larvik",
+      "kommunenummer": "3805"
+    },
+    {
+      "kommunenavn": "Midt-Telemark",
+      "kommunenummer": "3817"
+    },
+    {
+      "kommunenavn": "Nissedal",
+      "kommunenummer": "3822"
+    },
+    {
+      "kommunenavn": "Nome",
+      "kommunenummer": "3816"
+    },
+    {
+      "kommunenavn": "Notodden",
+      "kommunenummer": "3808"
+    },
+    {
+      "kommunenavn": "Porsgrunn",
+      "kommunenummer": "3806"
+    },
+    {
+      "kommunenavn": "Sandefjord",
+      "kommunenummer": "3804"
+    },
+    {
+      "kommunenavn": "Seljord",
+      "kommunenummer": "3820"
+    },
+    {
+      "kommunenavn": "Siljan",
+      "kommunenummer": "3812"
+    },
+    {
+      "kommunenavn": "Skien",
+      "kommunenummer": "3807"
+    },
+    {
+      "kommunenavn": "Tinn",
+      "kommunenummer": "3818"
+    },
+    {
+      "kommunenavn": "Tokke",
+      "kommunenummer": "3824"
+    },
+    {
+      "kommunenavn": "Tønsberg",
+      "kommunenummer": "3803"
+    },
+    {
+      "kommunenavn": "Vinje",
+      "kommunenummer": "3825"
+    }
+  ]
+}

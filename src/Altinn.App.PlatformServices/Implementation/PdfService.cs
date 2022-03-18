@@ -33,6 +33,7 @@ namespace Altinn.App.PlatformServices.Implementation
         private readonly IRegister _registerClient;
         private readonly ICustomPdfHandler _customPdfHandler;
         private readonly string pdfElementType = "ref-data-as-pdf";
+        private PDFContext _pdfContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PdfService"/> class.
@@ -53,6 +54,17 @@ namespace Altinn.App.PlatformServices.Implementation
             _profileClient = profileClient;
             _registerClient = registerClient;
             _customPdfHandler = customPdfHandler;
+        }
+
+        /// <summary>
+        /// Object containing all required data in order to produce the PDF.
+        /// This is only exposed to show the values used to generate the PDF.
+        /// The context is populated and exposed after the PDF is generated.
+        /// Primary use is to allow for value checking as part of tests.
+        /// </summary>
+        public PDFContext GetPdfContext() 
+        {
+            return _pdfContext;
         }
 
         /// <inheritdoc/>
@@ -151,6 +163,8 @@ namespace Altinn.App.PlatformServices.Implementation
                 Language = language
             };
 
+            _pdfContext = pdfContext;
+
             Stream pdfContent = await _pdfClient.GeneratePDF(pdfContext);
             await StorePDF(pdfContent, instance, textResource);
             pdfContent.Dispose();
@@ -246,7 +260,7 @@ namespace Altinn.App.PlatformServices.Implementation
 
             foreach (var mappingDef in componentMappingDefinitions)
             {
-                Dictionary<string, string> keyValuePairs = new Dictionary<string, string>();
+                var keyValuePairs = new Dictionary<string, string>();
 
                 dynamic mappings = mappingDef.Value;
                 foreach (var pair in mappings.Mappings)

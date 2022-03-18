@@ -1,0 +1,190 @@
+{
+  "fylkesnavn": "Innlandet",
+  "fylkesnummer": "34",
+  "kommuner": [
+    {
+      "kommunenavn": "Alvdal",
+      "kommunenummer": "3428"
+    },
+    {
+      "kommunenavn": "Dovre",
+      "kommunenummer": "3431"
+    },
+    {
+      "kommunenavn": "Eidskog",
+      "kommunenummer": "3416"
+    },
+    {
+      "kommunenavn": "Elverum",
+      "kommunenummer": "3420"
+    },
+    {
+      "kommunenavn": "Engerdal",
+      "kommunenummer": "3425"
+    },
+    {
+      "kommunenavn": "Etnedal",
+      "kommunenummer": "3450"
+    },
+    {
+      "kommunenavn": "Folldal",
+      "kommunenummer": "3429"
+    },
+    {
+      "kommunenavn": "Gausdal",
+      "kommunenummer": "3441"
+    },
+    {
+      "kommunenavn": "Gjøvik",
+      "kommunenummer": "3407"
+    },
+    {
+      "kommunenavn": "Gran",
+      "kommunenummer": "3446"
+    },
+    {
+      "kommunenavn": "Grue",
+      "kommunenummer": "3417"
+    },
+    {
+      "kommunenavn": "Hamar",
+      "kommunenummer": "3403"
+    },
+    {
+      "kommunenavn": "Kongsvinger",
+      "kommunenummer": "3401"
+    },
+    {
+      "kommunenavn": "Lesja",
+      "kommunenummer": "3432"
+    },
+    {
+      "kommunenavn": "Lillehammer",
+      "kommunenummer": "3405"
+    },
+    {
+      "kommunenavn": "Lom",
+      "kommunenummer": "3434"
+    },
+    {
+      "kommunenavn": "Løten",
+      "kommunenummer": "3412"
+    },
+    {
+      "kommunenavn": "Nord-Aurdal",
+      "kommunenummer": "3451"
+    },
+    {
+      "kommunenavn": "Nord-Fron",
+      "kommunenummer": "3436"
+    },
+    {
+      "kommunenavn": "Nord-Odal",
+      "kommunenummer": "3414"
+    },
+    {
+      "kommunenavn": "Nordre Land",
+      "kommunenummer": "3448"
+    },
+    {
+      "kommunenavn": "Os",
+      "kommunenummer": "3430"
+    },
+    {
+      "kommunenavn": "Rendalen",
+      "kommunenummer": "3424"
+    },
+    {
+      "kommunenavn": "Ringebu",
+      "kommunenummer": "3439"
+    },
+    {
+      "kommunenavn": "Ringsaker",
+      "kommunenummer": "3411"
+    },
+    {
+      "kommunenavn": "Sel",
+      "kommunenummer": "3437"
+    },
+    {
+      "kommunenavn": "Skjåk",
+      "kommunenummer": "3433"
+    },
+    {
+      "kommunenavn": "Stange",
+      "kommunenummer": "3413"
+    },
+    {
+      "kommunenavn": "Stor-Elvdal",
+      "kommunenummer": "3423"
+    },
+    {
+      "kommunenavn": "Søndre Land",
+      "kommunenummer": "3447"
+    },
+    {
+      "kommunenavn": "Sør-Aurdal",
+      "kommunenummer": "3449"
+    },
+    {
+      "kommunenavn": "Sør-Fron",
+      "kommunenummer": "3438"
+    },
+    {
+      "kommunenavn": "Sør-Odal",
+      "kommunenummer": "3415"
+    },
+    {
+      "kommunenavn": "Tolga",
+      "kommunenummer": "3426"
+    },
+    {
+      "kommunenavn": "Trysil",
+      "kommunenummer": "3421"
+    },
+    {
+      "kommunenavn": "Tynset",
+      "kommunenummer": "3427"
+    },
+    {
+      "kommunenavn": "Vang",
+      "kommunenummer": "3454"
+    },
+    {
+      "kommunenavn": "Vestre Slidre",
+      "kommunenummer": "3452"
+    },
+    {
+      "kommunenavn": "Vestre Toten",
+      "kommunenummer": "3443"
+    },
+    {
+      "kommunenavn": "Vågå",
+      "kommunenummer": "3435"
+    },
+    {
+      "kommunenavn": "Våler",
+      "kommunenummer": "3419"
+    },
+    {
+      "kommunenavn": "Østre Toten",
+      "kommunenummer": "3442"
+    },
+    {
+      "kommunenavn": "Øyer",
+      "kommunenummer": "3440"
+    },
+    {
+      "kommunenavn": "Øystre Slidre",
+      "kommunenummer": "3453"
+    },
+    {
+      "kommunenavn": "Åmot",
+      "kommunenummer": "3422"
+    },
+    {
+      "kommunenavn": "Åsnes",
+      "kommunenummer": "3418"
+    }
+  ]
+}

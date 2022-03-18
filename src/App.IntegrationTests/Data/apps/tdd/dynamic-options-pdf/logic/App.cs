@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
+using Altinn.App.AppLogic.DataProcessing;
+using Altinn.App.AppLogic.Print;
+using Altinn.App.AppLogic.Validation;
 using Altinn.App.Common.Enums;
 using Altinn.App.Common.Models;
-using Altinn.App.PlatformServices.Implementation;
 using Altinn.App.PlatformServices.Interface;
 using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
@@ -15,7 +18,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
+namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf
 {
     /// <summary>
     /// Represents the core logic of an App
@@ -23,6 +26,10 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
     public class App : AppBase, IAltinnApp
     {
         private readonly ILogger<App> _logger;
+        private readonly ValidationHandler _validationHandler;
+        private readonly InstantiationHandler _instantiationHandler;
+        private readonly PdfHandler _pdfHandler;
+        private readonly DataProcessingHandler _dataProcessingHandler;
 
         /// <summary>
         /// Initialize a new instance of the <see cref="App"/> class.
@@ -32,6 +39,8 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
         /// <param name="dataService">A service with access to data storage.</param>
         /// <param name="processService">A service with access to the process.</param>
         /// <param name="pdfService">A service with access to the PDF generator.</param>
+        /// <param name="profileService">A service with access to profile information.</param>
+        /// <param name="registerService">A service with access to register information.</param>
         /// <param name="prefillService">A service with access to prefill mechanisms.</param>
         /// <param name="instanceService">A service with access to instances</param>
         /// <param name="settings">General settings</param>
@@ -43,6 +52,8 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
             IData dataService,
             IProcess processService,
             IPdfService pdfService,
+            IProfile profileService,
+            IRegister registerService,
             IPrefill prefillService,
             IInstance instanceService,
             IOptions<GeneralSettings> settings,
@@ -60,23 +71,27 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
                 httpContextAccessor)
         {
             _logger = logger;
+            _validationHandler = new ValidationHandler(httpContextAccessor);
+            _dataProcessingHandler = new DataProcessingHandler();
+            _instantiationHandler = new InstantiationHandler(profileService, registerService);
+            _pdfHandler = new PdfHandler();
         }
 
         /// <inheritdoc />
-        public override object CreateNewAppModel(string dataType)
+        public override object CreateNewAppModel(string classRef)
         {
-            _logger.LogInformation($"CreateNewAppModel {dataType}");
+            _logger.LogInformation($"CreateNewAppModel {classRef}");
 
-            Type appType = Type.GetType(dataType);
+            Type appType = Type.GetType(classRef);
             return Activator.CreateInstance(appType);
         }
 
         /// <inheritdoc />
-        public override Type GetAppModelType(string dataType)
+        public override Type GetAppModelType(string classRef)
         {
-            _logger.LogInformation($"GetAppModelType {dataType}");
+            _logger.LogInformation($"GetAppModelType {classRef}");
 
-            return Type.GetType(dataType);
+            return Type.GetType(classRef);
         }
 
         /// <summary>
@@ -98,11 +113,22 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
         /// Is called to run custom calculation events defined by app developer when data is read from app
         /// </summary>
         /// <param name="instance">Instance that data belongs to</param>
-        /// <param name="dataId">Data id for the  data</param>
+        /// <param name="dataId">Data id for the data</param>
         /// <param name="data">The data to perform calculations on</param>
         public override async Task<bool> RunProcessDataRead(Instance instance, Guid? dataId, object data)
         {
-            return await CalculationHandler.Calculate(data);
+            return await _dataProcessingHandler.ProcessDataRead(instance, dataId, data);
+        }
+
+        /// <summary>
+        /// Is called to run custom calculation events defined by app developer when data is written to app.
+        /// </summary>
+        /// <param name="instance">Instance that data belongs to</param>
+        /// <param name="dataId">Data id for the  data</param>
+        /// <param name="data">The data to perform calculations on</param>
+        public override async Task<bool> RunProcessDataWrite(Instance instance, Guid? dataId, object data)
+        {
+            return await _dataProcessingHandler.ProcessDataWrite(instance, dataId, data);
         }
 
         /// <summary>
@@ -113,7 +139,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
         /// <returns>Value indicating if the form is valid or not</returns>
         public override async Task RunDataValidation(object data, ModelStateDictionary validationResults)
         {
-           await ValidationHandler.ValidateData(data, validationResults);
+           await _validationHandler.ValidateData(data, validationResults);
         }
 
         /// <summary>
@@ -125,16 +151,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
         /// <returns>A task supporting the async await pattern.</returns>
         public override async Task RunTaskValidation(Instance instance, string taskId, ModelStateDictionary validationResults)
         {
-            await ValidationHandler.ValidateTask(instance, taskId, validationResults);
-        }
-
-        /// <summary>
-        /// Is called to run custom calculation events defined by app developer.
-        /// </summary>
-        /// <param name="data">The data to perform calculations on</param>
-        public override async Task<bool> RunCalculation(object data)
-        {
-            return await CalculationHandler.Calculate(data);
+            await _validationHandler.ValidateTask(instance, taskId, validationResults);
         }
 
         /// <summary>
@@ -143,7 +160,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
         /// <returns>Task with validation results</returns>
         public override async Task<InstantiationValidationResult> RunInstantiationValidation(Instance instance)
         {
-            return await InstantiationHandler.RunInstantiationValidation(instance);
+            return await _instantiationHandler.RunInstantiationValidation(instance);
         }
 
         /// <summary>
@@ -151,17 +168,42 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.PresentationTextsApp
         /// </summary>
         /// <param name="instance">The data to perform data creation on</param>
         /// <param name="data">The data object being created</param>
-        public override async Task RunDataCreation(Instance instance, object data)
+        /// <param name="prefill">External prefill available under instansiation</param>
+        public override async Task RunDataCreation(Instance instance, object data, Dictionary<string, string> prefill)
         {
-           await InstantiationHandler.DataCreation(instance, data);
+           await _instantiationHandler.DataCreation(instance, data, prefill);
         }
 
         /// <inheritdoc />
-#pragma warning disable CS0672 // Member overrides obsolete member
         public override Task<AppOptions> GetOptions(string id, AppOptions options)
-#pragma warning restore CS0672 // Member overrides obsolete member
         {
-            return Task.FromResult(options);
+            if (id.ToLowerInvariant() == "land")
+            {
+                //var dynamicOptions = new AppOptions
+                //{
+                //    Options = new List<AppOption>
+                //    {
+                //        new AppOption
+                //        {
+                //            Label = "Norge",
+                //            Value = "47"
+                //        },
+                //        new AppOption
+                //        {
+                //            Label = "Sverige",
+                //            Value = "46"
+                //        }
+                //    }
+                //};
+
+                //return Task.FromResult(dynamicOptions);
+                return Task.FromResult(options);
+            }
+            else
+            {
+                // don't touch existing options
+                return Task.FromResult(options);
+            }
         }
 
         /// <summary>
