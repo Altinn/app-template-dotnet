@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Altinn.App.Services.Models;
 using Altinn.Platform.Storage.Interface.Models;
 
 namespace Altinn.App.PlatformServices.Interface
@@ -24,6 +25,6 @@ namespace Altinn.App.PlatformServices.Interface
         /// The context is populated and exposed after the PDF is generated.
         /// Primary use is to allow for value checking as part of tests.
         /// </summary>
-        PdfContext GetPdfContext();
+        PDFContext GetPdfContext();
     }
 }
