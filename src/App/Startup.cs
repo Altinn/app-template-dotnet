@@ -85,7 +85,7 @@ namespace Altinn.App
             services.AddPlatformServices(Configuration, _env);
 
             // Uncomment this line if you have implemented custom pdf formatting.
-            // services.AddTransient<ICustomPdfHandler, PdfHandler>()
+            // services.AddTransient<ICustomPdfHandler, PdfHandler>();
 
             // Altinn App implementation service (The concrete implementation of logic from Application repository)
             services.AddTransient<IAltinnApp, AppLogic.App>();

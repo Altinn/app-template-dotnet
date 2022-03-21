@@ -181,7 +181,7 @@ namespace App.IntegrationTests.Utils
             return null;
         }
 
-        private static string GetAppPath(string org, string app)
+        public static string GetAppPath(string org, string app)
         {
             string unitTestFolder = Path.GetDirectoryName(new Uri(typeof(InstanceMockSI).Assembly.Location).LocalPath);
             return Path.Combine(unitTestFolder, $"../../../Data/Apps/{org}/{app}/");
