@@ -56,17 +56,6 @@ namespace Altinn.App.PlatformServices.Implementation
             _customPdfHandler = customPdfHandler;
         }
 
-        /// <summary>
-        /// Object containing all required data in order to produce the PDF.
-        /// This is only exposed to show the values used to generate the PDF.
-        /// The context is populated and exposed after the PDF is generated.
-        /// Primary use is to allow for value checking as part of tests.
-        /// </summary>
-        public PDFContext GetPdfContext() 
-        {
-            return _pdfContext;
-        }
-
         /// <inheritdoc/>
         public async Task GenerateAndStoreReceiptPDF(Instance instance, string taskId, DataElement dataElement, Type dataElementModelType)
         {
