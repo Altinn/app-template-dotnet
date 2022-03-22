@@ -4,16 +4,30 @@
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>Altinn.App</AssemblyName>
     <RootNamespace>Altinn.App</RootNamespace>
+    <UseLocalAppTemplate>false</UseLocalAppTemplate>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Altinn.App.Api" Version="4.33.0">
-      <CopyToOutputDirectory>lib\$(TargetFramework)\*.xml</CopyToOutputDirectory>
-    </PackageReference>
-    <PackageReference Include="Altinn.App.Common" Version="4.33.0" />
-    <PackageReference Include="Altinn.App.PlatformServices" Version="4.33.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <!-- Platform dependencies from nuget -->
+  <ItemGroup Condition="'$(UseLocalAppTemplate)'!='true'">
+    <PackageReference Include="Altinn.App.Api" Version="4.25.0">
+      <CopyToOutputDirectory>lib\$(TargetFramework)\*.xml</CopyToOutputDirectory>
+    </PackageReference>
+    <PackageReference Include="Altinn.App.Common" Version="4.25.0" />
+    <PackageReference Include="Altinn.App.PlatformServices" Version="4.25.0" />
+  </ItemGroup>
+
+  <!-- Platform dependencies from relative import -->
+  <ItemGroup Condition="'$(UseLocalAppTemplate)'=='true'">
+    <ProjectReference Include="../../app-template-dotnet/src/Altinn.App.Api/Altinn.App.Api.csproj">
+      <CopyToOutputDirectory>lib\$(TargetFramework)\*.xml</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="../../app-template-dotnet/src/Altinn.App.Common/Altinn.App.Common.csproj" />
+    <ProjectReference Include="../../app-template-dotnet/src/Altinn.App.PlatformServices/Altinn.App.PlatformServices.csproj" />
   </ItemGroup>
 
   <ItemGroup>
