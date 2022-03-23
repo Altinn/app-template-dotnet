@@ -25,9 +25,6 @@ namespace App.IntegrationTestsRef.Implementation
         public async Task GenerateAndStorePdf_SingleOptionsMapping_ShouldPassCorrectOptionsData()
         {
             // Arrange
-            Instance instance = GetInstance();
-            DataElement dataElement = GetDataElement();
-
             string postedPdfContextJson = string.Empty;
             PdfService pdfService = BuildPdfService((HttpRequestMessage requestMessage, CancellationToken cancellationToken) =>
             {
@@ -35,7 +32,7 @@ namespace App.IntegrationTestsRef.Implementation
             });
 
             // Act
-            await pdfService.GenerateAndStoreReceiptPDF(instance, "Task_1", dataElement, typeof(IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Models.FylkeKommune));
+            await pdfService.GenerateAndStoreReceiptPDF(GetInstance(), "Task_1", GetDataElement(), typeof(IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Models.FylkeKommune));
 
             // Assert
             var pdfContext = JsonSerializer.Deserialize<PDFContext>(postedPdfContextJson, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
