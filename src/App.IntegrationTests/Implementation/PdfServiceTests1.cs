@@ -15,14 +15,14 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.Implementation
 {
-    public class PdfServiceTests2 : PdfServiceTestsBase
+    public class PdfServiceTests1 : PdfServiceTestsBase
     {
-        public PdfServiceTests2() : base("tdd", "dynamic-options-2")
+        public PdfServiceTests1() : base("tdd", "dynamic-options-pdf")
         {
         }
 
         [Fact]
-        public async Task GenerateAndStorePdf_MultipleMappingsWithSameOptionsId_ShouldPassCorrectOptionsData()
+        public async Task GenerateAndStorePdf_SingleOptionsMapping_ShouldPassCorrectOptionsData()
         {
             // Arrange
             Instance instance = GetInstance();
@@ -35,17 +35,15 @@ namespace App.IntegrationTestsRef.Implementation
             });
 
             // Act
-            await pdfService.GenerateAndStoreReceiptPDF(instance, "Task_1", dataElement, typeof(IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Models.Flyttemelding));
+            await pdfService.GenerateAndStoreReceiptPDF(instance, "Task_1", dataElement, typeof(IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Models.FylkeKommune));
 
             // Assert
             var pdfContext = JsonSerializer.Deserialize<PDFContext>(postedPdfContextJson, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
 
             pdfContext.OptionsDictionary["fylker"].Values.Should().Contain("46");
-            pdfContext.OptionsDictionary["kommuner"].Keys.Count.Should().Be(84);
+            pdfContext.OptionsDictionary["kommuner"].Keys.Count.Should().Be(43);
             pdfContext.OptionsDictionary["kommuner"].Values.Should().Contain("4640");
             pdfContext.OptionsDictionary["kommuner"].Keys.Should().Contain("Sogndal");
-            pdfContext.OptionsDictionary["kommuner"].Values.Should().Contain("1813");
-            pdfContext.OptionsDictionary["kommuner"].Keys.Should().Contain("Brønnøy");
         }
 
         private Instance GetInstance()
@@ -75,7 +73,7 @@ namespace App.IntegrationTestsRef.Implementation
             return new DataElement()
             {
                 Id = "9eac88a2-1060-4b86-aba6-3b39bcbad29f",
-                DataType = "Flyttemelding",
+                DataType = "FylkeKommune",
                 ContentType = "application/xml",
                 Size = 0,
                 Locked = true,
@@ -85,12 +83,13 @@ namespace App.IntegrationTestsRef.Implementation
             };
         }
 
-        internal override IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Models.Flyttemelding GetFormData()
+        internal override IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Models.FylkeKommune GetFormData()
         {
-            return new IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Models.Flyttemelding()
+            return new IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Models.FylkeKommune()
             {
-                FlytterFra = new IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Models.FylkeKommune() { Fylke = "18", Kommune = "1813" },
-                FlytterTil = new IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Models.FylkeKommune() { Fylke = "46", Kommune = "4640" }
+                Land = "47",
+                Fylke = "46",
+                Kommune = "4640"
             };
         }
 
@@ -98,7 +97,7 @@ namespace App.IntegrationTestsRef.Implementation
         {
             return new List<IAppOptionsProvider>()
                 {
-                    new IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Options.CommuneAppOptionsProvider(new AppOptionsFileHandler(appOptions)),
+                    new IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.Options.CommuneAppOptionsProvider(new AppOptionsFileHandler(appOptions)),
                     new DefaultAppOptionsProvider(new AppOptionsFileHandler(appOptions))
                 };
         }
