@@ -193,93 +193,53 @@ namespace Altinn.App.PlatformServices.Implementation
             return fileName;
         }
 
-        private static List<string> GetOptionIdsFromFormLayout(string formLayout)
-        {
-            var optionsIds = new List<string>();
-            string matchString = "\"optionsId\":\"";
-
-            string[] formLayoutSubstrings = formLayout.Replace(" ", string.Empty).Split(new string[] { matchString }, StringSplitOptions.None);
-
-            for (int i = 1; i < formLayoutSubstrings.Length; i++)
-            {
-                string[] workingSet = formLayoutSubstrings[i].Split('\"');
-                string optionsId = workingSet[0];
-                optionsIds.Add(optionsId);
-            }
-
-            return optionsIds;
-        }
-
         private async Task<Dictionary<string, Dictionary<string, string>>> GetOptionsDictionary(string formLayout, string language, object data)
         {
-            IEnumerable<JToken> componentsWithMappingDefined = GetFormComponentsWithMappingDefined(formLayout);
-            Dictionary<string, object> componentMappingDefinitions = GetComponentMappingDefinitions(componentsWithMappingDefined);
-            Dictionary<string, Dictionary<string, string>> componentKeyValuePairs = GetComponentKeyValuePairs(componentMappingDefinitions, data);
+            IEnumerable<JToken> componentsWithOptionsDefined = GetFormComponentsWithOptionsDefined(formLayout);
 
             Dictionary<string, Dictionary<string, string>> dictionary = new Dictionary<string, Dictionary<string, string>>();
-            List<string> optionsIdsList = GetOptionIdsFromFormLayout(formLayout);
 
-            foreach (string optionsId in optionsIdsList)
+            foreach (JToken component in componentsWithOptionsDefined)
             {
-                var hasMappings = componentKeyValuePairs.TryGetValue(optionsId, out Dictionary<string, string> optionsKeyValuePairs);
-                AppOptions appOptions = await _resourceService.GetOptionsAsync(optionsId, language, hasMappings ? optionsKeyValuePairs : new Dictionary<string, string>());
+                string optionsId = component.SelectToken("optionsId").Value<string>();
+                bool hasMappings = component.SelectToken("mapping") != null;
+                Dictionary<string, string> keyValuePairs = hasMappings ? GetComponentKeyValuePairs(component, data) : new Dictionary<string, string>();
+                AppOptions appOptions = await _resourceService.GetOptionsAsync(optionsId, language, keyValuePairs);
 
-                if (appOptions.Options != null && !dictionary.ContainsKey(optionsId))
+                if (!dictionary.ContainsKey(optionsId))
                 {
-                    Dictionary<string, string> options = new Dictionary<string, string>();
-                    foreach (AppOption item in appOptions.Options)
-                    {
-                        if (!options.ContainsKey(item.Label))
-                        {
-                            options.Add(item.Label, item.Value);
-                        }
-                    }
-
-                    dictionary.Add(optionsId, options);
+                    dictionary.Add(optionsId, new Dictionary<string, string>());
                 }
+
+                AppendOptionsToDictionary(dictionary[optionsId], appOptions.Options);
             }
 
             return dictionary;
         }
 
-        private static Dictionary<string, Dictionary<string, string>> GetComponentKeyValuePairs(Dictionary<string, object> componentMappingDefinitions, object data)
+        private static IEnumerable<JToken> GetFormComponentsWithOptionsDefined(string formLayout)
         {
+            JObject formLayoutObject = JObject.Parse(formLayout);
+
+            // @ = Current object, ?(expression) = Filter, the rest is just dot notation ref. https://goessner.net/articles/JsonPath/
+            return formLayoutObject.SelectTokens("FormLayout.data.layout[?(@.optionsId)]");
+        }
+
+        private static Dictionary<string, string> GetComponentKeyValuePairs(JToken component, object data)
+        {
+            var componentKeyValuePairs = new Dictionary<string, string>();
             JObject jsonData = JObject.FromObject(data);
-            var componentKeyValuePairs = new Dictionary<string, Dictionary<string, string>>();
 
-            foreach (var mappingDef in componentMappingDefinitions)
+            Dictionary<string, string> mappings = GetMappingsForComponent(component);
+            foreach (var map in mappings)
             {
-                var keyValuePairs = new Dictionary<string, string>();
-
-                dynamic mappings = mappingDef.Value;
-                foreach (var pair in mappings.Mappings)
-                {
-                    JToken selectedData = jsonData.SelectToken(pair.Key);
-                    keyValuePairs.Add(pair.Value, selectedData.ToString());
-                }
-
-                componentKeyValuePairs.Add(mappings.OptionsId, keyValuePairs);
+                JToken selectedData = jsonData.SelectToken(map.Key);
+                componentKeyValuePairs.Add(map.Value, selectedData.ToString());
             }
 
             return componentKeyValuePairs;
         }
-
-        private static Dictionary<string, object> GetComponentMappingDefinitions(IEnumerable<JToken> components)
-        {
-            var componentMappings = new Dictionary<string, object>();
-            foreach (JToken component in components)
-            {
-                string componentId = component.SelectToken("id").ToString();
-                string optionsId = component.SelectToken("optionsId").ToString();
-
-                Dictionary<string, string> mappings = GetMappingsForComponent(component);
-
-                componentMappings.Add(componentId, new { OptionsId = optionsId, Mappings = mappings });
-            }
-
-            return componentMappings;
-        }
-
+        
         private static Dictionary<string, string> GetMappingsForComponent(JToken component)
         {
             var maps = new Dictionary<string, string>();
@@ -291,12 +251,15 @@ namespace Altinn.App.PlatformServices.Implementation
             return maps;
         }
 
-        private static IEnumerable<JToken> GetFormComponentsWithMappingDefined(string formLayout)
+        private static void AppendOptionsToDictionary(Dictionary<string, string> dictionary, List<AppOption> options)
         {
-            JObject formLayoutObject = JObject.Parse(formLayout);
-
-            // ? = Current object, ? = Filter, the rest is just dot notation ref. https://goessner.net/articles/JsonPath/
-            return formLayoutObject.SelectTokens("FormLayout.data.layout[?(@.mapping)]");
+            foreach (AppOption item in options)
+            {
+                if (!dictionary.ContainsKey(item.Label))
+                {
+                    dictionary.Add(item.Label, item.Value);
+                }
+            }
         }
     }
 }
