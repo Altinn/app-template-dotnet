@@ -96,10 +96,10 @@ namespace Altinn.App.Services.Implementation
         }
 
         /// <inheritdoc />
-        public abstract Type GetAppModelType(string dataType);
+        public abstract Type GetAppModelType(string classRef);
 
         /// <inheritdoc />
-        public abstract object CreateNewAppModel(string dataType);
+        public abstract object CreateNewAppModel(string classRef);
 
         /// <inheritdoc />
         public abstract Task<bool> RunAppEvent(AppEventType appEvent, object model, ModelStateDictionary modelState = null);
@@ -286,7 +286,7 @@ namespace Altinn.App.Services.Implementation
             {
                 if (_eFormidlingClient == null || _tokenGenerator == null)
                 {
-                    throw new ArgumentNullException("eFormidling support has not been correctly configured in App.cs. " +
+                    throw new EntryPointNotFoundException("eFormidling support has not been correctly configured in App.cs. " +
                         "Ensure that IEformidlingClient and IAccessTokenGenerator are included in the base constructor.");
                 }
 
@@ -331,7 +331,7 @@ namespace Altinn.App.Services.Implementation
         }
 
         /// <inheritdoc />
-        public virtual Task<(string, Stream)> GenerateEFormidlingMetadata(Instance instance)
+        public virtual Task<(string MetadataFilename, Stream Metadata)> GenerateEFormidlingMetadata(Instance instance)
         {
             throw new NotImplementedException("No method available for generating arkivmelding for eFormidling shipment.");
         }

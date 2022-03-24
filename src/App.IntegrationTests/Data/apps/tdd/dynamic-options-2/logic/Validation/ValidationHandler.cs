@@ -12,7 +12,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.AppLogic.Validatio
     /// </summary>
     public class ValidationHandler
     {
-        private IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         /// <summary>
         /// Initialize a new instance of the <see cref="ValidationHandler"/> class with access to the Http Context.

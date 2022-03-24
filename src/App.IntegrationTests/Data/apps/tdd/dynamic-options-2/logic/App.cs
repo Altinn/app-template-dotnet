@@ -174,7 +174,9 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.AppLogic
         }
 
         /// <inheritdoc />
+#pragma warning disable CS0672 // Member overrides obsolete member
         public override Task<AppOptions> GetOptions(string id, AppOptions options)
+#pragma warning restore CS0672 // Member overrides obsolete member
         {
             return Task.FromResult(options);
         }
@@ -189,16 +191,5 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.AppLogic
         {
             await Task.CompletedTask;
         }
-
-        /// <summary>
-        /// Hook to run logic to hide pages or components when generatring PDF
-        /// </summary>
-        /// <param name="layoutSettings">The layoutsettings</param>
-        /// <param name="data">The data that there is generated PDF from</param>
-        /// <returns>Layoutsetting with possible hidden fields or pages</returns>
-        //public override async Task<LayoutSettings> FormatPdf(LayoutSettings layoutSettings, object data)
-        //{
-        //    return await _pdfHandler.FormatPdf(layoutSettings, data);
-        //}
     }
 }

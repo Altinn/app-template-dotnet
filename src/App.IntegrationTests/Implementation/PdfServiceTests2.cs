@@ -25,9 +25,6 @@ namespace App.IntegrationTestsRef.Implementation
         public async Task GenerateAndStorePdf_MultipleMappingsWithSameOptionsId_ShouldPassCorrectOptionsData()
         {
             // Arrange
-            Instance instance = GetInstance();
-            DataElement dataElement = GetDataElement();
-
             string postedPdfContextJson = string.Empty;
             PdfService pdfService = BuildPdfService((HttpRequestMessage requestMessage, CancellationToken cancellationToken) =>
             {
@@ -35,7 +32,7 @@ namespace App.IntegrationTestsRef.Implementation
             });
 
             // Act
-            await pdfService.GenerateAndStoreReceiptPDF(instance, "Task_1", dataElement, typeof(IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Models.Flyttemelding));
+            await pdfService.GenerateAndStoreReceiptPDF(GetInstance(), "Task_1", GetDataElement(), typeof(IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Models.Flyttemelding));
 
             // Assert
             var pdfContext = JsonSerializer.Deserialize<PDFContext>(postedPdfContextJson, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });

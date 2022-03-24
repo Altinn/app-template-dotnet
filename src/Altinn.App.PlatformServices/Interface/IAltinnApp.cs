@@ -36,7 +36,7 @@ namespace Altinn.App.Services.Interface
         /// Get the service Type
         /// </summary>
         /// <returns>The Type of the service model for the current service</returns>
-        Type GetAppModelType(string dataType);
+        Type GetAppModelType(string classRef);
 
         /// <summary>
         /// AppLogic must set the start event of the process model.

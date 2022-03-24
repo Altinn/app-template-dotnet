@@ -33,7 +33,6 @@ namespace Altinn.App.PlatformServices.Implementation
         private readonly IRegister _registerClient;
         private readonly ICustomPdfHandler _customPdfHandler;
         private readonly string pdfElementType = "ref-data-as-pdf";
-        private PDFContext _pdfContext;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PdfService"/> class.
@@ -151,8 +150,6 @@ namespace Altinn.App.PlatformServices.Implementation
                 UserParty = actingParty,
                 Language = language
             };
-
-            _pdfContext = pdfContext;
 
             Stream pdfContent = await _pdfClient.GeneratePDF(pdfContext);
             await StorePDF(pdfContent, instance, textResource);

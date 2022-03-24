@@ -13,8 +13,8 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.AppLogic.DataProce
     /// </summary>
     public class InstantiationHandler
     {
-        private IProfile _profileService;
-        private IRegister _registerService;
+        private readonly IProfile _profileService;
+        private readonly IRegister _registerService;
 
         /// <summary>
         /// Initialize a new instance of the <see cref="InstantiationHandler"/> class with services

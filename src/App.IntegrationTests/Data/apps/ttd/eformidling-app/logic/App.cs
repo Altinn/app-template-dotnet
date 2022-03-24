@@ -99,7 +99,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidling
         }
 
         /// <inheritdoc />
-        public override async Task<(string, Stream)> GenerateEFormidlingMetadata(Instance instance)
+        public override async Task<(string MetadataFilename, Stream Metadata)> GenerateEFormidlingMetadata(Instance instance)
         {
             Arkivmelding arkivmelding = new Arkivmelding
             {
