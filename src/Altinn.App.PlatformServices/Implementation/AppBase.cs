@@ -33,7 +33,6 @@ namespace Altinn.App.Services.Implementation
     {
         private readonly Application _appMetadata;
         private readonly IAppResources _resourceService;
-        private readonly IProcess _processService;
         private readonly ILogger<AppBase> _logger;
         private readonly IEFormidlingClient _eFormidlingClient;        
         private readonly IHttpContextAccessor _httpContextAccessor;
@@ -42,7 +41,6 @@ namespace Altinn.App.Services.Implementation
         private readonly IPdfService _pdfService;
         private readonly IPrefill _prefillService;
         private readonly IInstance _instanceClient;
-        private readonly IText _textClient;
         private readonly IAccessTokenGenerator _tokenGenerator;
         private readonly PlatformSettings _platformSettings;
 
@@ -52,12 +50,9 @@ namespace Altinn.App.Services.Implementation
         /// <param name="resourceService">The service giving access to local resources.</param>
         /// <param name="logger">A logging service.</param>
         /// <param name="dataClient">The data client.</param>
-        /// <param name="processService">The service giving access the App process.</param>
         /// <param name="pdfService">The pdf service responsible for creating the pdf.</param>
         /// <param name="prefillService">The service giving access to prefill mechanisms.</param>
         /// <param name="instanceClient">The instance client</param>
-        /// <param name="settings">The general settings</param>
-        /// <param name="textClient">The text client</param>
         /// <param name="httpContextAccessor">The httpContextAccessor</param>
         /// <param name="eFormidlingClient">The eFormidling client</param>
         /// <param name="appSettings">The appsettings</param>
@@ -67,12 +62,9 @@ namespace Altinn.App.Services.Implementation
             IAppResources resourceService,
             ILogger<AppBase> logger,
             IData dataClient,
-            IProcess processService,
             IPdfService pdfService,
             IPrefill prefillService,
             IInstance instanceClient,
-            IOptions<GeneralSettings> settings,
-            IText textClient,
             IHttpContextAccessor httpContextAccessor,
             IEFormidlingClient eFormidlingClient = null,
             IOptions<AppSettings> appSettings = null,
@@ -83,11 +75,9 @@ namespace Altinn.App.Services.Implementation
             _resourceService = resourceService;
             _logger = logger;
             _dataClient = dataClient;
-            _processService = processService;
             _pdfService = pdfService;
             _prefillService = prefillService;
             _instanceClient = instanceClient;
-            _textClient = textClient;
             _httpContextAccessor = httpContextAccessor;
             _appSettings = appSettings?.Value;
             _eFormidlingClient = eFormidlingClient;

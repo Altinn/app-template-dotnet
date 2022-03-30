@@ -1,11 +1,8 @@
 using System;
 using System.Threading.Tasks;
-
-using Altinn.App.AppLogic.Print;
 using Altinn.App.AppLogic.Validation;
 using Altinn.App.Common.Enums;
 using Altinn.App.Common.Models;
-using Altinn.App.PlatformServices.Implementation;
 using Altinn.App.PlatformServices.Interface;
 using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
@@ -13,7 +10,6 @@ using Altinn.App.Services.Interface;
 using Altinn.App.Services.Models.Validation;
 using Altinn.Common.AccessTokenClient.Services;
 using Altinn.Common.EFormidlingClient;
-using Altinn.Common.EFormidlingClient.Models;
 using Altinn.Platform.Storage.Interface.Models;
 
 using App.IntegrationTests.Mocks.Apps.Ttd.EFormidling;
@@ -40,14 +36,11 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidlingInvalid
         /// <param name="appResourcesService">A service with access to local resources.</param>
         /// <param name="logger">A logger from the built in LoggingFactory.</param>
         /// <param name="dataService">A service with access to data storage.</param>
-        /// <param name="processService">A service with access to the process.</param>
         /// <param name="pdfService">A service with access to the PDF generator.</param>
         /// <param name="profileService">A service with access to profile information.</param>
         /// <param name="registerService">A service with access to register information.</param>
         /// <param name="prefillService">A service with access to prefill mechanisms.</param>
         /// <param name="instanceService">A service with access to instances</param>
-        /// <param name="settings">General settings</param>
-        /// <param name="textService">A service with access to text</param>
         /// <param name="httpContextAccessor">A context accessor</param>
         /// <param name="efor">A client for eFormidling integration</param>
         /// <param name="appsettings">Application settings</param>
@@ -57,14 +50,11 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidlingInvalid
             IAppResources appResourcesService,
             ILogger<App> logger,
             IData dataService,
-            IProcess processService,
             IPdfService pdfService,
             IProfile profileService,
             IRegister registerService,
             IPrefill prefillService,
             IInstance instanceService,
-            IOptions<GeneralSettings> settings,
-            IText textService,
             IHttpContextAccessor httpContextAccessor,
             IEFormidlingClient efor,
             IOptions<AppSettings> appsettings,
@@ -74,12 +64,9 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidlingInvalid
                 appResourcesService,
                 logger,
                 dataService,
-                processService,
                 pdfService,
                 prefillService,
                 instanceService,
-                settings,
-                textService,
                 httpContextAccessor,
                 efor,
                 appsettings,

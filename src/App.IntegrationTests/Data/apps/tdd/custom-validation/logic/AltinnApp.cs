@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 using Altinn.App.Common.Enums;
 using Altinn.App.Common.Models;
-using Altinn.App.PlatformServices.Implementation;
 using Altinn.App.PlatformServices.Interface;
 using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
@@ -24,36 +23,28 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
         private readonly CalculationHandler _calculationHandler;
         private readonly InstantiationHandler _instantiationHandler;
 
-        private readonly GeneralSettings _settings;
-
         public AltinnApp(
             IAppResources appResourcesService,
             ILogger<AltinnApp> logger,
             IData dataService,
-            IProcess processService,
             IPdfService pdfService,
             IProfile profileService,
             IRegister registerService,
             IPrefill prefillService,
             IInstance instanceService,
             IOptions<GeneralSettings> settings,
-            IText textService,
             IHttpContextAccessor httpContextAccessor) : base(
                 appResourcesService, 
                 logger, 
                 dataService, 
-                processService, 
                 pdfService, 
                 prefillService, 
                 instanceService, 
-                settings, 
-                textService, 
                 httpContextAccessor)
         {
             _validationHandler = new ValidationHandler(settings.Value, httpContextAccessor);
             _calculationHandler = new CalculationHandler();
             _instantiationHandler = new InstantiationHandler(profileService, registerService);
-            _settings = settings.Value;
         }
 
         public override object CreateNewAppModel(string classRef)

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Altinn.App.Common.Enums;
 using Altinn.App.Common.Models;
 using Altinn.App.PlatformServices.Interface;
-using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
 using Altinn.App.Services.Interface;
 using Altinn.App.Services.Models.Validation;
@@ -15,7 +14,6 @@ using App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.AppLogic.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.AppLogic
 {
@@ -36,37 +34,28 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.AppLogic
         /// <param name="appResourcesService">A service with access to local resources.</param>
         /// <param name="logger">A logger from the built in LoggingFactory.</param>
         /// <param name="dataService">A service with access to data storage.</param>
-        /// <param name="processService">A service with access to the process.</param>
         /// <param name="pdfService">A service with access to the PDF generator.</param>
         /// <param name="profileService">A service with access to profile information.</param>
         /// <param name="registerService">A service with access to register information.</param>
         /// <param name="prefillService">A service with access to prefill mechanisms.</param>
         /// <param name="instanceService">A service with access to instances</param>
-        /// <param name="settings">General settings</param>
-        /// <param name="textService">A service with access to text</param>
         /// <param name="httpContextAccessor">A context accessor</param>
         public App(
             IAppResources appResourcesService,
             ILogger<App> logger,
             IData dataService,
-            IProcess processService,
             IPdfService pdfService,
             IProfile profileService,
             IRegister registerService,
             IPrefill prefillService,
             IInstance instanceService,
-            IOptions<GeneralSettings> settings,
-            IText textService,
             IHttpContextAccessor httpContextAccessor) : base(
                 appResourcesService,
                 logger,
                 dataService,
-                processService,
                 pdfService,
                 prefillService,
                 instanceService,
-                settings,
-                textService,
                 httpContextAccessor)
         {
             _logger = logger;
