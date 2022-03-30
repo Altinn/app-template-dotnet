@@ -1,12 +1,9 @@
-﻿using Altinn.App.Common.Models;
-using Altinn.App.PlatformServices.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Altinn.App.Common.Models;
+using Altinn.App.PlatformServices.Options;
 
-namespace App.IntegrationTestsRef.Data.apps.tdd.endring_av_navn.options
+namespace App.IntegrationTests.Mocks.Apps.Ttd.EndringAvNavn.Options
 {
     public class CarbrandsAppOptionsProvider : IAppOptionsProvider
     {
@@ -19,9 +16,14 @@ namespace App.IntegrationTestsRef.Data.apps.tdd.endring_av_navn.options
             _appOptionsFileHandler = appOptionsFileHandler;
         }
 
-        public Task<AppOptions> GetAppOptionsAsync(string language, Dictionary<string, string> keyValuePairs)
+        public async Task<AppOptions> GetAppOptionsAsync(string language, Dictionary<string, string> keyValuePairs)
         {
-            throw new NotImplementedException();
+            var appOptions = new AppOptions();
+            appOptions.Options = await _appOptionsFileHandler.ReadOptionsFromFileAsync(Id);
+
+            appOptions.Options.Insert(0, new AppOption() { Value = string.Empty, Label = "Velg bilmerke" });
+
+            return appOptions;
         }
     }
 }

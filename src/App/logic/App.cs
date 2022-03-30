@@ -160,13 +160,6 @@ namespace Altinn.App.AppLogic
            await _instantiationHandler.DataCreation(instance, data, prefill);
         }
 
-        /// <inheritdoc />
-        [Obsolete("GetOptions method is obsolete and will be removed in the future.", false, UrlFormat = "https://docs.altinn.studio/app/development/data/options/#kodeliste-generert-runtime")]
-        public override Task<AppOptions> GetOptions(string id, AppOptions options)
-        {
-            return Task.FromResult(options);
-        }
-
         /// <summary>
         /// Hook to run code when process tasks is ended. 
         /// </summary>

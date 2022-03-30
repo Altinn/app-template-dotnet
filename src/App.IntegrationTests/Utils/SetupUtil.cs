@@ -90,6 +90,8 @@ namespace App.IntegrationTests.Utils
                     {
                         case "endring-av-navn":
                             services.AddTransient<IAltinnApp, IntegrationTests.Mocks.Apps.tdd.endring_av_navn.AltinnApp>();
+                            services.AddTransient<IAppOptionsProvider, Mocks.Apps.Ttd.EndringAvNavn.Options.CarbrandsAppOptionsProvider>();
+                            services.AddTransient<IAppOptionsProvider, Mocks.Apps.Ttd.EndringAvNavn.Options.WeekdaysAppOptionsProvider>();
                             break;
                         case "custom-validation":
                             services.AddTransient<IAltinnApp, IntegrationTests.Mocks.Apps.tdd.custom_validation.AltinnApp>();

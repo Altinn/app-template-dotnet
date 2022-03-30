@@ -147,14 +147,6 @@ namespace App.IntegrationTests.Mocks.Apps.nsm.klareringsportalen.AppLogic
            await _instantiationHandler.DataCreation(instance, data);
         }
 
-        /// <inheritdoc />
-#pragma warning disable CS0672 // Member overrides obsolete member
-        public override Task<AppOptions> GetOptions(string id, AppOptions options)
-#pragma warning restore CS0672 // Member overrides obsolete member
-        {
-            return Task.FromResult(options);
-        }
-
         /// <summary>
         /// Hook to run code when process tasks is ended. 
         /// </summary>

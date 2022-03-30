@@ -86,56 +86,6 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.endring_av_navn
             await Task.CompletedTask;
         }
 
-#pragma warning disable CS0672 // Member overrides obsolete member
-        public override Task<AppOptions> GetOptions(string id, AppOptions options)
-#pragma warning restore CS0672 // Member overrides obsolete member
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return Task.FromResult(options);
-            }
-
-            if (id.Equals("weekdays"))
-            {
-                options.Options = new List<AppOption>();
-
-                options.Options.Add(new AppOption() { Value = "1", Label = "Mandag" });
-                options.Options.Add(new AppOption() { Value = "2", Label = "Tirsdag" });
-                options.Options.Add(new AppOption() { Value = "3", Label = "Onsdag" });
-                options.Options.Add(new AppOption() { Value = "4", Label = "Torsdag" });
-                options.Options.Add(new AppOption() { Value = "5", Label = "Fredag" });
-                options.Options.Add(new AppOption() { Value = "6", Label = "Lørdag" });
-                options.Options.Add(new AppOption() { Value = "7", Label = "Søndag" });
-
-                options.IsCacheable = true;
-            }
-
-            if (id.Equals("months"))
-            {
-                options.Options = new List<AppOption>();
-
-                options.Options.Add(new AppOption() { Value = "1", Label = "Januar" });
-                options.Options.Add(new AppOption() { Value = "2", Label = "Februar" });
-                options.Options.Add(new AppOption() { Value = "3", Label = "Mars" });
-                options.Options.Add(new AppOption() { Value = "4", Label = "April" });
-                options.Options.Add(new AppOption() { Value = "5", Label = "Mai" });
-                options.Options.Add(new AppOption() { Value = "6", Label = "Juni" });
-                options.Options.Add(new AppOption() { Value = "7", Label = "Juli" });
-                options.Options.Add(new AppOption() { Value = "8", Label = "August" });
-                options.Options.Add(new AppOption() { Value = "9", Label = "September" });
-                options.Options.Add(new AppOption() { Value = "10", Label = "Oktober" });
-                options.Options.Add(new AppOption() { Value = "11", Label = "November" });
-                options.Options.Add(new AppOption() { Value = "12", Label = "Desember" });
-            }
-
-            if (id.Equals("carbrands"))
-            {
-                options.Options.Insert(0, new AppOption() { Value = string.Empty, Label = "Velg bilmerke" });
-            }
-
-            return Task.FromResult(options);
-        }
-
         public override Task RunProcessTaskEnd(string taskId, Instance instance)
         {
             return Task.CompletedTask;

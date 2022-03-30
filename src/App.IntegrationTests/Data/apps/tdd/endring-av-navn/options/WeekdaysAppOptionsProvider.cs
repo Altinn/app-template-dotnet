@@ -13,13 +13,16 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EndringAvNavn.Options
         {
             var appOptions = new AppOptions();
 
-            appOptions.Options.Add(new AppOption() { Value = "1", Label = "Mandag" });
-            appOptions.Options.Add(new AppOption() { Value = "2", Label = "Tirsdag" });
-            appOptions.Options.Add(new AppOption() { Value = "3", Label = "Onsdag" });
-            appOptions.Options.Add(new AppOption() { Value = "4", Label = "Torsdag" });
-            appOptions.Options.Add(new AppOption() { Value = "5", Label = "Fredag" });
-            appOptions.Options.Add(new AppOption() { Value = "6", Label = "Lørdag" });
-            appOptions.Options.Add(new AppOption() { Value = "7", Label = "Søndag" });
+            appOptions.Options = new List<AppOption>
+            {
+                new AppOption() { Value = "1", Label = "Mandag" },
+                new AppOption() { Value = "2", Label = "Tirsdag" },
+                new AppOption() { Value = "3", Label = "Onsdag" },
+                new AppOption() { Value = "4", Label = "Torsdag" },
+                new AppOption() { Value = "5", Label = "Fredag" },
+                new AppOption() { Value = "6", Label = "Lørdag" },
+                new AppOption() { Value = "7", Label = "Søndag" }
+            };
 
             appOptions.IsCacheable = true;
 

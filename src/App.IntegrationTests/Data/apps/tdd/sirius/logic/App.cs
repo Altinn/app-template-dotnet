@@ -137,13 +137,6 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.sirius
             await _instantiationHandler.DataCreation(instance, data);
         }
 
-#pragma warning disable CS0672 // Member overrides obsolete member
-        public override Task<AppOptions> GetOptions(string id, AppOptions options)
-#pragma warning restore CS0672 // Member overrides obsolete member
-        {
-            return Task.FromResult(options);
-        }
-
         public override async Task RunProcessTaskEnd(string taskId, Instance instance)
         {
             // Transfer from Task_1 to Task_2, need to download the PDF from tax.
