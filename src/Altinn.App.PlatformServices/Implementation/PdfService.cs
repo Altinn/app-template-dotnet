@@ -9,6 +9,7 @@ using Altinn.App.Common.Helpers.Extensions;
 using Altinn.App.Common.Models;
 using Altinn.App.PlatformServices.Extensions;
 using Altinn.App.PlatformServices.Interface;
+using Altinn.App.PlatformServices.Options;
 using Altinn.App.Services.Interface;
 using Altinn.App.Services.Models;
 using Altinn.Platform.Profile.Models;
@@ -27,6 +28,7 @@ namespace Altinn.App.PlatformServices.Implementation
     {
         private readonly IPDF _pdfClient;
         private readonly IAppResources _resourceService;
+        private readonly IAppOptionsService _appOptionsService;
         private readonly IData _dataClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IProfile _profileClient;
@@ -44,10 +46,11 @@ namespace Altinn.App.PlatformServices.Implementation
         /// <param name="profileClient">The profile client</param>
         /// <param name="registerClient">The register client</param>
         /// <param name="customPdfHandler">Class for customizing pdf formatting and layout.</param>
-        public PdfService(IPDF pdfClient, IAppResources appResources, IData dataClient, IHttpContextAccessor httpContextAccessor, IProfile profileClient, IRegister registerClient, ICustomPdfHandler customPdfHandler)
+        public PdfService(IPDF pdfClient, IAppResources appResources, IAppOptionsService appOptionsService, IData dataClient, IHttpContextAccessor httpContextAccessor, IProfile profileClient, IRegister registerClient, ICustomPdfHandler customPdfHandler)
         {
             _pdfClient = pdfClient;
             _resourceService = appResources;
+            _appOptionsService = appOptionsService;
             _dataClient = dataClient;
             _httpContextAccessor = httpContextAccessor;
             _profileClient = profileClient;
@@ -201,7 +204,7 @@ namespace Altinn.App.PlatformServices.Implementation
                 string optionsId = component.SelectToken("optionsId").Value<string>();
                 bool hasMappings = component.SelectToken("mapping") != null;
                 Dictionary<string, string> keyValuePairs = hasMappings ? GetComponentKeyValuePairs(component, data) : new Dictionary<string, string>();
-                AppOptions appOptions = await _resourceService.GetOptionsAsync(optionsId, language, keyValuePairs);
+                AppOptions appOptions = await _appOptionsService.GetOptionsAsync(optionsId, language, keyValuePairs);
 
                 if (!dictionary.ContainsKey(optionsId))
                 {

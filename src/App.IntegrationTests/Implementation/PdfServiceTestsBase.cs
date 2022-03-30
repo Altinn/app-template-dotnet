@@ -105,31 +105,43 @@ namespace App.IntegrationTestsRef.Implementation
 
         internal virtual AppResourcesSI BuildAppResourcesService()
         {
+            var appOptionSettings = BuildAppOptionSettings();
+            var appResources = new AppResourcesSI(appOptionSettings, null, null);
+
+            return appResources;
+        }
+
+        internal virtual AppOptionsService BuildAppOptionsService()
+        {
+            var appOptionSettings = BuildAppOptionSettings();
+            var appOptionsFactory = new AppOptionsFactory(GetAppOptionProviders(appOptionSettings));
+            var instanceAppOptionsFactory = new InstanceAppOptionsFactory(new List<IInstanceAppOptionsProvider>());
+
+            return new AppOptionsService(appOptionsFactory, instanceAppOptionsFactory);
+        }
+
+        internal virtual IOptions<AppSettings> BuildAppOptionSettings()
+        {
             var appSettings = new AppSettings()
             {
                 AppBasePath = SetupUtil.GetAppPath(Org, App)
             };
-            var appOptions = Options.Create(appSettings);
 
-            var appOptionsFactory = new AppOptionsFactory(GetAppOptionProviders(appOptions));
-            var instanceAppOptionsFactory = new InstanceAppOptionsFactory(new List<IInstanceAppOptionsProvider>());
-            var appOptionsService = new AppOptionsService(appOptionsFactory, instanceAppOptionsFactory);
-            var appResources = new AppResourcesSI(appOptions, null, null, appOptionsService);
-
-            return appResources;
+            return Options.Create(appSettings);
         }
 
         internal virtual PdfService BuildPdfService(Action<HttpRequestMessage, CancellationToken> onDataPostCallback)
         {
             PDFClient pdfClient = MockPdfClient(onDataPostCallback);
             AppResourcesSI appResources = BuildAppResourcesService();
+            IAppOptionsService appOptionsService = BuildAppOptionsService();
             Mock<IData> dataClient = MockDataClient();
             Mock<IHttpContextAccessor> httpContextAccessor = MockUserInHttpContext();
             Mock<IProfile> profileClient = MockProfileClient();
             var registerClient = new Mock<IRegister>();
             var customPdfHandler = new NullPdfHandler();
 
-            var pdfService = new PdfService(pdfClient, appResources, dataClient.Object, httpContextAccessor.Object, profileClient.Object, registerClient.Object, customPdfHandler);
+            var pdfService = new PdfService(pdfClient, appResources, appOptionsService, dataClient.Object, httpContextAccessor.Object, profileClient.Object, registerClient.Object, customPdfHandler);
 
             return pdfService;
         }

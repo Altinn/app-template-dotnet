@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-
 using Altinn.App.Common.Models;
-using Altinn.App.PlatformServices.Options;
 using Altinn.Platform.Storage.Interface.Models;
 
 namespace Altinn.App.Services.Interface
@@ -11,7 +8,7 @@ namespace Altinn.App.Services.Interface
     /// <summary>
     /// Interface for execution functionality
     /// </summary>
-    public interface IAppResources : IAppOptionsService
+    public interface IAppResources
     {
         /// <summary>
         /// Get the app resource for the given parameters.

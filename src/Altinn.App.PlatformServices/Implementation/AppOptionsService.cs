@@ -23,12 +23,6 @@ namespace Altinn.App.Services.Implementation
             _instanceAppOptionsFactory = instanceAppOptionsFactory;
         }
 
-        /// <inheritdoc/>        
-        public List<AppOption> GetOptions(string optionId)
-        {
-            return GetOptionsAsync(optionId, string.Empty, new Dictionary<string, string>()).Result.Options;
-        }
-
         /// <inheritdoc/>
         public async Task<AppOptions> GetOptionsAsync(string optionId, string language, Dictionary<string, string> keyValuePairs)
         {
