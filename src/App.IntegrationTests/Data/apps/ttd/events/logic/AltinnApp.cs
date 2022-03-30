@@ -56,11 +56,6 @@ namespace App.IntegrationTests.Mocks.Apps.ttd.events
             return Type.GetType(classRef);
         }
 
-        public override Task<bool> RunAppEvent(AppEventType appEvent, object model, ModelStateDictionary modelState = null)
-        {
-            return Task.FromResult(true);
-        }
-
         public override async Task RunDataValidation(object data, ModelStateDictionary validationResults)
         {
             await _validationHandler.ValidateData(data, validationResults);

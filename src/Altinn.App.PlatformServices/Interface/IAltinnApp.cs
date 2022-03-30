@@ -27,12 +27,6 @@ namespace Altinn.App.Services.Interface
         object CreateNewAppModel(string classRef);
 
         /// <summary>
-        /// Event that is triggered 
-        /// </summary>
-        /// <returns>Task to indicate when the event is completed</returns>
-        Task<bool> RunAppEvent(AppEventType appEvent, object model, ModelStateDictionary modelState = null);
-
-        /// <summary>
         /// Get the service Type
         /// </summary>
         /// <returns>The Type of the service model for the current service</returns>

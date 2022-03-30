@@ -46,11 +46,6 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.autodelete_true
             return Type.GetType(classRef);
         }
 
-        public override Task<bool> RunAppEvent(AppEventType appEvent, object model, ModelStateDictionary modelState = null)
-        {
-            return Task.FromResult(true);
-        }
-
         public override async Task RunDataValidation(object data, ModelStateDictionary validationResults)
         {
             await Task.CompletedTask;

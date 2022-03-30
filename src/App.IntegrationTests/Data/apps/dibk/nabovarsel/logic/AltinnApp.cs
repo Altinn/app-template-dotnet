@@ -1,8 +1,5 @@
 using System;
 using System.Threading.Tasks;
-
-using Altinn.App.Common.Enums;
-using Altinn.App.Common.Models;
 using Altinn.App.PlatformServices.Interface;
 using Altinn.App.Services.Implementation;
 using Altinn.App.Services.Interface;
@@ -54,11 +51,6 @@ namespace App.IntegrationTests.Mocks.Apps.dibk.nabovarsel
         public override Type GetAppModelType(string classRef)
         {
             return Type.GetType(classRef);
-        }
-
-        public override Task<bool> RunAppEvent(AppEventType appEvent, object model, ModelStateDictionary modelState = null)
-        {
-            return Task.FromResult(true);
         }
 
         public override async Task RunDataValidation(object data, ModelStateDictionary validationResults)

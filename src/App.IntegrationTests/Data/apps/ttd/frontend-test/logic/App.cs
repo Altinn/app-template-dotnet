@@ -65,21 +65,6 @@ namespace App.IntegrationTests.Mocks.Apps.Tdd.Frontendtest
         }
 
         /// <summary>
-        /// Run app event
-        /// </summary>
-        /// <remarks>DEPRECATED METHOD, USE EVENT SPECIFIC METHOD INSTEAD</remarks>
-        /// <param name="appEvent">The app event type</param>
-        /// <param name="model">The service model</param>
-        /// <param name="modelState">The model state</param>
-        /// <returns></returns>
-        public override async Task<bool> RunAppEvent(AppEventType appEvent, object model, ModelStateDictionary modelState)
-        {
-            _logger.LogInformation($"RunAppEvent {appEvent}");
-
-            return await Task.FromResult(true);
-        }
-
-        /// <summary>
         /// Run data validation event to perform custom validations on data
         /// </summary>
         /// <returns>Value indicating if the form is valid or not</returns>

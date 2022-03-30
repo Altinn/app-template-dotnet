@@ -1,8 +1,5 @@
 using System;
 using System.Threading.Tasks;
-
-using Altinn.App.Common.Enums;
-using Altinn.App.Common.Models;
 using Altinn.App.PlatformServices.Interface;
 using Altinn.App.Services.Implementation;
 using Altinn.App.Services.Interface;
@@ -79,21 +76,6 @@ namespace App.IntegrationTests.Mocks.Apps.nsm.klareringsportalen.AppLogic
             _logger.LogInformation($"GetAppModelType {classRef}");
 
             return Type.GetType(classRef);
-        }
-
-        /// <summary>
-        /// Run app event
-        /// </summary>
-        /// <remarks>DEPRECATED METHOD, USE EVENT SPECIFIC METHOD INSTEAD</remarks>
-        /// <param name="appEvent">The app event type</param>
-        /// <param name="model">The service model</param>
-        /// <param name="modelState">The model state</param>
-        /// <returns>True if the event was handled</returns>
-        public override async Task<bool> RunAppEvent(AppEventType appEvent, object model, ModelStateDictionary modelState = null)
-        {
-            _logger.LogInformation($"RunAppEvent {appEvent}");
-
-            return await Task.FromResult(true);
         }
 
         /// <summary>

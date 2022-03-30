@@ -92,9 +92,6 @@ namespace Altinn.App.Services.Implementation
         public abstract object CreateNewAppModel(string classRef);
 
         /// <inheritdoc />
-        public abstract Task<bool> RunAppEvent(AppEventType appEvent, object model, ModelStateDictionary modelState = null);
-
-        /// <inheritdoc />
         public abstract Task RunDataValidation(object data, ModelStateDictionary validationResults);
 
         /// <inheritdoc />
