@@ -138,15 +138,6 @@ namespace Altinn.App.Services.Interface
         Task RunDataCreation(Instance instance, object data, Dictionary<string, string> prefill);
 
         /// <summary>
-        /// Gets the App Options
-        /// </summary>
-        /// <param name="id">The option id</param>
-        /// <param name="options">Possible option found by the platform itself</param>
-        /// <returns>The app options</returns>
-        [Obsolete("GetOptions method is obsolete and will be removed in the future.", false, UrlFormat = "https://docs.altinn.studio/app/development/data/options/#kodeliste-generert-runtime")]
-        Task<AppOptions> GetOptions(string id, AppOptions options);
-
-        /// <summary>
         /// Gets the current page order of the app
         /// </summary>
         /// <param name="org">The app owner.</param>

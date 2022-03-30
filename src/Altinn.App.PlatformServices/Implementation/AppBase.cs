@@ -134,10 +134,6 @@ namespace Altinn.App.Services.Implementation
         }
 
         /// <inheritdoc />
-        [Obsolete("GetOptions method is obsolete and will be removed in the future.", false, UrlFormat = "https://docs.altinn.studio/app/development/data/options/#kodeliste-generert-runtime")]
-        public abstract Task<AppOptions> GetOptions(string id, AppOptions options);
-
-        /// <inheritdoc />
         public abstract Task RunProcessTaskEnd(string taskId, Instance instance);
 
         /// <inheritdoc />
