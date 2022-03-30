@@ -16,7 +16,6 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Models
     [JsonProperty("FlytterTil")]
     [JsonPropertyName("FlytterTil")]
     public FylkeKommune FlytterTil { get; set; }
-
   }
 
   public class FylkeKommune

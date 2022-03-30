@@ -157,8 +157,6 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.sirius
                     await _dataService.InsertBinaryData(instance.Id, "næringsoppgavepdf", "application/pdf", "NæringPDF", næringsPDF);
                 }
             }
-
-            return;
         }
     }
 }

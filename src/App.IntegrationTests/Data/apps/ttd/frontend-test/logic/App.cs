@@ -139,7 +139,6 @@ namespace App.IntegrationTests.Mocks.Apps.Tdd.Frontendtest
         public override async Task RunProcessTaskEnd(string taskId, Instance instance)
         {
             await Task.CompletedTask;
-            return;
         }
     }
 }
