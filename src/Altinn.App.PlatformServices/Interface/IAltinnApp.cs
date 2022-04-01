@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-
-using Altinn.App.Common.Enums;
-using Altinn.App.Common.Models;
 using Altinn.App.Services.Models.Validation;
 using Altinn.Common.EFormidlingClient.Models.SBD;
 using Altinn.Platform.Storage.Interface.Models;

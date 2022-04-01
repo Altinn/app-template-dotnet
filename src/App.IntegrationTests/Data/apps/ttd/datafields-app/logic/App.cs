@@ -1,7 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Altinn.App.Common.Enums;
-using Altinn.App.Common.Models;
 using Altinn.App.PlatformServices.Interface;
 using Altinn.App.PlatformServices.Models;
 using Altinn.App.Services.Implementation;

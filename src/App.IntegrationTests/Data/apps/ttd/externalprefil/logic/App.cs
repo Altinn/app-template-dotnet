@@ -2,13 +2,8 @@ using System;
 using System.Threading.Tasks;
 
 using Altinn.App.AppLogic.DataProcessing;
-using Altinn.App.AppLogic.Print;
 using Altinn.App.AppLogic.Validation;
-using Altinn.App.Common.Enums;
-using Altinn.App.Common.Models;
-using Altinn.App.PlatformServices.Implementation;
 using Altinn.App.PlatformServices.Interface;
-using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
 using Altinn.App.Services.Interface;
 using Altinn.App.Services.Models.Validation;
@@ -16,7 +11,6 @@ using Altinn.Platform.Storage.Interface.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace App.IntegrationTests.Mocks.Apps.Ttd.Externalprefil
 {
