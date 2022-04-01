@@ -5,7 +5,7 @@ using Altinn.App.PlatformServices.Interface;
 namespace Altinn.App.AppLogic.Print
 {
     /// <summary>
-    /// Handler for formatting PDF. Dow
+    /// Handler for formatting PDF.
     /// </summary>
     public class PdfHandler : ICustomPdfHandler
     {
