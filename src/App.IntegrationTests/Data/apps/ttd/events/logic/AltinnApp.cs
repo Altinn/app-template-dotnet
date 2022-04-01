@@ -67,15 +67,6 @@ namespace App.IntegrationTests.Mocks.Apps.ttd.events
         /// Run validation event to perform custom validations
         /// </summary>
         /// <returns>Value indicating if the form is valid or not</returns>
-        public override async Task<bool> RunCalculation(object data)
-        {
-            return await _calculationHandler.Calculate(data);
-        }
-
-        /// <summary>
-        /// Run validation event to perform custom validations
-        /// </summary>
-        /// <returns>Value indicating if the form is valid or not</returns>
         public override async Task<Altinn.App.Services.Models.Validation.InstantiationValidationResult> RunInstantiationValidation(Instance instance)
         {
             return await _instantiationHandler.RunInstantiationValidation(instance);

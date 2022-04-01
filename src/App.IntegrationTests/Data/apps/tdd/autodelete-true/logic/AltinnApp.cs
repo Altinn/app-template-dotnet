@@ -53,11 +53,6 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.autodelete_true
             await Task.CompletedTask;
         }
 
-        public override Task<bool> RunCalculation(object data)
-        {
-            return Task.FromResult(false);
-        }
-
         public override async Task<Altinn.App.Services.Models.Validation.InstantiationValidationResult> RunInstantiationValidation(Instance instance)
         {
             await Task.CompletedTask;

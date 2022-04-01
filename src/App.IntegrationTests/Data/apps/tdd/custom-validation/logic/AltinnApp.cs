@@ -17,7 +17,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
     public class AltinnApp : AppBase, IAltinnApp
     {
         private readonly ValidationHandler _validationHandler;
-        private readonly CalculationHandler _calculationHandler;
+        private readonly DataProcessingHandler _dataProcessingHandler;
         private readonly InstantiationHandler _instantiationHandler;
 
         public AltinnApp(
@@ -40,8 +40,8 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
                 httpContextAccessor)
         {
             _validationHandler = new ValidationHandler(settings.Value, httpContextAccessor);
-            _calculationHandler = new CalculationHandler();
             _instantiationHandler = new InstantiationHandler(profileService, registerService);
+            _dataProcessingHandler = new DataProcessingHandler();
         }
 
         public override object CreateNewAppModel(string classRef)
@@ -67,12 +67,6 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
             _validationHandler.ValidateTask(instance, taskId, validationResults);
         }
 
-        public override async Task<bool> RunCalculation(object data)
-        {
-            await Task.CompletedTask;
-            return _calculationHandler.Calculate(data);
-        }
-
         public override async Task<Altinn.App.Services.Models.Validation.InstantiationValidationResult> RunInstantiationValidation(Instance instance)
         {
             await Task.CompletedTask;
@@ -88,6 +82,28 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
         public override Task RunProcessTaskEnd(string taskId, Instance instance)
         {
             return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Is called to run custom calculation events defined by app developer when data is read from app
+        /// </summary>
+        /// <param name="instance">Instance that data belongs to</param>
+        /// <param name="dataId">Data id for the data</param>
+        /// <param name="data">The data to perform calculations on</param>
+        public override async Task<bool> RunProcessDataRead(Instance instance, Guid? dataId, object data)
+        {
+            return await _dataProcessingHandler.ProcessDataRead(instance, dataId, data);
+        }
+
+        /// <summary>
+        /// Is called to run custom calculation events defined by app developer when data is written to app.
+        /// </summary>
+        /// <param name="instance">Instance that data belongs to</param>
+        /// <param name="dataId">Data id for the  data</param>
+        /// <param name="data">The data to perform calculations on</param>
+        public override async Task<bool> RunProcessDataWrite(Instance instance, Guid? dataId, object data)
+        {
+            return await _dataProcessingHandler.ProcessDataWrite(instance, dataId, data);
         }
     }
 }

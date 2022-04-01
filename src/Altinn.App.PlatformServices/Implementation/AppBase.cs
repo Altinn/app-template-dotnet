@@ -96,21 +96,15 @@ namespace Altinn.App.Services.Implementation
         public abstract Task RunTaskValidation(Instance instance, string taskId, ModelStateDictionary validationResults);
 
         /// <inheritdoc />
-        public virtual Task<bool> RunCalculation(object data)
+        public virtual Task<bool> RunProcessDataRead(Instance instance, Guid? dataId, object data)
         {
             return Task.FromResult(false);
         }
 
         /// <inheritdoc />
-        public virtual Task<bool> RunProcessDataRead(Instance instance, Guid? dataId, object data)
-        {
-            throw new NotImplementedException("RunProcessDataRead not implemented in app");
-        }
-
-        /// <inheritdoc />
         public virtual Task<bool> RunProcessDataWrite(Instance instance, Guid? dataId, object data)
         {
-            throw new NotImplementedException("RunProcessDataWrite not implemented in app");
+            return Task.FromResult(false);
         }
 
         /// <inheritdoc />

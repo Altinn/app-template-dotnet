@@ -195,15 +195,6 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidling
         }
 
         /// <summary>
-        /// Is called to run custom calculation events defined by app developer.
-        /// </summary>
-        /// <param name="data">The data to perform calculations on</param>
-        public override async Task<bool> RunCalculation(object data)
-        {
-            return await _calculationHandler.Calculate(data);
-        }
-
-        /// <summary>
         /// Is called to run custom instantiation validation defined by app developer.
         /// </summary>
         /// <returns>Task with validation results</returns>

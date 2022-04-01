@@ -66,12 +66,6 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.contributer_restriction
             _validationHandler.ValidateTask(instance, taskId, validationResults);
         }
 
-        public override async Task<bool> RunCalculation(object data)
-        {
-            await Task.CompletedTask;
-            return _calculationHandler.Calculate(data);
-        }
-
         public override async Task<Altinn.App.Services.Models.Validation.InstantiationValidationResult> RunInstantiationValidation(Instance instance)
         {
             await Task.CompletedTask;

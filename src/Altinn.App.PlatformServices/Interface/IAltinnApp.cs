@@ -90,13 +90,6 @@ namespace Altinn.App.Services.Interface
         Task RunTaskValidation(Instance instance, string taskId, ModelStateDictionary validationResults);
 
         /// <summary>
-        /// Is called to run custom calculation events defined by app developer. Obsolete Replaced by RunProcessDataRead and RunProcessDataWrite
-        /// </summary>
-        /// <param name="data">The data to perform calculations on</param>
-        [Obsolete("The RunCalculation method is obsolete and will be removed in the future.", false, UrlFormat = "https://docs.altinn.studio/app/development/logic/dataprocessing/")]
-        Task<bool> RunCalculation(object data);
-
-        /// <summary>
         /// Is called to run custom calculation events defined by app developer when data is read from app
         /// </summary>
         /// <param name="instance">Instance that data belongs to</param>

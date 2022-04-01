@@ -65,17 +65,6 @@ namespace App.IntegrationTests.Mocks.Apps.ttd.model_validation
         }
 
         /// <summary>
-        /// Run validation event to perform custom validations
-        /// </summary>
-        /// <param name="data">Object to contain any validation errors/warnings</param>
-        /// <returns>Value indicating if the form is valid or not</returns>
-        public override async Task<bool> RunCalculation(object data)
-        {
-            await Task.CompletedTask;
-            return _calculationHandler.Calculate(data);
-        }
-
-        /// <summary>
         /// Is called to run custom calculation events defined by app developer when data is read from app
         /// </summary>
         /// <param name="instance">Instance that data belongs to</param>
