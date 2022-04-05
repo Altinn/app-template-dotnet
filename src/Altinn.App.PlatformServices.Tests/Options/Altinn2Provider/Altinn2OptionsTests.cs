@@ -71,6 +71,28 @@ namespace Altinn.App.PlatformServices.Tests.Options.Altinn2Provider
         }
 
         [Fact]
+        public async Task Altinn2OptionsTests_EnglishLanguage()
+        {
+            var services = GetServiceCollection();
+            services.AddAltinn2CodeList(
+                id: "ASF_Land1",
+                transform: (code) => new() { Value = code.Code, Label = code.Value1 },
+                codeListVersion: 2758,
+                metadataApiId: "ASF_land");
+
+            var sp = services.BuildServiceProvider(validateScopes: true);
+            using (var scope = sp.CreateScope())
+            {
+                var providers = scope.ServiceProvider.GetRequiredService<IEnumerable<IAppOptionsProvider>>();
+                providers.Count().Should().Be(1);
+                var optionsProvider = providers.SingleOrDefault(p => p.Id == "ASF_Land1");
+                var landOptions = await optionsProvider.GetAppOptionsAsync("en", new Dictionary<string, string>());
+                landOptions.Options.Count.Should().BeGreaterThan(4, "ASF_Land needs to have more than 4 countries");
+                landOptions.Options.Should().Match(options => options.Any(o => o.Label == "NORWAY"));
+            }
+        }
+
+        [Fact]
         public async Task Altinn2OptionsTests_FilterOnlyNorway()
         {
             var services = GetServiceCollection();
