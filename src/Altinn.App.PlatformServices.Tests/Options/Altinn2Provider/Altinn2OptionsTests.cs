@@ -65,7 +65,7 @@ namespace Altinn.App.PlatformServices.Tests.Options.Altinn2Provider
                 providers.Count().Should().Be(1);
                 var optionsProvider = providers.SingleOrDefault(p => p.Id == "ASF_Land1");
                 var landOptions = await optionsProvider.GetAppOptionsAsync("nb", new Dictionary<string, string>());
-                landOptions.Options.Count().Should().BeGreaterThan(4, "ASF_Land needs to have more than 4 countries");
+                landOptions.Options.Count.Should().BeGreaterThan(4, "ASF_Land needs to have more than 4 countries");
                 landOptions.Options.Should().Match(options => options.Any(o => o.Value == "NORGE"));
             }
         }
@@ -79,6 +79,29 @@ namespace Altinn.App.PlatformServices.Tests.Options.Altinn2Provider
                 transform: (code) => new() { Value = code.Code, Label = code.Value1 },
                 filter: (code) => code.Value2 == "NO",
                 codeListVersion: 2758,
+                metadataApiId: "ASF_land");
+
+            var sp = services.BuildServiceProvider(validateScopes: true);
+            using (var scope = sp.CreateScope())
+            {
+                var providers = scope.ServiceProvider.GetRequiredService<IEnumerable<IAppOptionsProvider>>();
+                providers.Count().Should().Be(1);
+                var optionsProvider = providers.SingleOrDefault(p => p.Id == "OnlyNorway");
+                var landOptions = await optionsProvider.GetAppOptionsAsync("nb", new Dictionary<string, string>());
+                landOptions.Options.Count().Should().Be(1, "We filter out only norway");
+                landOptions.Options.Should().Match(options => options.Any(o => o.Value == "NORGE"));
+            }
+        }
+
+        [Fact]
+        public async Task Altinn2OptionsTests_NoCodeListVersionProvided()
+        {
+            var services = GetServiceCollection();
+            services.AddAltinn2CodeList(
+                id: "OnlyNorway",
+                transform: (code) => new() { Value = code.Code, Label = code.Value1 },
+                filter: (code) => code.Value2 == "NO",
+                codeListVersion: null,
                 metadataApiId: "ASF_land");
 
             var sp = services.BuildServiceProvider(validateScopes: true);
