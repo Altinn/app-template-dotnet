@@ -1,13 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Altinn.App.Common.Models;
 using Altinn.App.PlatformServices.Options;
 using Altinn.App.PlatformServices.Options.Altinn2Provider;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using Moq;
 using Xunit;
 
 namespace Altinn.App.PlatformServices.Tests.Options.Altinn2Provider
@@ -94,6 +91,21 @@ namespace Altinn.App.PlatformServices.Tests.Options.Altinn2Provider
                 landOptions.Options.Count().Should().Be(1, "We filter out only norway");
                 landOptions.Options.Should().Match(options => options.Any(o => o.Value == "NORGE"));
             }
+        }
+
+        [Fact]
+        public void Altinn2OptionsTests_Altinn2MetadataClientNotRegistered()
+        {
+            var services = new ServiceCollection();
+            
+            services.AddAltinn2CodeList(
+                id: "OnlyNorway",
+                transform: (code) => new() { Value = code.Code, Label = code.Value1 },
+                filter: (code) => code.Value2 == "NO",
+                codeListVersion: 2758,
+                metadataApiId: "ASF_land");
+
+            services.Should().Contain(serviceDescriptor => serviceDescriptor.ServiceType == typeof(Altinn2MetadataApiClient));
         }
     }
 }
