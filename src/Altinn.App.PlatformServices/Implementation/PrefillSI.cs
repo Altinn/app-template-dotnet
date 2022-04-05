@@ -53,12 +53,18 @@ namespace Altinn.App.Services.Implementation
         }
 
         /// <inheritdoc/>
+        public void PrefillDataModel(object dataModel, Dictionary<string, string> externalPrefill, bool continueOnError = false)
+        {
+            LoopThroughDictionaryAndAssignValuesToDataModel(externalPrefill, null, dataModel, continueOnError);
+        }
+
+        /// <inheritdoc/>
         public async Task PrefillDataModel(string partyId, string dataModelName, object dataModel, Dictionary<string, string> externalPrefill)
         {
             // Prefill from external input. Only available during instansiation
             if (externalPrefill != null && externalPrefill.Count > 0)
             {
-                LoopThroughDictionaryAndAssignValuesToDataModel(SwapKeyValuesForPrefil(externalPrefill), null, dataModel, true);
+                PrefillDataModel(dataModel, externalPrefill, true);
             }
 
             string jsonConfig = _appResourcesService.GetPrefillJson(dataModelName);
@@ -96,7 +102,7 @@ namespace Altinn.App.Services.Implementation
                     {
                         JObject userProfileJsonObject = JObject.FromObject(userProfile);
                         _logger.LogInformation($"Started prefill from {USER_PROFILE_KEY}");
-                        LoopThroughDictionaryAndAssignValuesToDataModel(userProfileDict, userProfileJsonObject, dataModel);
+                        LoopThroughDictionaryAndAssignValuesToDataModel(SwapKeyValuesForPrefil(userProfileDict), userProfileJsonObject, dataModel);
                     }
                     else
                     {
@@ -119,7 +125,7 @@ namespace Altinn.App.Services.Implementation
                     {
                         JObject orgJsonObject = JObject.FromObject(org);
                         _logger.LogInformation($"Started prefill from {ER_KEY}");
-                        LoopThroughDictionaryAndAssignValuesToDataModel(enhetsregisterPrefill, orgJsonObject, dataModel);
+                        LoopThroughDictionaryAndAssignValuesToDataModel(SwapKeyValuesForPrefil(enhetsregisterPrefill), orgJsonObject, dataModel);
                     }
                     else
                     {
@@ -142,7 +148,7 @@ namespace Altinn.App.Services.Implementation
                     {
                         JObject personJsonObject = JObject.FromObject(person);
                         _logger.LogInformation($"Started prefill from {DSF_KEY}");
-                        LoopThroughDictionaryAndAssignValuesToDataModel(folkeregisterPrefill, personJsonObject, dataModel);
+                        LoopThroughDictionaryAndAssignValuesToDataModel(SwapKeyValuesForPrefil(folkeregisterPrefill), personJsonObject, dataModel);
                     }
                     else
                     {
@@ -214,8 +220,8 @@ namespace Altinn.App.Services.Implementation
         {
             foreach (KeyValuePair<string, string> keyValuePair in dictionary)
             {
-                string source = keyValuePair.Key;
-                string target = keyValuePair.Value.Replace("-", string.Empty);
+                string source = keyValuePair.Value;
+                string target = keyValuePair.Key.Replace("-", string.Empty);
                 if (source == null || source == string.Empty)
                 {
                     string errorMessage = $"Could not prefill, a source value was not set for target: {target}";

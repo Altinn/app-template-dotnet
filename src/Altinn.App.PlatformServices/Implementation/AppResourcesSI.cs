@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 using Altinn.App.Common.Models;
 using Altinn.App.PlatformServices.Helpers;
-using Altinn.App.PlatformServices.Options;
 using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Interface;
 using Altinn.Platform.Storage.Interface.Models;
@@ -29,7 +28,6 @@ namespace Altinn.App.Services.Implementation
         private readonly AppSettings _settings;
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ILogger _logger;
-        private readonly IAppOptionsService _appOptionsService;
         private Application _application;
 
         /// <summary>
@@ -38,17 +36,14 @@ namespace Altinn.App.Services.Implementation
         /// <param name="settings">The app repository settings.</param>
         /// <param name="hostingEnvironment">The hosting environment</param>
         /// <param name="logger">A logger from the built in logger factory.</param>
-        /// <param name="appOptionsService">Service for working with app options.</param>
         public AppResourcesSI(
             IOptions<AppSettings> settings,
             IWebHostEnvironment hostingEnvironment,
-            ILogger<AppResourcesSI> logger,
-            IAppOptionsService appOptionsService)
+            ILogger<AppResourcesSI> logger)
         {
             _settings = settings.Value;
             _hostingEnvironment = hostingEnvironment;
             _logger = logger;
-            _appOptionsService = appOptionsService;
         }
 
         /// <inheritdoc/>
@@ -100,9 +95,9 @@ namespace Altinn.App.Services.Implementation
                 return null;
             }
 
-            using (FileStream fileStream = new (fullFileName, FileMode.Open, FileAccess.Read))
+            using (FileStream fileStream = new(fullFileName, FileMode.Open, FileAccess.Read))
             {
-                JsonSerializerOptions options = new () { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+                JsonSerializerOptions options = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
                 TextResource textResource = await System.Text.Json.JsonSerializer.DeserializeAsync<TextResource>(fileStream, options);
                 textResource.Id = $"{org}-{app}-{language}";
                 textResource.Org = org;
@@ -293,20 +288,6 @@ namespace Altinn.App.Services.Implementation
             }
 
             return classRef;
-        }
-
-        /// <inheritdoc />
-        [Obsolete("GetOptions method is obsolete and will be removed in the future. Use the corresponding method in IAppOptions interface instead.", false)]
-        public List<AppOption> GetOptions(string optionId)
-        {
-            return _appOptionsService.GetOptionsAsync(optionId, string.Empty, new Dictionary<string, string>()).Result.Options;
-        }
-
-        /// <inheritdoc />
-        public async Task<List<AppOption>> GetOptions(string optionId, string language, Dictionary<string, string> keyValuePairs)
-        {
-            var appOptions = await _appOptionsService.GetOptionsAsync(optionId, string.Empty, new Dictionary<string, string>());
-            return appOptions.Options;
         }
 
         /// <inheritdoc />
