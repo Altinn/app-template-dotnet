@@ -516,10 +516,10 @@ namespace Altinn.App.Services.Implementation
             string fileName = null;
             string app = instance.AppId.Split("/")[1];
 
-            TextResourceElement titleText = 
+            TextResourceElement titleText =
                 textResource.Resources.Find(textResourceElement => textResourceElement.Id.Equals("appName")) ??
                 textResource.Resources.Find(textResourceElement => textResourceElement.Id.Equals("ServiceName"));
-            
+
             if (titleText != null && !string.IsNullOrEmpty(titleText.Value))
             {
                 fileName = titleText.Value + ".pdf";
@@ -680,6 +680,11 @@ namespace Altinn.App.Services.Implementation
                 StandardBusinessDocumentHeader = sbdHeader,
                 Arkivmelding = new Arkivmelding { Sikkerhetsnivaa = _appMetadata.EFormidling.SecurityLevel },
             };
+
+            if (!string.IsNullOrEmpty(_appMetadata.EFormidling.DPFShipmentType))
+            {
+                sbd.Arkivmelding.DPF.ForsendelsesType = _appMetadata.EFormidling.DPFShipmentType;
+            }
 
             return sbd;
         }
