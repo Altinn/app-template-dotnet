@@ -454,7 +454,7 @@ namespace Altinn.App.Services.Implementation
 
             if (!string.IsNullOrEmpty(_appMetadata.EFormidling.DPFShipmentType))
             {
-                sbd.Arkivmelding.DPF.ForsendelsesType = _appMetadata.EFormidling.DPFShipmentType;
+                sbd.Arkivmelding.DPF = new() { ForsendelsesType = _appMetadata.EFormidling.DPFShipmentType };
             }
 
             return sbd;
