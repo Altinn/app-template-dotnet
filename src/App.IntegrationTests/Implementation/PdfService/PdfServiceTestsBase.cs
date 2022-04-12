@@ -17,7 +17,7 @@ using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
 
-namespace App.IntegrationTestsRef.Implementation
+namespace App.IntegrationTestsRef.Implementation.PdfService
 {
     public abstract class PdfServiceTestsBase
     {
@@ -130,7 +130,7 @@ namespace App.IntegrationTestsRef.Implementation
             return Options.Create(appSettings);
         }
 
-        internal virtual PdfService BuildPdfService(Action<HttpRequestMessage, CancellationToken> onDataPostCallback)
+        internal virtual Altinn.App.PlatformServices.Implementation.PdfService BuildPdfService(Action<HttpRequestMessage, CancellationToken> onDataPostCallback)
         {
             PDFClient pdfClient = MockPdfClient(onDataPostCallback);
             AppResourcesSI appResources = BuildAppResourcesService();
@@ -141,7 +141,7 @@ namespace App.IntegrationTestsRef.Implementation
             var registerClient = new Mock<IRegister>();
             var customPdfHandler = new NullPdfHandler();
 
-            var pdfService = new PdfService(pdfClient, appResources, appOptionsService, dataClient.Object, httpContextAccessor.Object, profileClient.Object, registerClient.Object, customPdfHandler);
+            var pdfService = new Altinn.App.PlatformServices.Implementation.PdfService(pdfClient, appResources, appOptionsService, dataClient.Object, httpContextAccessor.Object, profileClient.Object, registerClient.Object, customPdfHandler);
 
             return pdfService;
         }
