@@ -42,6 +42,7 @@ namespace App.IntegrationTestsRef.Implementation.PdfService
             pdfContext.OptionsDictionary["kommuner"].Keys.Should().Contain("Sogndal");
             pdfContext.OptionsDictionary["kommuner"].Values.Should().Contain("1813");
             pdfContext.OptionsDictionary["kommuner"].Keys.Should().Contain("Brønnøy");
+            pdfContext.OptionsDictionary["children"].Keys.Should().Contain("Ole");
         }
 
         private Instance GetInstance()
@@ -86,7 +87,8 @@ namespace App.IntegrationTestsRef.Implementation.PdfService
             return new IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Models.Flyttemelding()
             {
                 FlytterFra = new IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Models.FylkeKommune() { Fylke = "18", Kommune = "1813" },
-                FlytterTil = new IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Models.FylkeKommune() { Fylke = "46", Kommune = "4640" }
+                FlytterTil = new IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Models.FylkeKommune() { Fylke = "46", Kommune = "4640" },
+                Child = "1"
             };
         }
 

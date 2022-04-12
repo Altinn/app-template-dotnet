@@ -11,6 +11,7 @@ using Altinn.App.Services.Implementation;
 using Altinn.App.Services.Interface;
 using Altinn.Platform.Profile.Models;
 using Altinn.Platform.Register.Enums;
+using App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptions2.Options;
 using App.IntegrationTests.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -115,7 +116,12 @@ namespace App.IntegrationTestsRef.Implementation.PdfService
         {
             var appOptionSettings = BuildAppOptionSettings();
             var appOptionsFactory = new AppOptionsFactory(GetAppOptionProviders(appOptionSettings));
-            var instanceAppOptionsFactory = new InstanceAppOptionsFactory(new List<IInstanceAppOptionsProvider>());
+            var instanceAppOptionsFactory = new InstanceAppOptionsFactory(
+                new List<IInstanceAppOptionsProvider>()
+                {
+                    new ChildrenAppOptionsProvider()
+                }
+            );
 
             return new AppOptionsService(appOptionsFactory, instanceAppOptionsFactory);
         }
