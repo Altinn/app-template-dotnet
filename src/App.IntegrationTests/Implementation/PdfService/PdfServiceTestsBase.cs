@@ -120,8 +120,7 @@ namespace App.IntegrationTestsRef.Implementation.PdfService
                 new List<IInstanceAppOptionsProvider>()
                 {
                     new ChildrenAppOptionsProvider()
-                }
-            );
+                });
 
             return new AppOptionsService(appOptionsFactory, instanceAppOptionsFactory);
         }
