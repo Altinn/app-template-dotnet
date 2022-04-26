@@ -56,6 +56,11 @@ namespace Altinn.App.AppLogic
         /// <param name="prefill">External prefill available under instansiation if supplied</param>
         public async Task DataCreation(Instance instance, object data, Dictionary<string, string> prefill)
         {
+            if (data is Altinn.App.Models.TestModel model)
+            {
+                var addr = model?.rapport?.innsender?.adresse;
+            }
+
             await Task.CompletedTask;
         }
     }

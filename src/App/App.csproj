@@ -17,6 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Use Model Generator -->
+    <ProjectReference Include="..\Altinn.App.ModelGenerator\Altinn.App.ModelGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <AdditionalFiles Include="config\**\*.json"></AdditionalFiles>
+    <AdditionalFiles Include="ui\**\*.json"></AdditionalFiles>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\script\" />
   </ItemGroup>

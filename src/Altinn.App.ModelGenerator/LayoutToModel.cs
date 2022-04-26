@@ -28,17 +28,15 @@ namespace Altinn.App.ModelGenerator
             var ret = new List<string>();
             foreach (var layout in layouts)
             {
-                var node = JsonNode.Parse(layout)?["data"]?["layout"] as JsonArray;
-                if (node != null)
+                if (JsonNode.Parse(layout)?["data"]?["layout"] is JsonArray node)
                 {
                     foreach (var component in node)
                     {
-                        var bindings = component?["dataModelBindings"] as JsonObject;
-                        if(bindings != null)
+                        if (component?["dataModelBindings"] is JsonObject bindings)
                         {
-                            foreach(var binding in bindings)
+                            foreach (var binding in bindings)
                             {
-                                if((binding.Value as JsonValue)?.TryGetValue<string>(out string? value) ?? false)
+                                if ((binding.Value as JsonValue)?.TryGetValue(out string? value) ?? false)
                                 {
                                     ret.Add(value!);
                                 }
