@@ -8,7 +8,7 @@ namespace Altinn.App.ModelGenerator.Tests;
 public class LayoutToModelTests
 {
     [Theory]
-    [FileDataAttribute("LayoutToModel/FormLayout.json", "LayoutToModel/Summary.json", "LayoutToModel/bindings.json", "LayoutToModel/model.cs")]
+    [FileData("LayoutToModel/FormLayout.json", "LayoutToModel/Summary.json", "LayoutToModel/bindings.json", "LayoutToModel/model.cs")]
     public void TestGetModelDataBindings(string FormLayout, string summary, string expectedBindings, string expectedModel)
     {
         // while (!System.Diagnostics.Debugger.IsAttached)
