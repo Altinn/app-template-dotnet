@@ -26,8 +26,8 @@ namespace Altinn.App.PlatformServices.Extensions
             }
             catch (DirectoryNotFoundException)
             {
-                // Extra secrets configuration file is optional. The directory usually does not exist, but might
-                // typically be mounted to a folder directly on the filesystem root. We could init the file provider
+                // Extra secrets configuration file is optional. The directory does not exist in dev environments, but
+                // is otherwise mounted to a folder directly on the filesystem root. We could init the file provider
                 // with the root folder (and not have to catch this exception), but that would cause
                 // 'reloadOnChange: true' to recurse through the entire file system to monitor for changes.
             }
