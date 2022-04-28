@@ -285,7 +285,7 @@ namespace Altinn.App.Services.Implementation
 
             if (originalMessage.StartsWith(_generalSettings.InfoValidationPrefix))
             {
-                return (ValidationIssueSeverity.Info,
+                return (ValidationIssueSeverity.Informational,
                     originalMessage.Remove(0, _generalSettings.InfoValidationPrefix.Length));
             }
 
