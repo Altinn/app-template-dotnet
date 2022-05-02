@@ -111,8 +111,7 @@ namespace Altinn.App.Api.Controllers
 
             DataType dataType = GetStatelessDataType(application);
 
-            // Check if anonymous user is allowed - TODO replace with real check
-            if (dataType != null && dataType.AllowedContentTypes.Contains("stateless"))
+            if (dataType != null && dataType.AppLogic.AllowAnonymousOnStateless)
             {
                 return true;
             }
