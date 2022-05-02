@@ -1,11 +1,23 @@
 using System;
+using System.Collections.Generic;
 
 namespace Altinn.App.Api.Models
 {
     /// <summary>
-    /// A simplified instance model used for presentation of key instance information.
+    /// A definition of the layout sets available to an app
     /// </summary>
     public class LayoutSets
+    {
+        /// <summary>
+        /// The list of layout sets
+        /// </summary>
+        public List<LayoutSet> Sets { get; set; }
+    }
+
+    /// <summary>
+    /// A layout set definition
+    /// </summary>
+    public class LayoutSet
     {
         /// <summary>
         /// The layout set id.

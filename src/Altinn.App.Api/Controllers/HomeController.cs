@@ -26,7 +26,7 @@ namespace Altinn.App.Api.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly AppSettings _appSettings;
         private readonly IAppResources _appResources;
-        private readonly List<string> _onEntryWithInstance = new List<string>{"new-instance", "select-instance"};
+        private readonly List<string> _onEntryWithInstance = new List<string>{ "new-instance", "select-instance" };
 
         /// <summary>
         /// Initialize a new instance of the <see cref="HomeController"/> class.
@@ -124,8 +124,8 @@ namespace Altinn.App.Api.Controllers
         {
             string layoutSetsString = _appResources.GetLayoutSets();
             JsonSerializerOptions options = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-            List<LayoutSets> layoutSets = JsonSerializer.Deserialize<List<LayoutSets>>(layoutSetsString, options);
-            string dataTypeId = layoutSets.Find(set => set.Id == application.OnEntry?.Show).DataType;
+            LayoutSets layoutSets = JsonSerializer.Deserialize<LayoutSets>(layoutSetsString, options);
+            string dataTypeId = layoutSets.Sets.Find(set => set.Id == application.OnEntry?.Show).DataType;
             return application.DataTypes.Find(d => d.Id == dataTypeId);
         }
     }
