@@ -3,7 +3,6 @@ using System.Net;
 using System.Threading.Tasks;
 
 using Altinn.App.Api.Filters;
-
 using Altinn.App.Common.Serialization;
 using Altinn.App.PlatformServices.Extensions;
 using Altinn.App.Services.Interface;
@@ -134,7 +133,8 @@ namespace Altinn.App.Api.Controllers
         [RequestSizeLimit(REQUEST_SIZE_LIMIT)]
         [ProducesResponseType(typeof(DataElement), 200)]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public async Task<ActionResult> Get([FromQuery] string dataType, [FromQuery] bool anonymous)
+        [Route("anonymous")]
+        public async Task<ActionResult> GetAnonymous([FromQuery] string dataType)
         {
             if (string.IsNullOrEmpty(dataType))
             {
@@ -169,7 +169,6 @@ namespace Altinn.App.Api.Controllers
         [RequestSizeLimit(REQUEST_SIZE_LIMIT)]
         [ProducesResponseType(typeof(DataElement), 200)]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        [Route("anonymous")]
         public async Task<ActionResult> Post(
             [FromRoute] string org,
             [FromRoute] string app,
@@ -234,6 +233,7 @@ namespace Altinn.App.Api.Controllers
         [RequestSizeLimit(REQUEST_SIZE_LIMIT)]
         [ProducesResponseType(typeof(DataElement), 200)]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [Route("anonymous")]
         public async Task<ActionResult> PostAnonymous([FromQuery] string dataType)
         {
             if (string.IsNullOrEmpty(dataType))
