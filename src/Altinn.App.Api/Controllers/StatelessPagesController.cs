@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using Altinn.App.Common.Models;
 using Altinn.App.Common.Serialization;
+using Altinn.App.PlatformServices.Models;
 using Altinn.App.Services.Implementation;
 using Altinn.App.Services.Interface;
 using Altinn.Platform.Storage.Interface.Models;
@@ -28,7 +29,7 @@ namespace Altinn.App.Api.Controllers
     {
         private readonly IAltinnApp _altinnApp;
         private readonly IAppResources _resources;
-        private readonly IStatelessPageOrder _pageOrder;
+        private readonly IPageOrder _pageOrder;
         private readonly ILogger _logger;
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace Altinn.App.Api.Controllers
         /// <param name="resources">The app resource service</param>
         /// <param name="pageOrder">The page order service</param>
         /// <param name="logger">A logger provided by the logging framework.</param>
-        public StatelessPagesController(IAltinnApp altinnApp, IAppResources resources, IStatelessPageOrder pageOrder, ILogger<PagesController> logger)
+        public StatelessPagesController(IAltinnApp altinnApp, IAppResources resources, IPageOrder pageOrder, ILogger<PagesController> logger)
         {
             _altinnApp = altinnApp;
             _resources = resources;
@@ -67,7 +68,7 @@ namespace Altinn.App.Api.Controllers
             string classRef = _resources.GetClassRefForLogicDataType(dataTypeId);
 
             object data = JsonConvert.DeserializeObject(formData.ToString(), _altinnApp.GetAppModelType(classRef));
-            return await _pageOrder.GetPageOrder(org, app, layoutSetId, currentPage, dataTypeId, data);
+            return await _pageOrder.GetPageOrder(new AppIdentifier(org, app), InstanceIdentifier.NoInstance, layoutSetId, currentPage, dataTypeId, data);
         }
     }
 }
