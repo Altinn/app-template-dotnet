@@ -26,7 +26,7 @@ namespace Altinn.App.Api.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly AppSettings _appSettings;
         private readonly IAppResources _appResources;
-        private readonly List<string> _onEntryWithInstance = new List<string>{ "new-instance", "select-instance" };
+        private readonly List<string> _onEntryWithInstance = new List<string> { "new-instance", "select-instance" };
 
         /// <summary>
         /// Initialize a new instance of the <see cref="HomeController"/> class.

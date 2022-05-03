@@ -126,6 +126,39 @@ namespace Altinn.App.Api.Controllers
         /// <summary>
         /// Create a new data object of the defined data type
         /// </summary>
+        /// <param name="dataType">The data type id</param>
+        /// <returns>Return a new instance of the data object including prefill and initial calculations</returns>
+        [AllowAnonymous]
+        [HttpGet]
+        [DisableFormValueModelBinding]
+        [RequestSizeLimit(REQUEST_SIZE_LIMIT)]
+        [ProducesResponseType(typeof(DataElement), 200)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public async Task<ActionResult> Get([FromQuery] string dataType, [FromQuery] bool anonymous)
+        {
+            if (string.IsNullOrEmpty(dataType))
+            {
+                return BadRequest($"Invalid dataType {dataType} provided. Please provide a valid dataType as query parameter.");
+            }
+
+            string classRef = _appResourcesService.GetClassRefForLogicDataType(dataType);
+
+            if (string.IsNullOrEmpty(classRef))
+            {
+                return BadRequest($"Invalid dataType {dataType} provided. Please provide a valid dataType as query parameter.");
+            }
+
+            object appModel = _altinnApp.CreateNewAppModel(classRef);
+
+            var virutalInstance = new Instance();
+            await _altinnApp.RunProcessDataRead(virutalInstance, null, appModel);
+
+            return Ok(appModel);
+        }
+
+        /// <summary>
+        /// Create a new data object of the defined data type
+        /// </summary>
         /// <param name="org">unique identfier of the organisation responsible for the app</param>
         /// <param name="app">application identifier which is unique within an organisation</param>
         /// <param name="dataType">The data type id</param>
@@ -136,6 +169,7 @@ namespace Altinn.App.Api.Controllers
         [RequestSizeLimit(REQUEST_SIZE_LIMIT)]
         [ProducesResponseType(typeof(DataElement), 200)]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [Route("anonymous")]
         public async Task<ActionResult> Post(
             [FromRoute] string org,
             [FromRoute] string app,
@@ -184,6 +218,45 @@ namespace Altinn.App.Api.Controllers
             await _prefillService.PrefillDataModel(owner.PartyId, dataType, appModel);
 
             Instance virutalInstance = new Instance() { InstanceOwner = owner };
+            await _altinnApp.RunProcessDataRead(virutalInstance, null, appModel);
+
+            return Ok(appModel);
+        }
+
+        /// <summary>
+        /// Create a new data object of the defined data type
+        /// </summary>
+        /// <param name="dataType">The data type id</param>
+        /// <returns>Return a new instance of the data object including prefill and initial calculations</returns>
+        [AllowAnonymous]
+        [HttpPost]
+        [DisableFormValueModelBinding]
+        [RequestSizeLimit(REQUEST_SIZE_LIMIT)]
+        [ProducesResponseType(typeof(DataElement), 200)]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public async Task<ActionResult> PostAnonymous([FromQuery] string dataType)
+        {
+            if (string.IsNullOrEmpty(dataType))
+            {
+                return BadRequest($"Invalid dataType {dataType} provided. Please provide a valid dataType as query parameter.");
+            }
+
+            string classRef = _appResourcesService.GetClassRefForLogicDataType(dataType);
+
+            if (string.IsNullOrEmpty(classRef))
+            {
+                return BadRequest($"Invalid dataType {dataType} provided. Please provide a valid dataType as query parameter.");
+            }
+
+            ModelDeserializer deserializer = new ModelDeserializer(_logger, _altinnApp.GetAppModelType(classRef));
+            object appModel = await deserializer.DeserializeAsync(Request.Body, Request.ContentType);
+
+            if (!string.IsNullOrEmpty(deserializer.Error))
+            {
+                return BadRequest(deserializer.Error);
+            }
+
+            Instance virutalInstance = new Instance();
             await _altinnApp.RunProcessDataRead(virutalInstance, null, appModel);
 
             return Ok(appModel);
