@@ -36,11 +36,11 @@ namespace Altinn.App.Api.Controllers
         /// <param name="resources">The app resource service</param>
         /// <param name="logger">A logger provided by the logging framework.</param>
         /// <param name="pageOrder">The page order service</param>
-        public PagesController(IAltinnApp altinnApp, IAppResources resources, ILogger<PagesController> logger, IStatefulPageOrder pageOrder = null)
+        public PagesController(IAltinnApp altinnApp, IAppResources resources, IStatefulPageOrder pageOrder, ILogger<PagesController> logger)
         {
             _altinnApp = altinnApp;
             _resources = resources;
-            _pageOrder = pageOrder ?? new DefaultStatefulPageOrder(altinnApp);
+            _pageOrder = pageOrder;
             _logger = logger;
         }
 
