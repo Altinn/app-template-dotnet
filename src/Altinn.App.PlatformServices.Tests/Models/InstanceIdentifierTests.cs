@@ -50,5 +50,13 @@ namespace Altinn.App.PlatformServices.Tests.Models
 
             instanceIdentifier.IsNoInstance.Should().BeTrue();
         }
+
+        [Fact]
+        public void InstanceIdentifier_NoInstance_GetInstanceId_throws_ArgumentNullException()
+        {
+            var instanceIdentifier = InstanceIdentifier.NoInstance;
+
+            Assert.Throws<ArgumentNullException>(() => instanceIdentifier.GetInstanceId());
+        }
     }
 }
