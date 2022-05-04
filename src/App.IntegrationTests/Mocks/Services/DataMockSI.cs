@@ -160,7 +160,7 @@ namespace App.IntegrationTests.Mocks.Services
 
             Directory.CreateDirectory(dataPath + @"blob");
 
-            using (Stream stream = File.Open(dataPath + @"blob/" + dataId.ToString(), FileMode.Create, FileAccess.ReadWrite))
+            using (Stream stream = File.Open(dataPath + $@"blob{Path.DirectorySeparatorChar}" + dataId.ToString(), FileMode.Create, FileAccess.ReadWrite))
             {
                 XmlSerializer serializer = new XmlSerializer(type);
                 serializer.Serialize(stream, dataToSerialize);
@@ -179,7 +179,7 @@ namespace App.IntegrationTests.Mocks.Services
         private static string GetDataPath(string org, string app, int instanceOwnerId, Guid instanceGuid)
         {
             string unitTestFolder = Path.GetDirectoryName(new Uri(typeof(InstanceMockSI).Assembly.Location).LocalPath);
-            return Path.Combine(unitTestFolder, @"../../../Data/Instances", org, app, instanceOwnerId.ToString(), instanceGuid.ToString()) + "/";
+            return Path.Combine(unitTestFolder, @"../../../Data/Instances", org, app, instanceOwnerId.ToString(), instanceGuid.ToString()) + Path.DirectorySeparatorChar;
         }
 
         private static string GetDataBlobPath(string org, string app, int instanceOwnerId, Guid instanceGuid, Guid dataId)
