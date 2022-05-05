@@ -1,4 +1,3 @@
-using System.IO;
 using Altinn.App.PlatformServices.Helpers;
 using Xunit;
 
