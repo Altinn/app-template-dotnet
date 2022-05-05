@@ -1,7 +1,7 @@
-name: Code build test on all os-latest
+name: Build and Test on windows and macos
 on:
   push:
-    branches: [ main, chore/make-test-run-on-mac ]
+    branches: [ main ]
   pull_request:
     branches: [ main ]
     types: [opened, synchronize, reopened]
