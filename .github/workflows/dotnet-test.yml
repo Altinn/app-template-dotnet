@@ -13,6 +13,8 @@ jobs:
         os: [ubuntu-latest, macos-latest,windows-latest]
     name: Run dotnet build and test
     runs-on: ${{ matrix.os}}
+    env: 
+      DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE: false
     steps:
       - name: Setup .NET
         uses: actions/setup-dotnet@v1
