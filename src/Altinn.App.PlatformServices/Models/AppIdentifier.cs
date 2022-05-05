@@ -27,6 +27,5 @@ namespace Altinn.App.PlatformServices.Models
             Org = org;
             App = app;
         }
-
     }
 }
