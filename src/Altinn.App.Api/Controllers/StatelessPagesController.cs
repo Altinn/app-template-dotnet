@@ -22,7 +22,6 @@ namespace Altinn.App.Api.Controllers
     /// <summary>
     /// Handles page related operations
     /// </summary>
-    [Authorize]
     [ApiController]
     [Route("{org}/{app}/v1/pages")]
     public class StatelessPagesController : ControllerBase
@@ -62,7 +61,7 @@ namespace Altinn.App.Api.Controllers
         {
             if (string.IsNullOrEmpty(dataTypeId))
             {
-                return BadRequest("Query parameter `dataTypeId` must be defined");
+                return BadRequest($"Query parameter `{nameof(dataTypeId)}` must be defined");
             }
 
             string classRef = _resources.GetClassRefForLogicDataType(dataTypeId);
