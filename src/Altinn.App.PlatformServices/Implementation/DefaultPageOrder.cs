@@ -45,7 +45,6 @@ namespace Altinn.App.Services.Implementation
                 return await Task.FromResult(layoutSettings.Pages.Order);
             }
 
-            // TODO: Remove this when GetPageOrder is removed.
             return await _altinnApp.GetPageOrder(
                 appIdentifier.Org,
                 appIdentifier.App,
