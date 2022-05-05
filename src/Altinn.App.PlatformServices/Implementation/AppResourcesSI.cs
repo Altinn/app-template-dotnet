@@ -83,10 +83,10 @@ namespace Altinn.App.Services.Implementation
         }
 
         /// <inheritdoc />
-        public async Task<TextResource> GetTexts(string org, string app, string language)
+        public async Task<TextResource> GetTexts(string org, string app, string languageCode)
         {
             string pathTextsFolder = _settings.AppBasePath + _settings.ConfigurationFolder + _settings.TextFolder;
-            string fullFileName = Path.Join(pathTextsFolder, $"resource.{language}.json");
+            string fullFileName = Path.Join(pathTextsFolder, $"resource.{languageCode}.json");
 
             PathHelper.EnsureLegalPath(pathTextsFolder, fullFileName);
 
@@ -99,9 +99,9 @@ namespace Altinn.App.Services.Implementation
             {
                 JsonSerializerOptions options = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
                 TextResource textResource = await System.Text.Json.JsonSerializer.DeserializeAsync<TextResource>(fileStream, options);
-                textResource.Id = $"{org}-{app}-{language}";
+                textResource.Id = $"{org}-{app}-{languageCode}";
                 textResource.Org = org;
-                textResource.Language = language;
+                textResource.LanguageCode = languageCode;
 
                 return textResource;
             }
@@ -424,6 +424,60 @@ namespace Altinn.App.Services.Implementation
             }
 
             return null;
+        }
+
+        /// <inheritdoc />
+        public async Task<List<ApplicationLanguage>> GetApplicationLanguages()
+        {
+            string pathTextsResourceFolder = _settings.AppBasePath + _settings.ConfigurationFolder + _settings.TextFolder;
+
+            DirectoryInfo directoryInfo = new DirectoryInfo(pathTextsResourceFolder);
+
+            if (!directoryInfo.Exists)
+            {
+                _logger.LogWarning("The text resource directory does not exist");
+                return new List<ApplicationLanguage>();
+            }
+
+            if (directoryInfo.GetFiles().Length < 1)
+            {
+                _logger.LogWarning("There are no resource files located in the text resource directory");
+                return new List<ApplicationLanguage>();
+            }
+
+            var textResourceFilesInDirectory = directoryInfo.GetFiles();
+            var applicationLanguages = new List<ApplicationLanguage>();
+
+            foreach (var fileInfo in textResourceFilesInDirectory)
+            {
+                try
+                {
+                    string fullFileName = Path.Join(pathTextsResourceFolder, fileInfo.Name);
+                    PathHelper.EnsureLegalPath(pathTextsResourceFolder, fullFileName);
+                    if (!File.Exists(fullFileName))
+                    {
+                        _logger.LogWarning("Something went wrong while trying to fetch the application language");
+                        return new List<ApplicationLanguage>();
+                    }
+
+                    ApplicationLanguage applicationLanguage;
+
+                    await using (FileStream fileStream = new(fullFileName, FileMode.Open, FileAccess.Read))
+                    {
+                        JsonSerializerOptions options = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+                        applicationLanguage = await System.Text.Json.JsonSerializer.DeserializeAsync<ApplicationLanguage>(fileStream, options);
+                    }
+
+                    applicationLanguages.Add(applicationLanguage);
+                }
+                catch (Exception)
+                {
+                    _logger.LogWarning("Something went wrong while trying to fetch the application language");
+                    return new List<ApplicationLanguage>();
+                }
+            }
+
+            return applicationLanguages;
         }
     }
 }

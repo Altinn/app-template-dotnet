@@ -51,7 +51,7 @@ namespace Altinn.App.PlatformServices.Tests.Implementation
         {
             // Arrange
             memoryCache.Remove("org-app-nb");
-            TextResource texts = new TextResource { Language = "nb" };
+            TextResource texts = new TextResource { LanguageCode = "nb" };
 
             HttpResponseMessage httpResponseMessage = new HttpResponseMessage
             {
@@ -75,7 +75,7 @@ namespace Altinn.App.PlatformServices.Tests.Implementation
         {
             // Arrange
             memoryCache.Remove("org-app-nb");
-            TextResource texts = new TextResource { Language = "nb" };
+            TextResource texts = new TextResource { LanguageCode = "nb" };
             memoryCache.Set("org-app-nb", texts);
 
             InitializeMocks(new HttpResponseMessage(), "texts");
@@ -87,7 +87,7 @@ namespace Altinn.App.PlatformServices.Tests.Implementation
             TextResource actual = await target.GetText("org", "app", "nb");
 
             // Assert
-            Assert.Equal(texts.Language, actual.Language);
+            Assert.Equal(texts.LanguageCode, actual.LanguageCode);
         }
 
         [Fact]

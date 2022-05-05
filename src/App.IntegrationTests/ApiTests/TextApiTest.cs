@@ -65,7 +65,7 @@ namespace App.IntegrationTestsRef.ApiTests
             TextResource actual = (TextResource)JsonConvert.DeserializeObject(responseContent, typeof(TextResource));
 
             Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
-            Assert.Equal(expectedLanguage, actual.Language);
+            Assert.Equal(expectedLanguage, actual.LanguageCode);
         }
     }
 }
