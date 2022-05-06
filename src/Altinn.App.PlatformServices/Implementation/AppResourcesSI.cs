@@ -101,7 +101,7 @@ namespace Altinn.App.Services.Implementation
                 TextResource textResource = await System.Text.Json.JsonSerializer.DeserializeAsync<TextResource>(fileStream, options);
                 textResource.Id = $"{org}-{app}-{languageCode}";
                 textResource.Org = org;
-                textResource.LanguageCode = languageCode;
+                textResource.Language = languageCode;
 
                 return textResource;
             }

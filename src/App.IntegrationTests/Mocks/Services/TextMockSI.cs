@@ -22,7 +22,7 @@ namespace App.IntegrationTestsRef.Mocks.Services
                 textResource = (TextResource)JsonConvert.DeserializeObject(fileContent, typeof(TextResource));
                 textResource.Id = $"{org}-{app}-{language}";
                 textResource.Org = org;
-                textResource.LanguageCode = language;
+                textResource.Language = language;
             }
 
             return Task.FromResult(textResource);
