@@ -24,6 +24,7 @@ namespace Altinn.App.Api.Controllers
     /// </summary>
     [ApiController]
     [Route("{org}/{app}/v1/pages")]
+    [AllowAnonymous]
     public class StatelessPagesController : ControllerBase
     {
         private readonly IAltinnApp _altinnApp;
