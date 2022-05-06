@@ -123,9 +123,16 @@ namespace Altinn.App.Api.Controllers
         {
             string layoutSetsString = _appResources.GetLayoutSets();
             JsonSerializerOptions options = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-            LayoutSets layoutSets = JsonSerializer.Deserialize<LayoutSets>(layoutSetsString, options);
-            string dataTypeId = layoutSets.Sets.Find(set => set.Id == application.OnEntry?.Show).DataType;
-            return application.DataTypes.Find(d => d.Id == dataTypeId);
+
+            // Stateless apps only work with layousets
+            if (!string.IsNullOrEmpty(layoutSetsString))
+            {
+                LayoutSets layoutSets = JsonSerializer.Deserialize<LayoutSets>(layoutSetsString, options);
+                string dataTypeId = layoutSets.Sets.Find(set => set.Id == application.OnEntry?.Show).DataType;
+                return application.DataTypes.Find(d => d.Id == dataTypeId);
+            }
+
+            return null;
         }
     }
 }
