@@ -80,7 +80,7 @@ namespace Altinn.App.PlatformServices.Models
         {
             if (IsNoInstance)
             {
-                throw new ArgumentNullException($"No instance id available for {nameof(NoInstance)}");
+                throw new ArgumentNullException(nameof(InstanceGuid), "No instance id available for instance");
             }
             
             return $"{InstanceOwnerPartyId}/{InstanceGuid}";
