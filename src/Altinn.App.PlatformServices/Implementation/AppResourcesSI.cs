@@ -83,10 +83,10 @@ namespace Altinn.App.Services.Implementation
         }
 
         /// <inheritdoc />
-        public async Task<TextResource> GetTexts(string org, string app, string languageCode)
+        public async Task<TextResource> GetTexts(string org, string app, string language)
         {
             string pathTextsFolder = _settings.AppBasePath + _settings.ConfigurationFolder + _settings.TextFolder;
-            string fullFileName = Path.Join(pathTextsFolder, $"resource.{languageCode}.json");
+            string fullFileName = Path.Join(pathTextsFolder, $"resource.{language}.json");
 
             PathHelper.EnsureLegalPath(pathTextsFolder, fullFileName);
 
@@ -99,9 +99,9 @@ namespace Altinn.App.Services.Implementation
             {
                 JsonSerializerOptions options = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
                 TextResource textResource = await System.Text.Json.JsonSerializer.DeserializeAsync<TextResource>(fileStream, options);
-                textResource.Id = $"{org}-{app}-{languageCode}";
+                textResource.Id = $"{org}-{app}-{language}";
                 textResource.Org = org;
-                textResource.Language = languageCode;
+                textResource.Language = language;
 
                 return textResource;
             }
