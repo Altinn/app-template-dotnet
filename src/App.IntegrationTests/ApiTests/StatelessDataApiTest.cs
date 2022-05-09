@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Altinn.App.IntegrationTests;
 
 using App.IntegrationTests.Utils;
-
 using Newtonsoft.Json;
 
 using Xunit;
@@ -54,6 +53,44 @@ namespace App.IntegrationTests.ApiTests
             Assert.NotNull(actualCalculatedValue);
             Assert.Equal(expectedPrefillValue, actualPrefillValue);
             Assert.Equal(expectedCalculatedValue, actualCalculatedValue);
+        }
+
+        [Fact]
+        public async Task GetAnonymous_CorrectDataType_ShouldReturnOk()
+        {
+            // Arrange
+            string org = "ttd";
+            string app = "anonymous-stateless";
+            HttpClient client = SetupUtil.GetTestClient(_factory, org, app);
+            string requestUri = $"/{org}/{app}/v1/data/anonymous?dataType=Veileder";
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+
+            // Act
+            HttpResponseMessage res = await client.SendAsync(httpRequestMessage);
+            string responseContent = await res.Content.ReadAsStringAsync();
+            Mocks.Apps.Ttd.AnonymousStateless.Models.Veileder dataObject = JsonConvert.DeserializeObject<Mocks.Apps.Ttd.AnonymousStateless.Models.Veileder>(responseContent);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, res.StatusCode);
+        }
+
+        [Theory]
+        [InlineData("nonexisting")]
+        [InlineData("")]
+        public async Task GetAnonymous_CorrectDataType_ShouldReturnBadRequest(string dataType)
+        {
+            // Arrange
+            string org = "ttd";
+            string app = "anonymous-stateless";
+            HttpClient client = SetupUtil.GetTestClient(_factory, org, app);
+            string requestUri = $"/{org}/{app}/v1/data/anonymous?dataType={dataType}";
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+
+            // Act
+            HttpResponseMessage res = await client.SendAsync(httpRequestMessage);
+           
+            // Assert
+            Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
         }
 
         [Fact]
