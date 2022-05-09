@@ -40,7 +40,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
         /// </example>
         /// <param name="instance">The instance being validated</param>
         /// <returns>The validation result object (null if no errors) </returns>
-        public async Task<InstantiationValidationResult> RunInstantiationValidation(Instance instance)
+        public static async Task<InstantiationValidationResult> RunInstantiationValidation(Instance instance)
         {
             return await Task.FromResult((InstantiationValidationResult)null);
         }
@@ -54,7 +54,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
         /// <param name="instance">Instance information</param>
         /// <param name="data">The data object created</param>
         /// <param name="prefill">External prefill available under instansiation if supplied</param>
-        public async Task DataCreation(Instance instance, object data, Dictionary<string, string> prefill)
+        public static async Task DataCreation(Instance instance, object data, Dictionary<string, string> prefill)
         {
             await Task.CompletedTask;
         }

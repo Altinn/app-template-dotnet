@@ -77,7 +77,7 @@ namespace App.IntegrationTests.ApiTests
         [Theory]
         [InlineData("nonexisting")]
         [InlineData("")]
-        public async Task GetAnonymous_CorrectDataType_ShouldReturnBadRequest(string dataType)
+        public async Task GetAnonymous_InvalidDataType_ShouldReturnBadRequest(string dataType)
         {
             // Arrange
             string org = "ttd";

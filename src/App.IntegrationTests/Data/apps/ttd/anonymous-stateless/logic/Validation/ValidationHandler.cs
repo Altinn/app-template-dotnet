@@ -45,7 +45,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
         ///     }
         /// }
         /// </example>
-        public async Task ValidateData(object data, ModelStateDictionary validationResults)
+        public static async Task ValidateData(object data, ModelStateDictionary validationResults)
         {
             await Task.CompletedTask;
         }
@@ -70,7 +70,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
         ///     }
         ///   }
         /// </example>
-        public async Task ValidateTask(Instance instance, string taskId, ModelStateDictionary validationResults)
+        public static async Task ValidateTask(Instance instance, string taskId, ModelStateDictionary validationResults)
         {
             await Task.CompletedTask;
         }

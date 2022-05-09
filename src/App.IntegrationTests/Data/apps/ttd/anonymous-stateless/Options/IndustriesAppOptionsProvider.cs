@@ -18,7 +18,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless.Options
                 {
                     new AppOption() { Value = "A", Label = "Jordbruk, skogbruk og fiske" },
                     new AppOption() { Value = "B", Label = "Bergverksdrift og utvinning" },
-                    new AppOption() { Value = "C", Label = "Industri"}
+                    new AppOption() { Value = "C", Label = "Industri" }
                 }
             };
 

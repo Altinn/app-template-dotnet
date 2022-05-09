@@ -86,7 +86,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
         /// <param name="data">The data to perform calculations on</param>
         public override async Task<bool> RunProcessDataRead(Instance instance, Guid? dataId, object data)
         {
-            return await _dataProcessingHandler.ProcessDataRead(instance, dataId, data);
+            return await DataProcessingHandler.ProcessDataRead(instance, dataId, data);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
         /// <param name="data">The data to perform calculations on</param>
         public override async Task<bool> RunProcessDataWrite(Instance instance, Guid? dataId, object data)
         {
-            return await _dataProcessingHandler.ProcessDataWrite(instance, dataId, data);
+            return await DataProcessingHandler.ProcessDataWrite(instance, dataId, data);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
         /// <returns>Value indicating if the form is valid or not</returns>
         public override async Task RunDataValidation(object data, ModelStateDictionary validationResults)
         {
-           await _validationHandler.ValidateData(data, validationResults);
+           await ValidationHandler.ValidateData(data, validationResults);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
         /// <returns>A task supporting the async await pattern.</returns>
         public override async Task RunTaskValidation(Instance instance, string taskId, ModelStateDictionary validationResults)
         {
-            await _validationHandler.ValidateTask(instance, taskId, validationResults);
+            await ValidationHandler.ValidateTask(instance, taskId, validationResults);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
         /// <returns>Task with validation results</returns>
         public override async Task<InstantiationValidationResult> RunInstantiationValidation(Instance instance)
         {
-            return await _instantiationHandler.RunInstantiationValidation(instance);
+            return await InstantiationHandler.RunInstantiationValidation(instance);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
         /// <param name="prefill">External prefill available under instansiation</param>
         public override async Task RunDataCreation(Instance instance, object data, Dictionary<string, string> prefill)
         {
-           await _instantiationHandler.DataCreation(instance, data, prefill);
+           await InstantiationHandler.DataCreation(instance, data, prefill);
         }
 
         /// <summary>
