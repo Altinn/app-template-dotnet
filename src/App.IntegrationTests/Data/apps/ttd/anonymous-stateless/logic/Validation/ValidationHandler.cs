@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 //// using Altinn.App.Models; // Uncomment this line to refer to app model(s)
 
-namespace Mocks.Apps.Ttd.AnonymousStateless.AppLogic.Validation
+namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
 {
     /// <summary>
     /// Represents a business logic class responsible for running validation at different steps of a process.

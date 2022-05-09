@@ -185,6 +185,37 @@ namespace App.IntegrationTests.ApiTests
         }
 
         [Fact]
+        public async Task PostAnonymous_ValidDatatype_CalculationsRunAndDataReturned()
+        {
+            // Arrange
+            string org = "ttd";
+            string app = "anonymous-stateless";
+            string expected = "6863";
+
+            HttpClient client = SetupUtil.GetTestClient(_factory, org, app);
+
+            string requestUri = $"/{org}/{app}/v1/data/anonymous?dataType=Veileder";
+            string requestBody = "{\"Bransje\":\"A\",\"Kommune\":null}";
+
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri)
+            {
+                Content = new StringContent(requestBody, Encoding.UTF8, "application/json")
+            };
+
+            // Act
+            HttpResponseMessage res = await client.SendAsync(httpRequestMessage);
+
+            string responseContent = await res.Content.ReadAsStringAsync();
+            Mocks.Apps.Ttd.AnonymousStateless.Models.Veileder dataObject = JsonConvert.DeserializeObject<Mocks.Apps.Ttd.AnonymousStateless.Models.Veileder>(responseContent);
+            string actual = dataObject.Kommune;
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, res.StatusCode);
+            Assert.NotNull(actual);
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
         public async Task StatelessData_Post_CalculationsRunAndDataReturned()
         {
             // Arrange

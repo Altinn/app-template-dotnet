@@ -1,10 +1,11 @@
 using System;
 using System.Threading.Tasks;
 using Altinn.Platform.Storage.Interface.Models;
+using App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless.Models;
 
 //// using Altinn.App.Models; // <-- Uncomment this line to refer to app model(s)
 
-namespace Mocks.Apps.Ttd.AnonymousStateless
+namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
 {
     /// <summary>
     /// Represents a business logic class responsible for running calculations on an instance.
@@ -26,7 +27,18 @@ namespace Mocks.Apps.Ttd.AnonymousStateless
         /// <param name="data">The data as object</param>
         public async Task<bool> ProcessDataRead(Instance instance, Guid? dataId, object data)
         {
-            return await Task.FromResult(false);
+            bool changed = false;
+            if (data.GetType() == typeof(Veileder))
+            {
+                Veileder model = (Veileder)data;
+                if (model.Kommune == null)
+                {
+                    model.Kommune = "6863";
+                    changed = true;
+                }
+            }
+
+            return await Task.FromResult(changed);
         }
 
         /// <summary>

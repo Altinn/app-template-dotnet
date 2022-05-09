@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Altinn.App.Common.Models;
 using Altinn.App.PlatformServices.Interface;
 
-namespace Mocks.Apps.Ttd.AnonymousStateless
+namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless
 {
     /// <summary>
     /// Handler for formatting PDF.
