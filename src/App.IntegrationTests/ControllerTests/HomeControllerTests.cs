@@ -51,7 +51,6 @@ namespace App.IntegrationTests.ControllerTests
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"/{org}/{app}/");
 
             HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
-            string responseContent = await response.Content.ReadAsStringAsync();
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
