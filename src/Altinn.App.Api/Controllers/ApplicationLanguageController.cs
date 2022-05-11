@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Altinn.App.Services.Interface;
+using Altinn.App.PlatformServices.Interface;
 using Altinn.Platform.Storage.Interface.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,26 +14,25 @@ namespace Altinn.App.Api.Controllers
     [Authorize]
     public class ApplicationLanguageController : ControllerBase
     {
-        private readonly IAppResources _appResources;
+        private readonly IApplicationLanguage _applicationLanguage;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationLanguageController"/> class.
         /// </summary>
-        /// <param name="appResources">A service with access to text resources.</param>
-        public ApplicationLanguageController(IAppResources appResources)
+        /// <param name="applicationLanguage">An implementation with access to application languages.</param>
+        public ApplicationLanguageController(IApplicationLanguage applicationLanguage)
         {
-            _appResources = appResources;
+            _applicationLanguage = applicationLanguage;
         }
 
         /// <summary>
         /// Method to retrieve the supported languages from the application
         /// </summary>
-        /// <returns>Returns a dictionary where the key is the language code represented in a 2-char ISOFormat
-        /// and the value is the language</returns>
+        /// <returns>Returns a list of ApplicationLanguages</returns>
         [HttpGet]
         public async Task<ActionResult<List<ApplicationLanguage>>> GetLanguages()
         {
-            return await _appResources.GetApplicationLanguages();
+            return await _applicationLanguage.GetApplicationLanguages();
         }
     }
 }

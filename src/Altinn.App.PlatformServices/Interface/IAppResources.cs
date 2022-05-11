@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Altinn.App.Common.Models;
 using Altinn.Platform.Storage.Interface.Models;
@@ -148,11 +147,5 @@ namespace Altinn.App.Services.Interface
         /// </summary>
         /// <returns>The layout settings</returns>
         byte[] GetRuleHandlerForSet(string id);
-
-        /// <summary>
-        /// Gets the supported languages from the application located in the text resource folder.
-        /// </summary>
-        /// <returns>Returns a list of the supported languages</returns>
-        Task<List<ApplicationLanguage>> GetApplicationLanguages();
     }
 }
