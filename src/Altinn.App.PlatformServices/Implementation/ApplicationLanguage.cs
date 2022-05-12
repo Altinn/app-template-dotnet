@@ -36,19 +36,12 @@ namespace Altinn.App.PlatformServices.Implementation
         /// <inheritdoc />
         public async Task<List<Platform.Storage.Interface.Models.ApplicationLanguage>> GetApplicationLanguages()
         {
-            string pathTextsResourceFolder = _settings.AppBasePath + _settings.ConfigurationFolder + _settings.TextFolder;
-
-            DirectoryInfo directoryInfo = new DirectoryInfo(pathTextsResourceFolder);
+            var pathTextsResourceFolder = Path.Join(_settings.AppBasePath, _settings.ConfigurationFolder, _settings.TextFolder);
+            var directoryInfo = new DirectoryInfo(pathTextsResourceFolder);
 
             if (!directoryInfo.Exists)
             {
                 _logger.LogWarning("The text resource directory does not exist");
-                return new List<Platform.Storage.Interface.Models.ApplicationLanguage>();
-            }
-
-            if (directoryInfo.GetFiles().Length < 1)
-            {
-                _logger.LogWarning("There are no resource files located in the text resource directory");
                 return new List<Platform.Storage.Interface.Models.ApplicationLanguage>();
             }
 
@@ -57,31 +50,14 @@ namespace Altinn.App.PlatformServices.Implementation
 
             foreach (var fileInfo in textResourceFilesInDirectory)
             {
-                try
+                Platform.Storage.Interface.Models.ApplicationLanguage applicationLanguage;
+                await using (FileStream fileStream = new(fileInfo.FullName, FileMode.Open, FileAccess.Read))
                 {
-                    string fullFileName = Path.Join(pathTextsResourceFolder, fileInfo.Name);
-                    PathHelper.EnsureLegalPath(pathTextsResourceFolder, fullFileName);
-                    if (!File.Exists(fullFileName))
-                    {
-                        _logger.LogWarning("Something went wrong while trying to fetch the application language");
-                        return new List<Platform.Storage.Interface.Models.ApplicationLanguage>();
-                    }
-
-                    Platform.Storage.Interface.Models.ApplicationLanguage applicationLanguage;
-
-                    await using (FileStream fileStream = new(fullFileName, FileMode.Open, FileAccess.Read))
-                    {
-                        JsonSerializerOptions options = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-                        applicationLanguage = await System.Text.Json.JsonSerializer.DeserializeAsync<Platform.Storage.Interface.Models.ApplicationLanguage>(fileStream, options);
-                    }
-
-                    applicationLanguages.Add(applicationLanguage);
+                    JsonSerializerOptions options = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+                    applicationLanguage = await JsonSerializer.DeserializeAsync<Platform.Storage.Interface.Models.ApplicationLanguage>(fileStream, options);
                 }
-                catch (Exception)
-                {
-                    _logger.LogWarning("Something went wrong while trying to fetch the application language");
-                    return new List<Platform.Storage.Interface.Models.ApplicationLanguage>();
-                }
+
+                applicationLanguages.Add(applicationLanguage);
             }
 
             return applicationLanguages;
