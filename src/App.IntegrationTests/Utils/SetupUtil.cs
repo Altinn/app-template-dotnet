@@ -91,6 +91,8 @@ namespace App.IntegrationTests.Utils
                     {
                         case "endring-av-navn":
                             services.AddTransient<IAltinnApp, IntegrationTests.Mocks.Apps.tdd.endring_av_navn.AltinnApp>();
+                            services.AddTransient<IAppOptionsProvider, Mocks.Apps.Ttd.EndringAvNavn.Options.CarbrandsAppOptionsProvider>();
+                            services.AddTransient<IAppOptionsProvider, Mocks.Apps.Ttd.EndringAvNavn.Options.WeekdaysAppOptionsProvider>();
                             break;
                         case "custom-validation":
                             services.AddTransient<IAltinnApp, IntegrationTests.Mocks.Apps.tdd.custom_validation.AltinnApp>();
@@ -145,6 +147,12 @@ namespace App.IntegrationTests.Utils
                         case "externalprefil":
                             services.AddTransient<IAltinnApp, App.IntegrationTests.Mocks.Apps.Ttd.Externalprefil.App>();
                             break;
+                        case "dynamic-options-pdf":
+                            services.AddTransient<IAltinnApp, App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.App>();
+                            break;
+                        case "anonymous-stateless":
+                            services.AddTransient<IAltinnApp, App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless.App>();
+                            break;
                         default:
                             services.AddTransient<IAltinnApp, IntegrationTests.Mocks.Apps.tdd.endring_av_navn.AltinnApp>();
                             break;
@@ -183,10 +191,10 @@ namespace App.IntegrationTests.Utils
             return null;
         }
 
-        private static string GetAppPath(string org, string app)
+        public static string GetAppPath(string org, string app)
         {
             string unitTestFolder = Path.GetDirectoryName(new Uri(typeof(InstanceMockSI).Assembly.Location).LocalPath);
-            return Path.Combine(unitTestFolder, $"../../../Data/Apps/{org}/{app}/");
+            return Path.Combine(unitTestFolder, $"../../../Data/apps/{org}/{app}/");
         }
 
         public class InstanceAppOptionsProviderStub : IInstanceAppOptionsProvider

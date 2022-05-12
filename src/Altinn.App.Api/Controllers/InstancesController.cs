@@ -684,7 +684,7 @@ namespace Altinn.App.Api.Controllers
         [Produces("application/json")]
         public async Task<ActionResult<List<SimpleInstance>>> GetActiveInstances([FromRoute] string org, [FromRoute] string app, int instanceOwnerPartyId)
         {
-            Dictionary<string, StringValues> queryParams = new ()
+            Dictionary<string, StringValues> queryParams = new()
             {
                 { "appId", $"{org}/{app}" },
                 { "instanceOwner.partyId", instanceOwnerPartyId.ToString() },
@@ -699,7 +699,7 @@ namespace Altinn.App.Api.Controllers
                 return Ok(new List<SimpleInstance>());
             }
 
-            List<string> userAndOrgIds = activeInstances.Select(i => i.LastChangedBy).Distinct().ToList();
+            List<string> userAndOrgIds = activeInstances.Where(i => !string.IsNullOrWhiteSpace(i.LastChangedBy)).Select(i => i.LastChangedBy).Distinct().ToList();
 
             Dictionary<string, string> userAndOrgLookup = new Dictionary<string, string>();
 
@@ -722,7 +722,7 @@ namespace Altinn.App.Api.Controllers
 
         private ActionResult ExceptionResponse(Exception exception, string message)
         {
-            _logger.LogError($"{message}: {exception}");
+            _logger.LogError(exception, message);
 
             if (exception is PlatformHttpException platformHttpException)
             {
