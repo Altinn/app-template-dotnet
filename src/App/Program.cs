@@ -4,6 +4,7 @@ using System.Reflection;
 using Altinn.App.Api.Controllers;
 using Altinn.App.Api.Filters;
 using Altinn.App.Api.Middleware;
+using Altinn.App.Core.Health;
 using Altinn.App.PlatformServices.Extensions;
 using Altinn.App.Services.Interface;
 using Altinn.Common.PEP.Authorization;
@@ -47,6 +48,7 @@ void ConfigureServices(IServiceCollection services, IConfiguration config)
             options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
         });
     services.AddMemoryCache();
+    services.AddHealthChecks().AddCheck<HealthCheck>("default_health_check");
 
     // Dot net services
     services.AddSingleton<IAuthorizationHandler, AppAccessHandler>();
@@ -149,6 +151,7 @@ void Configure()
     {
         endpoints.MapControllers();
     });
+    app.UseHealthChecks("/health");
 }
 
 void IncludeXmlComments(SwaggerGenOptions options)
