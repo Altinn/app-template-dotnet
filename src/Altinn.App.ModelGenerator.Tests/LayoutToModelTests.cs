@@ -18,7 +18,9 @@ public class LayoutToModelTests
         var bindings = LayoutToModel.GetDataModelBindings(new string[]{FormLayout, summary});
         Assert.Equal(JsonSerializer.Deserialize<List<string>>(expectedBindings), bindings);
         var generatedModel = LayoutToModel.Convert(bindings, "Altinn.App.Models.Model");
-        Assert.Equal(expectedModel, generatedModel);
+        Assert.Equal(
+            expectedModel.Replace("\r\n","\n"), //Github actions has configured git to translate LF to CRLF
+            generatedModel);
     }
     [Theory]
     [InlineData("Altinn.App.Models.KRT1226Gjenopprettingsplaner_M", "Altinn.App.Models", "KRT1226Gjenopprettingsplaner_M")]
