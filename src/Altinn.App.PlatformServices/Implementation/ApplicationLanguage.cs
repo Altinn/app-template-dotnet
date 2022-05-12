@@ -38,13 +38,6 @@ namespace Altinn.App.PlatformServices.Implementation
         {
             var pathTextsResourceFolder = Path.Join(_settings.AppBasePath, _settings.ConfigurationFolder, _settings.TextFolder);
             var directoryInfo = new DirectoryInfo(pathTextsResourceFolder);
-
-            if (!directoryInfo.Exists)
-            {
-                _logger.LogWarning("The text resource directory does not exist");
-                return new List<Platform.Storage.Interface.Models.ApplicationLanguage>();
-            }
-
             var textResourceFilesInDirectory = directoryInfo.GetFiles();
             var applicationLanguages = new List<Platform.Storage.Interface.Models.ApplicationLanguage>();
 
