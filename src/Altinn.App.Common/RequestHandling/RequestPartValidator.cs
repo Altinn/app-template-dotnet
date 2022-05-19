@@ -62,7 +62,7 @@ namespace Altinn.App.Common.RequestHandling
                 {
                     string contentTypeWithoutEncoding = part.ContentType.Split(";")[0];
 
-                    // only restrict content type if allowedContentTypes is specified
+                    // restrict content type if allowedContentTypes is specified
                     if (dataType.AllowedContentTypes != null &&
                         dataType.AllowedContentTypes.Count > 0 &&
                         !dataType.AllowedContentTypes.Contains(contentTypeWithoutEncoding))
