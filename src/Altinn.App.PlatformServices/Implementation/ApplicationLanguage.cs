@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Altinn.App.PlatformServices.Helpers;
 using Altinn.App.PlatformServices.Interface;
 using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
@@ -34,20 +32,20 @@ namespace Altinn.App.PlatformServices.Implementation
         }
 
         /// <inheritdoc />
-        public async Task<List<Platform.Storage.Interface.Models.ApplicationLanguage>> GetApplicationLanguages()
+        public async Task<List<Common.Models.ApplicationLanguage>> GetApplicationLanguages()
         {
             var pathTextsResourceFolder = Path.Join(_settings.AppBasePath, _settings.ConfigurationFolder, _settings.TextFolder);
             var directoryInfo = new DirectoryInfo(pathTextsResourceFolder);
             var textResourceFilesInDirectory = directoryInfo.GetFiles();
-            var applicationLanguages = new List<Platform.Storage.Interface.Models.ApplicationLanguage>();
+            var applicationLanguages = new List<Common.Models.ApplicationLanguage>();
 
             foreach (var fileInfo in textResourceFilesInDirectory)
             {
-                Platform.Storage.Interface.Models.ApplicationLanguage applicationLanguage;
+                Common.Models.ApplicationLanguage applicationLanguage;
                 await using (FileStream fileStream = new(fileInfo.FullName, FileMode.Open, FileAccess.Read))
                 {
                     JsonSerializerOptions options = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-                    applicationLanguage = await JsonSerializer.DeserializeAsync<Platform.Storage.Interface.Models.ApplicationLanguage>(fileStream, options);
+                    applicationLanguage = await JsonSerializer.DeserializeAsync<Common.Models.ApplicationLanguage>(fileStream, options);
                 }
 
                 applicationLanguages.Add(applicationLanguage);
