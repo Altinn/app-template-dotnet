@@ -149,6 +149,9 @@ namespace App.IntegrationTests.Utils
                         case "dynamic-options-pdf":
                             services.AddTransient<IAltinnApp, App.IntegrationTests.Mocks.Apps.Ttd.DynamicOptionsPdf.App>();
                             break;
+                        case "anonymous-stateless":
+                            services.AddTransient<IAltinnApp, App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless.App>();
+                            break;
                         default:
                             services.AddTransient<IAltinnApp, IntegrationTests.Mocks.Apps.tdd.endring_av_navn.AltinnApp>();
                             break;
@@ -186,7 +189,7 @@ namespace App.IntegrationTests.Utils
         public static string GetAppPath(string org, string app)
         {
             string unitTestFolder = Path.GetDirectoryName(new Uri(typeof(InstanceMockSI).Assembly.Location).LocalPath);
-            return Path.Combine(unitTestFolder, $"../../../Data/Apps/{org}/{app}/");
+            return Path.Combine(unitTestFolder, $"../../../Data/apps/{org}/{app}/");
         }
 
         public class InstanceAppOptionsProviderStub : IInstanceAppOptionsProvider
