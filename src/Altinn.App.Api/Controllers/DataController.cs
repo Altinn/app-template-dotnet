@@ -453,7 +453,7 @@ namespace Altinn.App.Api.Controllers
 
         private async Task<ActionResult> DeleteBinaryData(string org, string app, int instanceOwnerId, Guid instanceGuid, Guid dataGuid)
         {
-            bool successfullyDeleted = await _dataClient.DeleteBinaryData(org, app, instanceOwnerId, instanceGuid, dataGuid);
+            bool successfullyDeleted = await _dataClient.DeleteData(org, app, instanceOwnerId, instanceGuid, dataGuid, false);
 
             if (successfullyDeleted)
             {

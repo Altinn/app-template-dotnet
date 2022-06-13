@@ -32,9 +32,56 @@ namespace App.IntegrationTests.Mocks.Services
             throw new NotImplementedException();
         }
 
+        public Task<bool> DeleteData(string org, string app, int instanceOwnerPartyId, Guid instanceGuid, Guid dataGuid, bool delayed)
+        {
+            string dataElementPath = GetDataElementPath(org, app, instanceOwnerPartyId, instanceGuid, dataGuid);
+
+            if (delayed)
+            {
+                DataElement dataElement = null;
+
+                using (StreamReader file = File.OpenText(dataElementPath))
+                {
+                    JsonSerializer serializer = new JsonSerializer();
+                    dataElement = (DataElement)serializer.Deserialize(file, typeof(DataElement));
+                }
+
+                dataElement.DeleteStatus = new()
+                {
+                    IsHardDeleted = true,
+                    HardDeleted = DateTime.UtcNow
+                };
+
+                string jsonData = JsonConvert.SerializeObject(dataElement);
+
+                using StreamWriter sw = new(dataElementPath);
+
+                sw.Write(jsonData.ToString());
+                sw.Close();
+
+                return Task.FromResult(true);
+            }
+            else
+            {
+                string dataBlobPath = GetDataBlobPath(org, app, instanceOwnerPartyId, instanceGuid, dataGuid);
+
+                if (File.Exists(dataElementPath))
+                {
+                    File.Delete(dataElementPath);
+                }
+
+                if (File.Exists(dataBlobPath))
+                {
+                    File.Delete(dataBlobPath);
+                }
+
+                return Task.FromResult(true);
+            }
+        }
+
         public Task<Stream> GetBinaryData(string org, string app, int instanceOwnerPartyId, Guid instanceGuid, Guid dataId)
         {
-            string dataPath = GetDataBlobPath(org, app.Split("/")[1], instanceOwnerPartyId, instanceGuid, dataId);
+            string dataPath = GetDataBlobPath(org, app, instanceOwnerPartyId, instanceGuid, dataId);
 
             Stream ms = new MemoryStream();
             using (FileStream file = new FileStream(dataPath, FileMode.Open, FileAccess.Read))
@@ -182,10 +229,16 @@ namespace App.IntegrationTests.Mocks.Services
             return Path.Combine(unitTestFolder, @"../../../Data/Instances", org, app, instanceOwnerId.ToString(), instanceGuid.ToString()) + Path.DirectorySeparatorChar;
         }
 
-        private static string GetDataBlobPath(string org, string app, int instanceOwnerId, Guid instanceGuid, Guid dataId)
+        private static string GetDataElementPath(string org, string app, int instanceOwnerId, Guid instanceGuid, Guid dataGuid)
         {
             string unitTestFolder = Path.GetDirectoryName(new Uri(typeof(InstanceMockSI).Assembly.Location).LocalPath);
-            return Path.Combine(unitTestFolder, @"../../../Data/Instances", org, app, instanceOwnerId.ToString(), instanceGuid.ToString(), "blob", dataId.ToString());
+            return Path.Combine(unitTestFolder, @"../../../Data/Instances", org, app, instanceOwnerId.ToString(), instanceGuid.ToString(), $"{dataGuid}.json") + Path.DirectorySeparatorChar;
+        }
+
+        private static string GetDataBlobPath(string org, string app, int instanceOwnerId, Guid instanceGuid, Guid dataGuid)
+        {
+            string unitTestFolder = Path.GetDirectoryName(new Uri(typeof(InstanceMockSI).Assembly.Location).LocalPath);
+            return Path.Combine(unitTestFolder, @"../../../Data/Instances", org, app, instanceOwnerId.ToString(), instanceGuid.ToString(), "blob", dataGuid.ToString());
         }
 
         private static Instance GetTestInstance(string app, string org, int instanceOwnerId, Guid instanceId)

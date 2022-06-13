@@ -243,7 +243,13 @@ namespace Altinn.App.Services.Implementation
         /// <inheritdoc />
         public async Task<bool> DeleteBinaryData(string org, string app, int instanceOwnerPartyId, Guid instanceGuid, Guid dataGuid)
         {
-            string instanceIdentifier = $"{instanceOwnerPartyId}/{instanceGuid}";
+            return await DeleteData(org, app, instanceOwnerPartyId, instanceGuid, dataGuid, false);
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> DeleteData(string org, string app, int instanceOwnerPartyId, Guid instanceGuid, Guid dataGuid, bool delayed)
+        {
+            string instanceIdentifier = $"{instanceOwnerPartyId}/{instanceGuid}?delayed={delayed}";
             string apiUrl = $"instances/{instanceIdentifier}/data/{dataGuid}";
             string token = JwtTokenUtil.GetTokenFromContext(_httpContextAccessor.HttpContext, _settings.RuntimeCookieName);
 
@@ -254,7 +260,7 @@ namespace Altinn.App.Services.Implementation
                 return true;
             }
 
-            _logger.LogError($"Deleting form attachment {dataGuid} for instance {instanceGuid} failed with status code {response.StatusCode}");
+            _logger.LogError($"Deleting data element {dataGuid} for instance {instanceGuid} failed with status code {response.StatusCode}");
             throw await PlatformHttpException.CreateAsync(response);
         }
 
