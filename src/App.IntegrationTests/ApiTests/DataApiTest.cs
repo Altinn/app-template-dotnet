@@ -12,6 +12,7 @@ using Altinn.Platform.Storage.Interface.Models;
 using App.IntegrationTests.Utils;
 
 using Newtonsoft.Json;
+
 using Xunit;
 
 namespace App.IntegrationTests.ApiTests
@@ -19,7 +20,7 @@ namespace App.IntegrationTests.ApiTests
     public class DataApiTest : IClassFixture<CustomWebApplicationFactory<Altinn.App.Startup>>
     {
         private readonly CustomWebApplicationFactory<Altinn.App.Startup> _factory;
-        
+
         public DataApiTest(CustomWebApplicationFactory<Altinn.App.Startup> factory)
         {
             _factory = factory;
@@ -912,7 +913,7 @@ namespace App.IntegrationTests.ApiTests
             Instance instanceAfterCustomFieldsAdded = JsonConvert.DeserializeObject<Instance>(contentAfterCustomFieldsAdded);
 
             // Assert - after manual update
-            Assert.Equal(expectedDataValuesCountAfterManualUpdate, instanceAfterCustomFieldsAdded.DataValues.Count);            
+            Assert.Equal(expectedDataValuesCountAfterManualUpdate, instanceAfterCustomFieldsAdded.DataValues.Count);
             Assert.True(instanceAfterCustomFieldsAdded.DataValues.ContainsKey(expectedCustomKey));
             Assert.Equal(expectedCustomValue, instanceAfterCustomFieldsAdded.DataValues[expectedCustomKey]);
 
@@ -988,6 +989,40 @@ namespace App.IntegrationTests.ApiTests
             Assert.Equal(HttpStatusCode.OK, res.StatusCode);
             Assert.NotNull(actual);
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public async Task Data_Delete_BlobAndMetadataDeletedImmediatly()
+        {
+            // Arrange
+            int expectedCount = 0;
+            string org = "ttd";
+            string app = "autodelete-data";
+            string instanceGuid = "447ed22d-67a8-42c7-8add-cc35eba304f1";
+            string dataGuid = "590ebc27-246e-4a0a-aea3-4296cb231d78";
+            string token = PrincipalUtil.GetToken(1337);
+
+            TestDataUtil.PrepareInstance(org, app, 1337, new Guid(instanceGuid));
+
+            HttpClient client = SetupUtil.GetTestClient(_factory, org, app);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            string requestUri = $"/{org}/{app}/instances/1337/{instanceGuid}/data/{dataGuid}";
+
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Delete, requestUri);
+
+            // Act
+            await client.SendAsync(httpRequestMessage);
+
+            HttpResponseMessage res = await client.GetAsync($"/{org}/{app}/instances/1337/{instanceGuid}");
+            TestDataUtil.DeleteInstanceAndData(org, app, 1337, new Guid(instanceGuid));
+
+            string responseContent = await res.Content.ReadAsStringAsync();
+            Instance instance = JsonConvert.DeserializeObject<Instance>(responseContent);
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, res.StatusCode);
+            Assert.Equal(expectedCount, instance.Data.Count);
         }
     }
 }
