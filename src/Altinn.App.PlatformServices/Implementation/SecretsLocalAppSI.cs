@@ -30,7 +30,7 @@ namespace Altinn.App.PlatformServices.Implementation
         public async Task<byte[]> GetCertificateAsync(string certificateId)
         {
             string token = GetTokenFromSecrets(certificateId);
-            if (token != null)
+            if (!string.IsNullOrEmpty(token))
             {
                 byte[] localCertBytes = Convert.FromBase64String(token);
                 return await Task.FromResult(localCertBytes);
@@ -43,7 +43,7 @@ namespace Altinn.App.PlatformServices.Implementation
         public async Task<JsonWebKey> GetKeyAsync(string keyId)
         {
             string token = GetTokenFromSecrets(keyId);
-            if (token != null)
+            if (!string.IsNullOrEmpty(token))
             {
                 JsonWebKey key = JsonSerializer.Deserialize<JsonWebKey>(token);
                 return await Task.FromResult(key);
