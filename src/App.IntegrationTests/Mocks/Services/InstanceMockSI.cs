@@ -160,6 +160,12 @@ namespace App.IntegrationTests.Mocks.Services
                     {
                         string content = File.ReadAllText(Path.Combine(path, file));
                         DataElement dataElement = (DataElement)JsonConvert.DeserializeObject(content, typeof(DataElement));
+
+                        if (dataElement.DeleteStatus?.IsHardDeleted == true)
+                        {
+                            continue;
+                        }
+
                         dataElements.Add(dataElement);
                     }
                 }

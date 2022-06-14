@@ -43,6 +43,9 @@ namespace Altinn.App.Services.Implementation
         private readonly IAccessTokenGenerator _tokenGenerator;
         private readonly PlatformSettings _platformSettings;
 
+        private readonly string _org;
+        private readonly string _app;
+
         /// <summary>
         /// Initialize a new instance of <see cref="AppBase"/> class with the given services.
         /// </summary>
@@ -82,6 +85,9 @@ namespace Altinn.App.Services.Implementation
             _eFormidlingClient = eFormidlingClient;
             _tokenGenerator = tokenGenerator;
             _platformSettings = platformSettings?.Value;
+
+            _org = _appMetadata.Org;
+            _app = _appMetadata.Id.Split("/")[1];
         }
 
         /// <inheritdoc />
@@ -234,9 +240,8 @@ namespace Altinn.App.Services.Implementation
             _logger.LogInformation($"OnEndProcessTask for {instance.Id}. Locking data elements connected to {taskId}");
 
             List<DataType> dataTypesToLock = _appMetadata.DataTypes.FindAll(dt => dt.TaskId == taskId);
-            string org = _appMetadata.Org;
-            string app = _appMetadata.Id.Split("/")[1];
 
+            Guid instanceGuid = Guid.Parse(instance.Id.Split("/")[1]);
             foreach (DataType dataType in dataTypesToLock)
             {
                 bool generatePdf = dataType.AppLogic != null && dataType.EnablePdfCreation;
@@ -262,10 +267,10 @@ namespace Altinn.App.Services.Implementation
                     if (autoDeleteDataElement)
                     {
                         await _dataClient.DeleteData(
-                            org,
-                            app,
+                            _org,
+                            _app,
                             int.Parse(instance.InstanceOwner.PartyId),
-                            Guid.Parse(dataElement.InstanceGuid),
+                            instanceGuid,
                             Guid.Parse(dataElement.Id),
                             true);
                     }
@@ -286,8 +291,6 @@ namespace Altinn.App.Services.Implementation
             if (_appMetadata.AutoDeleteOnProcessEnd)
             {
                 int instanceOwnerPartyId = int.Parse(instance.InstanceOwner.PartyId);
-                Guid instanceGuid = Guid.Parse(instance.Id.Split("/")[1]);
-
                 await _instanceClient.DeleteInstance(instanceOwnerPartyId, instanceGuid, true);
             }
 
@@ -395,8 +398,7 @@ namespace Altinn.App.Services.Implementation
                 bool appLogic = _appMetadata.DataTypes.Any(d => d.Id == dataElement.DataType && d.AppLogic != null);
 
                 string fileName = appLogic ? $"{dataElement.DataType}.xml" : dataElement.Filename;
-                string app = instance.AppId.Split("/")[1];
-                using Stream stream = await _dataClient.GetBinaryData(instance.Org, app, instanceOwnerPartyId, instanceGuid, new Guid(dataElement.Id));
+                using Stream stream = await _dataClient.GetBinaryData(_org, _app, instanceOwnerPartyId, instanceGuid, new Guid(dataElement.Id));
 
                 bool successful = await _eFormidlingClient.UploadAttachment(stream, instanceGuid.ToString(), fileName, requestHeaders);
 
@@ -477,7 +479,7 @@ namespace Altinn.App.Services.Implementation
 
         private async Task SendEFormidlingShipment(Instance instance)
         {
-            string accessToken = _tokenGenerator.GenerateAccessToken(_appMetadata.Org, _appMetadata.Id.Split("/")[1]);
+            string accessToken = _tokenGenerator.GenerateAccessToken(_org, _app);
             string authzToken = JwtTokenUtil.GetTokenFromContext(_httpContextAccessor.HttpContext, _appSettings.RuntimeCookieName);
 
             var requestHeaders = new Dictionary<string, string>

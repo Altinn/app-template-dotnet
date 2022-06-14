@@ -152,6 +152,9 @@ namespace App.IntegrationTests.Utils
                         case "anonymous-stateless":
                             services.AddTransient<IAltinnApp, App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless.App>();
                             break;
+                        case "autodelete-data":
+                            services.AddTransient<IAltinnApp, App.IntegrationTests.Mocks.Apps.Ttd.AutoDeleteData.App>();
+                            break;
                         default:
                             services.AddTransient<IAltinnApp, IntegrationTests.Mocks.Apps.tdd.endring_av_navn.AltinnApp>();
                             break;
