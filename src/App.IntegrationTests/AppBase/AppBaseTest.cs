@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -192,6 +193,7 @@ namespace App.IntegrationTestsRef.AppBase
             DeleteInstance(instance);
 
             Assert.Single(actual.Data);
+            Assert.Null(actual.Data.FirstOrDefault(de => de.DataType == "default"));
         }
 
         [Fact]
