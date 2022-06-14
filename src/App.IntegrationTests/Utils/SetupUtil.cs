@@ -28,6 +28,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
+using Moq;
+
 namespace App.IntegrationTests.Utils
 {
     public static class SetupUtil
@@ -35,7 +37,8 @@ namespace App.IntegrationTests.Utils
         public static HttpClient GetTestClient(
             CustomWebApplicationFactory<Startup> customFactory,
             string org,
-            string app)
+            string app,
+            Mock<IData> dataMock = null)
         {
             WebApplicationFactory<Startup> factory = customFactory.WithWebHostBuilder(builder =>
             {
@@ -63,13 +66,21 @@ namespace App.IntegrationTests.Utils
 
                     services.AddTransient<IApplication, ApplicationMockSI>();
                     services.AddTransient<IInstance, InstanceMockSI>();
-                    services.AddTransient<IData, DataMockSI>();
                     services.AddTransient<IInstanceEvent, InstanceEventAppSIMock>();
                     services.AddTransient<IEvents, EventsMockSI>();
                     services.AddTransient<IDSF, DSFMockSI>();
                     services.AddTransient<IER, ERMockSI>();
                     services.AddTransient<IRegister, RegisterMockSI>();
                     services.AddTransient<IAuthorization, AuthorizationMock>();
+
+                    if (dataMock != null)
+                    {
+                        services.AddSingleton(dataMock.Object);
+                    }
+                    else
+                    {
+                        services.AddTransient<IData, DataMockSI>();
+                    }
 
                     services.AddTransient<IPDF, PDFMockSI>();
                     services.AddTransient<IProfile, ProfileMockSI>();

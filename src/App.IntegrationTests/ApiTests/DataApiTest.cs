@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 using Altinn.App.Common.Models;
 using Altinn.App.IntegrationTests;
+using Altinn.App.Services.Interface;
 using Altinn.Platform.Storage.Interface.Models;
 
 using App.IntegrationTests.Utils;
+
+using Moq;
 
 using Newtonsoft.Json;
 
@@ -1003,8 +1006,10 @@ namespace App.IntegrationTests.ApiTests
             string token = PrincipalUtil.GetToken(1337);
 
             TestDataUtil.PrepareInstance(org, app, 1337, new Guid(instanceGuid));
+            Mock<IData> dataMock = new();
+            dataMock.Setup(dm => dm.DeleteData(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<Guid>(), It.IsAny<Guid>(), It.Is<bool>(b => b == false))).ReturnsAsync(true);
 
-            HttpClient client = SetupUtil.GetTestClient(_factory, org, app);
+            HttpClient client = SetupUtil.GetTestClient(_factory, org, app, dataMock);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             string requestUri = $"/{org}/{app}/instances/1337/{instanceGuid}/data/{dataGuid}";
@@ -1012,17 +1017,11 @@ namespace App.IntegrationTests.ApiTests
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Delete, requestUri);
 
             // Act
-            await client.SendAsync(httpRequestMessage);
-
-            HttpResponseMessage res = await client.GetAsync($"/{org}/{app}/instances/1337/{instanceGuid}");
-            TestDataUtil.DeleteInstanceAndData(org, app, 1337, new Guid(instanceGuid));
-
-            string responseContent = await res.Content.ReadAsStringAsync();
-            Instance instance = JsonConvert.DeserializeObject<Instance>(responseContent);
+            HttpResponseMessage res = await client.SendAsync(httpRequestMessage);
 
             // Assert
             Assert.Equal(HttpStatusCode.OK, res.StatusCode);
-            Assert.Equal(expectedCount, instance.Data.Count);
+            dataMock.VerifyAll();
         }
     }
 }
