@@ -21,7 +21,7 @@ namespace App.IntegrationTests.Mocks.Services
     {
         private readonly IAppResources _applicationService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private static JsonSerializerOptions _serializerOptions = new()
+        private static readonly JsonSerializerOptions _serializerOptions = new()
         {
             WriteIndented = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -81,7 +81,7 @@ namespace App.IntegrationTests.Mocks.Services
             string dataPath = TestDataUtil.GetDataBlobPath(org, app, instanceOwnerPartyId, instanceGuid, dataId);
 
             Stream ms = new MemoryStream();
-            using (FileStream file = new FileStream(dataPath, FileMode.Open, FileAccess.Read))
+            using (FileStream file = new(dataPath, FileMode.Open, FileAccess.Read))
             {
                 file.CopyTo(ms);
             }
@@ -98,7 +98,7 @@ namespace App.IntegrationTests.Mocks.Services
         {
             string dataPath = TestDataUtil.GetDataBlobPath(org, app, instanceOwnerPartyId, instanceGuid, dataId);
 
-            XmlSerializer serializer = new XmlSerializer(type);
+            XmlSerializer serializer = new(type);
             try
             {
                 using FileStream sourceStream = File.Open(dataPath, FileMode.OpenOrCreate);
@@ -115,7 +115,7 @@ namespace App.IntegrationTests.Mocks.Services
         {
             Guid dataGuid = Guid.NewGuid();
             string dataPath = TestDataUtil.GetDataPath(org, app, instanceOwnerPartyId, instanceGuid);
-            DataElement dataElement = new DataElement() { Id = dataGuid.ToString(), InstanceGuid = instanceGuid.ToString(), DataType = dataType, ContentType = request.ContentType };
+            DataElement dataElement = new() { Id = dataGuid.ToString(), InstanceGuid = instanceGuid.ToString(), DataType = dataType, ContentType = request.ContentType };
 
             if (!Directory.Exists(Path.GetDirectoryName(dataPath)))
             {
@@ -156,7 +156,7 @@ namespace App.IntegrationTests.Mocks.Services
             Guid dataGuid = Guid.NewGuid();
             string dataPath = TestDataUtil.GetDataPath(org, app, instanceOwnerPartyId, instanceGuid);
 
-            DataElement dataElement = new DataElement() { Id = dataGuid.ToString(), InstanceGuid = instanceGuid.ToString(), DataType = dataType, ContentType = "application/xml", };
+            DataElement dataElement = new() { Id = dataGuid.ToString(), InstanceGuid = instanceGuid.ToString(), DataType = dataType, ContentType = "application/xml", };
 
             try
             {
@@ -164,7 +164,7 @@ namespace App.IntegrationTests.Mocks.Services
 
                 using (Stream stream = File.Open(dataPath + @"blob/" + dataGuid.ToString(), FileMode.Create, FileAccess.ReadWrite))
                 {
-                    XmlSerializer serializer = new XmlSerializer(type);
+                    XmlSerializer serializer = new(type);
                     serializer.Serialize(stream, dataToSerialize);
                 }
 
@@ -192,7 +192,7 @@ namespace App.IntegrationTests.Mocks.Services
 
             using (Stream stream = File.Open(dataPath + $@"blob{Path.DirectorySeparatorChar}" + dataGuid.ToString(), FileMode.Create, FileAccess.ReadWrite))
             {
-                XmlSerializer serializer = new XmlSerializer(type);
+                XmlSerializer serializer = new(type);
                 serializer.Serialize(stream, dataToSerialize);
             }
 
@@ -216,7 +216,7 @@ namespace App.IntegrationTests.Mocks.Services
 
             string dataPath = TestDataUtil.GetDataPath(org, app, instanceOwnerId, instanceGuid);
 
-            DataElement dataElement = new DataElement() { Id = dataGuid.ToString(), InstanceGuid = instanceGuid.ToString(), DataType = dataType, ContentType = contentType, };
+            DataElement dataElement = new() { Id = dataGuid.ToString(), InstanceGuid = instanceGuid.ToString(), DataType = dataType, ContentType = contentType, };
 
             if (!Directory.Exists(Path.GetDirectoryName(dataPath)))
             {
@@ -252,7 +252,7 @@ namespace App.IntegrationTests.Mocks.Services
             return Task.FromResult(dataElement);
         }
 
-        private void WriteDataElementToFile(DataElement dataElement, string org, string app, int instanceOwnerPartyId)
+        private static void WriteDataElementToFile(DataElement dataElement, string org, string app, int instanceOwnerPartyId)
         {
             string dataElementPath = TestDataUtil.GetDataElementPath(org, app, instanceOwnerPartyId, Guid.Parse(dataElement.InstanceGuid), Guid.Parse(dataElement.Id));
 
@@ -267,7 +267,7 @@ namespace App.IntegrationTests.Mocks.Services
         private List<DataElement> GetDataElements(string org, string app, int instanceOwnerId, Guid instanceId)
         {
             string path = TestDataUtil.GetDataPath(org, app, instanceOwnerId, instanceId);
-            List<DataElement> dataElements = new List<DataElement>();
+            List<DataElement> dataElements = new();
 
             if (!Directory.Exists(path))
             {
