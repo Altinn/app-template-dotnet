@@ -20,13 +20,12 @@ namespace App.IntegrationTests.Mocks.Services
     public class DataMockSI : IData
     {
         private readonly IAppResources _applicationService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private static JsonSerializerOptions _serializerOptions = new()
         {
             WriteIndented = true,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
-
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DataMockSI(IAppResources application, IHttpContextAccessor httpContextAccessor)
         {
