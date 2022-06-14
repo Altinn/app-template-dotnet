@@ -998,11 +998,10 @@ namespace App.IntegrationTests.ApiTests
         public async Task Data_Delete_BlobAndMetadataDeletedImmediatly()
         {
             // Arrange
-            int expectedCount = 0;
             string org = "ttd";
             string app = "autodelete-data";
-            string instanceGuid = "447ed22d-67a8-42c7-8add-cc35eba304f1";
-            string dataGuid = "590ebc27-246e-4a0a-aea3-4296cb231d78";
+            string instanceGuid = "447ed22d-67a8-42c7-8add-cc35eba30123";
+            string dataGuid = "590ebc27-246e-4a0a-aea3-4296cb231123";
             string token = PrincipalUtil.GetToken(1337);
 
             TestDataUtil.PrepareInstance(org, app, 1337, new Guid(instanceGuid));
