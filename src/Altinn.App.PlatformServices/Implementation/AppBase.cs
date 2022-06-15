@@ -244,7 +244,7 @@ namespace Altinn.App.Services.Implementation
             Guid instanceGuid = Guid.Parse(instance.Id.Split("/")[1]);
             foreach (DataType dataType in dataTypesToLock)
             {
-                bool generatePdf = dataType.AppLogic != null && dataType.EnablePdfCreation;
+                bool generatePdf = dataType.AppLogic?.ClassRef != null && dataType.EnablePdfCreation;
                 bool autoDeleteDataElement = dataType.AppLogic?.AutoDeleteOnProcessEnd == true && !_appMetadata.AutoDeleteOnProcessEnd;
 
                 foreach (DataElement dataElement in instance.Data.FindAll(de => de.DataType == dataType.Id))
@@ -395,7 +395,7 @@ namespace Altinn.App.Services.Implementation
                     continue;
                 }
 
-                bool appLogic = _appMetadata.DataTypes.Any(d => d.Id == dataElement.DataType && d.AppLogic != null);
+                bool appLogic = _appMetadata.DataTypes.Any(d => d.Id == dataElement.DataType && d.AppLogic?.ClassRef != null);
 
                 string fileName = appLogic ? $"{dataElement.DataType}.xml" : dataElement.Filename;
                 using Stream stream = await _dataClient.GetBinaryData(_org, _app, instanceOwnerPartyId, instanceGuid, new Guid(dataElement.Id));
