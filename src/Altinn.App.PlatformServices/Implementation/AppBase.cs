@@ -151,7 +151,7 @@ namespace Altinn.App.Services.Implementation
         /// <inheritdoc />
         public async Task OnEndProcess(string endEvent, Instance instance)
         {
-            await AutodeleteDataElements(instance);
+            await AutoDeleteDataElements(instance);
 
             _logger.LogInformation($"OnEndProcess for {instance.Id}, endEvent: {endEvent}");
         }
@@ -503,7 +503,7 @@ namespace Altinn.App.Services.Implementation
             }
         }
 
-        private async Task AutodeleteDataElements(Instance instance)
+        private async Task AutoDeleteDataElements(Instance instance)
         {
             List<string> typesToDelete = _appMetadata.DataTypes.Where(dt => dt?.AppLogic?.AutoDeleteOnProcessEnd == true).Select(dt => dt.Id).ToList();
             if (typesToDelete.Count == 0)
