@@ -511,6 +511,7 @@ namespace Altinn.App.Services.Implementation
                 return;
             }
 
+            instance = await _instanceClient.GetInstance(instance);
             List<DataElement> elementsToDelete = instance.Data.Where(e => typesToDelete.Contains(e.DataType)).ToList();
 
             List<Task> deleteTasks = new();
