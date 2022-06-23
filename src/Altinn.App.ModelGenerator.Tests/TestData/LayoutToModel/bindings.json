@@ -1,0 +1,16 @@
+[
+  "rapport.innsender.foretak.organisasjonsnummer.value",
+  "rapport.innsender.foretak.navn.value",
+  "rapport.innsender.adresse.adresselinje1.value",
+  "rapport.innsender.adresse.postnummer.value",
+  "rapport.innsender.adresse.poststed.value",
+  "rapport.rapportering.kontaktperson1.navn1.value",
+  "rapport.rapportering.kontaktperson1.epost1.value",
+  "rapport.rapportering.kontaktperson1.telefonprefiks1.value",
+  "rapport.rapportering.kontaktperson1.telefonnummer1.value",
+  "rapport.rapportering.kontaktperson2.navn2.value",
+  "rapport.rapportering.kontaktperson2.epost2.value",
+  "rapport.rapportering.kontaktperson2.telefonprefiks2.value",
+  "rapport.rapportering.kontaktperson2.telefonnummer2.value",
+  "rapport.rapportering.beskrivelse.value"
+]

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <AssemblyName>Altinn.App</AssemblyName>
     <RootNamespace>Altinn.App</RootNamespace>
   </PropertyGroup>
@@ -14,6 +14,13 @@
     <PackageReference Include="Altinn.App.PlatformServices" Version="5.3.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Use Model Generator -->
+    <ProjectReference Include="..\Altinn.App.ModelGenerator\Altinn.App.ModelGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <AdditionalFiles Include="config\**\*.json"></AdditionalFiles>
+    <AdditionalFiles Include="ui\**\*.json"></AdditionalFiles>
   </ItemGroup>
 
   <ItemGroup>
