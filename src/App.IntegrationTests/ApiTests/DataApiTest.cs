@@ -180,7 +180,7 @@ namespace App.IntegrationTests.ApiTests
             string token = PrincipalUtil.GetToken(1337);
             TestDataUtil.PrepareInstance("tdd", "custom-validation", 1337, new Guid("182e053b-3c74-46d4-92ec-a2828289a877"));
 
-            HttpClient client = SetupUtil.GetTestClient(_factory, "tdd", "custom-validation", false);
+            HttpClient client = SetupUtil.GetTestClient(_factory, "tdd", "custom-validation", null, false);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, "/tdd/custom-validation/instances/1337/182e053b-3c74-46d4-92ec-a2828289a877/data/7dfeffd1-1750-4e4a-8107-c6741e05d2a9");
 
@@ -626,7 +626,7 @@ namespace App.IntegrationTests.ApiTests
 
             TestDataUtil.PrepareInstance(org, app, 1337, new Guid(instanceGuid));
 
-            HttpClient client = SetupUtil.GetTestClient(_factory, org, app, false);
+            HttpClient client = SetupUtil.GetTestClient(_factory, org, app);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             string requestUri = $"/{org}/{app}/instances/1337/{instanceGuid}/data/{dataGuid}?dataType=default";
@@ -666,7 +666,7 @@ namespace App.IntegrationTests.ApiTests
 
             TestDataUtil.PrepareInstance(org, app, 1337, new Guid(instanceGuid));
 
-            HttpClient client = SetupUtil.GetTestClient(_factory, org, app, false);
+            HttpClient client = SetupUtil.GetTestClient(_factory, org, app);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             string requestUri = $"/{org}/{app}/instances/1337/{instanceGuid}/data/{dataGuid}?dataType=default";
@@ -706,7 +706,7 @@ namespace App.IntegrationTests.ApiTests
 
             TestDataUtil.PrepareInstance(org, app, 1337, new Guid(instanceGuid));
 
-            HttpClient client = SetupUtil.GetTestClient(_factory, org, app, false);
+            HttpClient client = SetupUtil.GetTestClient(_factory, org, app);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
             string requestUri = $"/{org}/{app}/instances/1337/{instanceGuid}/data/{dataGuid}?dataType=default";

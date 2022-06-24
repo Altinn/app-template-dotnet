@@ -37,7 +37,8 @@ namespace App.IntegrationTests.Utils
         public static HttpClient GetTestClient(
             CustomWebApplicationFactory<Altinn.App.AppLogic.App> customFactory,
             string org,
-            string app,
+            string app,            
+            Mock<IData> dataMock = null,
             bool allowRedirect = true)
         {
             WebApplicationFactory<Altinn.App.AppLogic.App> factory = customFactory.WithWebHostBuilder(builder =>
@@ -173,11 +174,11 @@ namespace App.IntegrationTests.Utils
                     }
                 });
             });
-            factory.Server.AllowSynchronousIO = true;
             var opts = new WebApplicationFactoryClientOptions
             {
                 AllowAutoRedirect = allowRedirect
             };
+            factory.Server.AllowSynchronousIO = true;            
             return factory.CreateClient(opts);
         }
 
