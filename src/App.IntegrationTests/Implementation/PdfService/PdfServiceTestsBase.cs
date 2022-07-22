@@ -144,7 +144,7 @@ namespace App.IntegrationTestsRef.Implementation.PdfService
             Mock<IHttpContextAccessor> httpContextAccessor = MockUserInHttpContext();
             Mock<IProfile> profileClient = MockProfileClient();
             var registerClient = new Mock<IRegister>();
-            var customPdfHandler = new NullPdfHandler();
+            var customPdfHandler = new NullPdfFormatter();
 
             var pdfService = new Altinn.App.PlatformServices.Implementation.PdfService(pdfClient, appResources, appOptionsService, dataClient.Object, httpContextAccessor.Object, profileClient.Object, registerClient.Object, customPdfHandler);
 

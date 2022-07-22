@@ -1,5 +1,7 @@
 using System;
-
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Altinn.App.Core.Interface;
 using Altinn.App.Services.Interface;
 using Altinn.App.Services.Models.Validation;
 using Altinn.Platform.Storage.Interface.Models;
@@ -8,7 +10,7 @@ using Altinn.Platform.Storage.Interface.Models;
 namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
 #pragma warning restore SA1300 // Element should begin with upper-case letter
 {
-    public class InstantiationHandler
+    public class InstantiationHandler: IInstantiation
     {
         private IProfile _profileService;
         private IRegister _registerService;
@@ -19,7 +21,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
             _registerService = registerService;
         }
 
-        public InstantiationValidationResult RunInstantiationValidation(Instance instance)
+        public async Task<InstantiationValidationResult> Validation(Instance instance)
         {
             DateTime now = DateTime.Now;
             if (now.Hour < 15)
@@ -42,7 +44,8 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
         /// </remarks>
         /// <param name="instance">The instance object</param>
         /// <param name="data">The data created</param>
-        public void DataCreation(Instance instance, object data)
+        /// <param name="prefill">Prefill data</param>
+        public async Task DataCreation(Instance instance, object data, Dictionary<string, string> prefill)
         {
             if (data.GetType() == typeof(Skjema))
             {

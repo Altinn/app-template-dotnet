@@ -12,15 +12,15 @@ namespace App.IntegrationTestsRef.CommonTests.Health
     /// <summary>
     /// Health check 
     /// </summary>
-    public class HealthCheckTests : IClassFixture<WebApplicationFactory<Altinn.App.AppLogic.App>>
+    public class HealthCheckTests : IClassFixture<WebApplicationFactory<Altinn.App.AppLogic.AppModel>>
     {
-        private readonly WebApplicationFactory<Altinn.App.AppLogic.App> _factory;
+        private readonly WebApplicationFactory<Altinn.App.AppLogic.AppModel> _factory;
 
         /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="factory">The web applicaiton factory</param>
-        public HealthCheckTests(WebApplicationFactory<Altinn.App.AppLogic.App> factory)
+        public HealthCheckTests(WebApplicationFactory<Altinn.App.AppLogic.AppModel> factory)
         {
             _factory = factory;
         }

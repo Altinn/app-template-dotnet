@@ -13,11 +13,11 @@ using Xunit;
 
 namespace App.IntegrationTests.ApiTests
 {
-    public class StatelessDataApiTest : IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.App>>
+    public class StatelessDataApiTest : IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel>>
     {
-        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.App> _factory;
+        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> _factory;
 
-        public StatelessDataApiTest(CustomWebApplicationFactory<Altinn.App.AppLogic.App> factory)
+        public StatelessDataApiTest(CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> factory)
         {
             _factory = factory;
         }

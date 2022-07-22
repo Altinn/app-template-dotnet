@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 
 using Altinn.App;
+using Altinn.App.Core.Interface;
 using Altinn.App.IntegrationTests.Mocks.Authentication;
 using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
@@ -34,9 +35,9 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.EndToEndTests
 {
-    public class EndToEndTests : IClassFixture<WebApplicationFactory<Altinn.App.AppLogic.App>>
+    public class EndToEndTests : IClassFixture<WebApplicationFactory<Altinn.App.AppLogic.AppModel>>
     {
-        private readonly WebApplicationFactory<Altinn.App.AppLogic.App> _factory;
+        private readonly WebApplicationFactory<Altinn.App.AppLogic.AppModel> _factory;
 
         private string org;
         private string app;
@@ -49,7 +50,7 @@ namespace App.IntegrationTestsRef.EndToEndTests
         private readonly Dictionary<string, DataElement> dataElements = new Dictionary<string, DataElement>();
         private readonly Dictionary<string, object> dataBlobs = new Dictionary<string, object>();
 
-        public EndToEndTests(WebApplicationFactory<Altinn.App.AppLogic.App> factory)
+        public EndToEndTests(WebApplicationFactory<Altinn.App.AppLogic.AppModel> factory)
         {
             _factory = factory;
         }
@@ -272,7 +273,7 @@ namespace App.IntegrationTestsRef.EndToEndTests
                         return dataBlobs[dataId.ToString()];
                     });
 
-            WebApplicationFactory<Altinn.App.AppLogic.App> factory = _factory.WithWebHostBuilder(builder =>
+            WebApplicationFactory<Altinn.App.AppLogic.AppModel> factory = _factory.WithWebHostBuilder(builder =>
             {
                 string unitTestFolder = Path.GetDirectoryName(new Uri(typeof(InstanceMockSI).Assembly.Location).LocalPath);
                 string path = Path.Combine(unitTestFolder, $"../../../Data/apps/{org}/{app}/");
@@ -312,7 +313,10 @@ namespace App.IntegrationTestsRef.EndToEndTests
                     switch (app)
                     {
                         case "complex-process":
-                            services.AddSingleton<IAltinnApp, IntegrationTests.Mocks.Apps.tdd.complex_process.App>();
+                            services.AddSingleton<IAppModel, IntegrationTests.Mocks.Apps.tdd.complex_process.AppModel>();
+                            services
+                                .AddTransient<IInstanceValidator, IntegrationTests.Mocks.Apps.tdd.complex_process.
+                                    AppLogic.Validation.ValidationHandler>();
                             break;
                     }
                 });

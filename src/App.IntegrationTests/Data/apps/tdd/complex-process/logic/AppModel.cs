@@ -2,31 +2,29 @@ using System;
 using Altinn.App.Core.Interface;
 using Microsoft.Extensions.Logging;
 
-namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidling
+#pragma warning disable SA1300 // Element should begin with upper-case letter
+namespace App.IntegrationTests.Mocks.Apps.tdd.complex_process
+#pragma warning restore SA1300 // Element should begin with upper-case letter
 {
-    /// <summary>
-    /// Represents the core logic of an App
-    /// </summary>
-    public class App : IAppModel
+    public class AppModel : IAppModel
     {
-        private readonly ILogger<App> _logger;
-
+        private readonly ILogger<AppModel> _logger;
+    
         /// <summary>
-        /// Initialize a new instance of the <see cref="App"/> class.
+        /// Initialize new instance of AppModel
         /// </summary>
-        /// <param name="logger">A logger from the built in LoggingFactory.</param>
-        public App(ILogger<App> logger)
+        /// <param name="logger">Logger for AppModle</param>
+        public AppModel(ILogger<AppModel> logger)
         {
             _logger = logger;
         }
-
+    
         /// <inheritdoc />
         public object Create(string classRef)
         {
             _logger.LogInformation($"CreateNewAppModel {classRef}");
 
-            Type appType = Type.GetType(classRef);
-            return Activator.CreateInstance(appType);
+            return Activator.CreateInstance(GetModelType(classRef));
         }
 
         /// <inheritdoc />

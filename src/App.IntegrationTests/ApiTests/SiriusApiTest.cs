@@ -20,11 +20,11 @@ using Xunit;
 
 namespace App.IntegrationTests.ApiTests
 {
-    public class SiriusApiTest: IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.App>>
+    public class SiriusApiTest: IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel>>
     {
-        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.App> _factory;
+        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> _factory;
 
-        public SiriusApiTest(CustomWebApplicationFactory<Altinn.App.AppLogic.App> factory)
+        public SiriusApiTest(CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> factory)
         {
             _factory = factory;
         }

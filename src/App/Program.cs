@@ -5,16 +5,13 @@ using Altinn.App.Api.Controllers;
 using Altinn.App.Api.Filters;
 using Altinn.App.Api.Middleware;
 using Altinn.App.Core.Health;
+using Altinn.App.Core.Interface;
 using Altinn.App.PlatformServices.Extensions;
-using Altinn.App.Services.Interface;
 using Altinn.Common.PEP.Authorization;
 using Altinn.Common.PEP.Clients;
 using AltinnCore.Authentication.JwtCookie;
-using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
@@ -56,11 +53,19 @@ void ConfigureServices(IServiceCollection services, IConfiguration config)
 
     // HttpClients for platform functionality. Registered as HttpClients so default HttpClientFactory is used
     services.AddHttpClient<AuthorizationApiClient>();
+    
+    // ##############################################################################################################
+    // # Add your services below here                                                                               #
+    // ##############################################################################################################
+    
+    // ##############################################################################################################
+    // # End of your services                                                                                       #
+    // ##############################################################################################################
     services.AddAppServices(config, builder.Environment);
     services.AddPlatformServices(config, builder.Environment);
 
-    // Altinn App implementation service (The concrete implementation of logic from Application repository)
-    services.AddTransient<IAltinnApp, Altinn.App.AppLogic.App>();
+    // Altinn App Model implementation service (The concrete implementation of IAppModel for this app)
+    services.AddTransient<IAppModel, Altinn.App.AppLogic.AppModel>();
 
     services.Configure<KestrelServerOptions>(options =>
     {

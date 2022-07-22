@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Altinn.App.Common" Version="6.0.0-alpha.3" />
-    <PackageReference Include="Altinn.App.PlatformServices" Version="6.0.0-alpha.3" />
+    <PackageReference Include="Altinn.App.Api" Version="7.0.0-local1" />
+    <PackageReference Include="Altinn.App.Core" Version="7.0.0-local1" />
     <PackageReference Include="FluentAssertions" Version="6.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
@@ -141,13 +141,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Data\apps\tdd\complex-process\logic\App.cs">
+    <Compile Update="Data\apps\tdd\complex-process\logic\AppModel.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Data\apps\tdd\complex-process\logic\Calculation\CalculationHandler.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Update="Data\apps\tdd\complex-process\logic\InstantiationHandler.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Data\apps\tdd\complex-process\logic\Validation\ValidationHandler.cs">
@@ -198,6 +195,7 @@
     <Folder Include="Data\apps\ttd\externalprefil\config\texts\" />
     <Folder Include="Data\apps\ttd\externalprefil\ui\layouts\" />
     <Folder Include="Data\apps\tdd\dynamic-options-pdf\" />
+    <Folder Include="Data\Instances\ttd\autodelete-data\1337\18cae029-8db7-4fea-a538-73b16f0f3c75\blob" />
     <Folder Include="Data\Instances\ttd\datafields-app\1337\" />
   </ItemGroup>
 

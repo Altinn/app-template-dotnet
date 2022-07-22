@@ -1,5 +1,6 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using Altinn.App.Core.Interface;
 using Altinn.App.Services.Interface;
 using Altinn.App.Services.Models.Validation;
 using Altinn.Platform.Storage.Interface.Models;
@@ -8,7 +9,7 @@ using Altinn.Platform.Storage.Interface.Models;
 namespace App.IntegrationTests.Mocks.Apps.ttd.events
 #pragma warning restore SA1300 // Element should begin with upper-case letter
 {
-    public class InstantiationHandler
+    public class InstantiationHandler: IInstantiation
     {
         private IProfile _profileService;
         private IRegister _registerService;
@@ -24,12 +25,12 @@ namespace App.IntegrationTests.Mocks.Apps.ttd.events
             _registerService = registerService;
         }
 
-        public async Task<InstantiationValidationResult> RunInstantiationValidation(Instance instance)
+        public async Task<InstantiationValidationResult> Validation(Instance instance)
         {
             return await Task.FromResult((InstantiationValidationResult)null);
         }
 
-        public async Task DataCreation(Instance instance, object data)
+        public async Task DataCreation(Instance instance, object data, Dictionary<string, string> prefill)
         {
             if (data.GetType() == typeof(Skjema))
             {
