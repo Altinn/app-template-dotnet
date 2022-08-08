@@ -2,16 +2,14 @@ using System;
 using System.IO;
 using System.Reflection;
 using Altinn.App.Api.Controllers;
-using Altinn.App.Api.Filters;
-using Altinn.App.Api.Middleware;
+using Altinn.App.Api.Extensions;
+using Altinn.App.Api.Infrastructure.Filters;
 using Altinn.App.Core.Health;
+using Altinn.App.Core.Interface;
 using Altinn.App.PlatformServices.Extensions;
-using Altinn.App.Services.Interface;
 using Altinn.Common.PEP.Authorization;
 using Altinn.Common.PEP.Clients;
 using AltinnCore.Authentication.JwtCookie;
-using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -56,11 +54,10 @@ void ConfigureServices(IServiceCollection services, IConfiguration config)
 
     // HttpClients for platform functionality. Registered as HttpClients so default HttpClientFactory is used
     services.AddHttpClient<AuthorizationApiClient>();
-    services.AddAppServices(config, builder.Environment);
-    services.AddPlatformServices(config, builder.Environment);
+    services.AddAltinnAppServices(config, builder.Environment);
 
     // Altinn App implementation service (The concrete implementation of logic from Application repository)
-    services.AddTransient<IAltinnApp, Altinn.App.AppLogic.App>();
+    services.AddTransient<IAppModel, Altinn.App.AppLogic.App>();
 
     services.Configure<KestrelServerOptions>(options =>
     {
