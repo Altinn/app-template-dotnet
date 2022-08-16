@@ -147,6 +147,9 @@
     <Compile Update="Data\apps\tdd\complex-process\logic\Calculation\CalculationHandler.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Update="Data\apps\tdd\complex-process\logic\InstantiationHandler.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Update="Data\apps\tdd\complex-process\logic\Validation\ValidationHandler.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -195,7 +198,6 @@
     <Folder Include="Data\apps\ttd\externalprefil\config\texts\" />
     <Folder Include="Data\apps\ttd\externalprefil\ui\layouts\" />
     <Folder Include="Data\apps\tdd\dynamic-options-pdf\" />
-    <Folder Include="Data\Instances\ttd\autodelete-data\1337\18cae029-8db7-4fea-a538-73b16f0f3c75\blob" />
     <Folder Include="Data\Instances\ttd\datafields-app\1337\" />
   </ItemGroup>
 
