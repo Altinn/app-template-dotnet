@@ -62,8 +62,7 @@ void ConfigureServices(IServiceCollection services, IConfiguration config)
     // ##############################################################################################################
     // # End of your services                                                                                       #
     // ##############################################################################################################
-    services.AddAppServices(config, builder.Environment);
-    services.AddPlatformServices(config, builder.Environment);
+    services.AddAltinnAppServices(config, builder.Environment);
 
     // Altinn App Model implementation service (The concrete implementation of IAppModel for this app)
     services.AddTransient<IAppModel, Altinn.App.AppLogic.AppModel>();
