@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Altinn.App.Core.Interface;
 using Altinn.Platform.Storage.Interface.Models;
-using Microsoft.AspNetCore.Http;
 
 #pragma warning disable SA1300 // Element should begin with upper-case letter
 namespace App.IntegrationTests.Mocks.Apps.ttd.model_validation

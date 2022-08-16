@@ -1,9 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Altinn.App.Core.Interface;
-using Altinn.App.Services.Interface;
 using Altinn.Platform.Storage.Interface.Models;
-using App.IntegrationTests.Mocks.Apps.Ttd.Dayplanner;
 
 //// using Altinn.App.Models; // <-- Uncomment this line to refer to app model(s)
 

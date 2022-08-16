@@ -1,14 +1,5 @@
 using System;
-using System.Threading.Tasks;
 using Altinn.App.Core.Interface;
-using Altinn.App.PlatformServices.Interface;
-using Altinn.App.PlatformServices.Models;
-using Altinn.App.Services.Implementation;
-using Altinn.App.Services.Interface;
-using Altinn.App.Services.Models.Validation;
-using Altinn.Platform.Storage.Interface.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 
 namespace App.IntegrationTests.Mocks.Apps.Ttd.AutoDeleteData

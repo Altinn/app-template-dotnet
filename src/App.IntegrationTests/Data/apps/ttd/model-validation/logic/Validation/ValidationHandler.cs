@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using Altinn.App.Core.Interface;
 using Altinn.Platform.Storage.Interface.Models;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 #pragma warning disable SA1300 // Element should begin with upper-case letter

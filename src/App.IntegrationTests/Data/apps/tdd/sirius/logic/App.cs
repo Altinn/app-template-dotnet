@@ -1,21 +1,5 @@
 using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Altinn.App.Core.Interface;
-using Altinn.App.PlatformServices.Interface;
-using Altinn.App.Services.Implementation;
-using Altinn.App.Services.Interface;
-using Altinn.App.Services.Models.Validation;
-using Altinn.Platform.Storage.Interface.Models;
-
-using App.IntegrationTests.Mocks.Apps.tdd.sirius.AppLogic;
-using App.IntegrationTests.Mocks.Apps.tdd.sirius.AppLogic.Calculation;
-using App.IntegrationTests.Mocks.Apps.tdd.sirius.AppLogic.Validation;
-using App.IntegrationTestsRef.Data.apps.tdd.sirius.services;
-
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 
 #pragma warning disable SA1300 // Element should begin with upper-case letter
