@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Altinn.App.Core.Infrastructure.Clients.Pdf;
 using Altinn.App.PlatformServices.Implementation;
 using Altinn.App.PlatformServices.Options;
 using Altinn.App.Services.Configuration;
