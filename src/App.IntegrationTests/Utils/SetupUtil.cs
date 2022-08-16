@@ -133,6 +133,8 @@ namespace App.IntegrationTests.Utils
                             services.AddSingleton<ISiriusApi, SiriusAPI>();
                             services.AddTransient<IAppModel, Mocks.Apps.tdd.sirius.App>();
                             services.AddTransient<ITaskProcessor, Mocks.Apps.tdd.sirius.TaskProcessor>();
+                            services
+                                .AddTransient<IInstanceValidator, Mocks.Apps.tdd.sirius.AppLogic.Validation.ValidationHandler>();
                             break;
                         case "events":
                             services.AddTransient<IAppModel, Mocks.Apps.ttd.events.AltinnApp>();
