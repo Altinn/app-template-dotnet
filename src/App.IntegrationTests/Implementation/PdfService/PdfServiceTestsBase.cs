@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Altinn.App.Core.Infrastructure.Clients.Pdf;
 using Altinn.App.PlatformServices.Implementation;
 using Altinn.App.PlatformServices.Options;
 using Altinn.App.Services.Configuration;
@@ -144,7 +145,7 @@ namespace App.IntegrationTestsRef.Implementation.PdfService
             Mock<IHttpContextAccessor> httpContextAccessor = MockUserInHttpContext();
             Mock<IProfile> profileClient = MockProfileClient();
             var registerClient = new Mock<IRegister>();
-            var customPdfHandler = new NullPdfHandler();
+            var customPdfHandler = new NullPdfFormatter();
 
             var pdfService = new Altinn.App.PlatformServices.Implementation.PdfService(pdfClient, appResources, appOptionsService, dataClient.Object, httpContextAccessor.Object, profileClient.Object, registerClient.Object, customPdfHandler);
 

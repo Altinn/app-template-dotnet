@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
-
+using Altinn.App.Core.Infrastructure.Clients.Profile;
 using Altinn.App.Services.Configuration;
-using Altinn.App.Services.Decorators;
 using Altinn.App.Services.Interface;
 using Altinn.Platform.Profile.Models;
 

@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Altinn.App.Core.Interface;
 using Altinn.App.Services.Interface;
 using Altinn.App.Services.Models.Validation;
 using Altinn.Platform.Storage.Interface.Models;
@@ -7,7 +10,7 @@ using Altinn.Platform.Storage.Interface.Models;
 namespace App.IntegrationTests.Mocks.Apps.tdd.task_validation
 #pragma warning restore SA1300 // Element should begin with upper-case letter
 {
-    public class InstantiationHandler
+    public class InstantiationHandler: IInstantiation
     {
         private IProfile _profileService;
         private IRegister _registerService;
@@ -18,22 +21,22 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.task_validation
             _registerService = registerService;
         }
 
-        public InstantiationValidationResult RunInstantiationValidation(Instance instance)
+        public async Task<InstantiationValidationResult> Validation(Instance instance)
         {
             DateTime now = DateTime.Now;
             if (now.Hour < 15)
             {
-                return new InstantiationValidationResult()
+                return await Task.FromResult(new InstantiationValidationResult()
                 {
                     Valid = false,
                     Message = "ERROR: Instantiation not possible before 3PM."
-                };
+                });
             }
 
             return null;
         }
 
-        public void DataCreation(Instance instance, object data)
+        public async Task DataCreation(Instance instance, object data, Dictionary<string, string> prefill)
         {
             if (data.GetType() == typeof(Skjema))
             {
@@ -64,6 +67,8 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.task_validation
                     model.Foretakgrp8820.EnhetNavnEndringdatadef31.value = navn;
                 }
             }
+
+            await Task.CompletedTask;
         }
     }
 }

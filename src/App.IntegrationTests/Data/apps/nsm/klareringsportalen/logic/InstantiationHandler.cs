@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Altinn.App.Core.Interface;
 using Altinn.App.Models; // Uncomment this line to refer to app model(s)
 using Altinn.App.Services.Interface;
 using Altinn.App.Services.Models.Validation;
@@ -16,7 +18,7 @@ namespace App.IntegrationTests.Mocks.Apps.nsm.klareringsportalen.AppLogic
     /// <summary>
     /// Represents a business logic class responsible for running logic related to instantiation.
     /// </summary>
-    public class InstantiationHandler
+    public class InstantiationHandler: IInstantiation
     {
         private IProfile _profileService;
         private IRegister _registerService;
@@ -45,7 +47,7 @@ namespace App.IntegrationTests.Mocks.Apps.nsm.klareringsportalen.AppLogic
         /// </example>
         /// <param name="instance">The instance being validated</param>
         /// <returns>The validation result object (null if no errors) </returns>
-        public async Task<InstantiationValidationResult> RunInstantiationValidation(Instance instance)
+        public async Task<InstantiationValidationResult> Validation(Instance instance)
         {
             return await Task.FromResult((InstantiationValidationResult)null);
         }
@@ -58,7 +60,7 @@ namespace App.IntegrationTests.Mocks.Apps.nsm.klareringsportalen.AppLogic
         /// </remarks>
         /// <param name="instance">Instance information</param>
         /// <param name="data">The data object created</param>
-        public async Task DataCreation(Instance instance, object data)
+        public async Task DataCreation(Instance instance, object data, Dictionary<string, string> prefill)
         {
             ePOB_M model = (ePOB_M)data;
 

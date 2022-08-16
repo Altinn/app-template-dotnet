@@ -10,11 +10,11 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.ApiTests
 {
-    public class InstanceApiPlatformFailsTest : IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.App>>
+    public class InstanceApiPlatformFailsTest : IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel>>
     {
-        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.App> _factory;
+        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> _factory;
 
-        public InstanceApiPlatformFailsTest(CustomWebApplicationFactory<Altinn.App.AppLogic.App> factory)
+        public InstanceApiPlatformFailsTest(CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> factory)
         {
             _factory = factory;
         }

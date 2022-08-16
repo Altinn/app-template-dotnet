@@ -4,6 +4,7 @@ using System.Reflection;
 using Altinn.App.Api.Controllers;
 using Altinn.App.Api.Extensions;
 using Altinn.App.Api.Infrastructure.Filters;
+using Altinn.App.Core.Extensions;
 using Altinn.App.Core.Health;
 using Altinn.App.Core.Interface;
 using Altinn.App.PlatformServices.Extensions;
@@ -12,7 +13,6 @@ using Altinn.Common.PEP.Clients;
 using AltinnCore.Authentication.JwtCookie;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
@@ -54,10 +54,18 @@ void ConfigureServices(IServiceCollection services, IConfiguration config)
 
     // HttpClients for platform functionality. Registered as HttpClients so default HttpClientFactory is used
     services.AddHttpClient<AuthorizationApiClient>();
+    
+    // ##############################################################################################################
+    // # Add your services below here                                                                               #
+    // ##############################################################################################################
+    
+    // ##############################################################################################################
+    // # End of your services                                                                                       #
+    // ##############################################################################################################
     services.AddAltinnAppServices(config, builder.Environment);
 
-    // Altinn App implementation service (The concrete implementation of logic from Application repository)
-    services.AddTransient<IAppModel, Altinn.App.AppLogic.App>();
+    // Altinn App Model implementation service (The concrete implementation of IAppModel for this app)
+    services.AddTransient<IAppModel, Altinn.App.AppLogic.AppModel>();
 
     services.Configure<KestrelServerOptions>(options =>
     {

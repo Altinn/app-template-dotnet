@@ -13,11 +13,11 @@ using Xunit;
 
 namespace App.IntegrationTests.ControllerTests
 {
-    public class HomeControllerTests : IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.App>>
+    public class HomeControllerTests : IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel>>
     {
-        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.App> _factory;
+        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> _factory;
 
-        public HomeControllerTests(CustomWebApplicationFactory<Altinn.App.AppLogic.App> factory)
+        public HomeControllerTests(CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> factory)
         {
             _factory = factory;
         }

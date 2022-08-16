@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Altinn.App.Common.Models;
@@ -12,7 +11,7 @@ namespace App.IntegrationTests.Mocks.Apps.dibk.nabovarsel
     /// <summary>
     /// Handler for formatting PDF. Dow
     /// </summary>
-    public class PdfHandler
+    public class PdfHandler: IPdfFormatter
     {
         /// <summary>
         /// Method to format PDF

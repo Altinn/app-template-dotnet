@@ -6,9 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Altinn.App.Api" Version="6.0.1" />
-    <PackageReference Include="Altinn.App.Common" Version="6.0.1" />
-    <PackageReference Include="Altinn.App.PlatformServices" Version="6.0.1" />
+    <PackageReference Include="Altinn.App.Api" Version="7.0.0-preview.3" />
+    <PackageReference Include="Altinn.App.Core" Version="7.0.0-preview.3" />
     <PackageReference Include="FluentAssertions" Version="6.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
@@ -18,6 +17,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\App\AppRef.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(Configuration)'=='Debug'">
@@ -138,7 +141,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Data\apps\tdd\complex-process\logic\App.cs">
+    <Compile Update="Data\apps\tdd\complex-process\logic\AppModel.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Update="Data\apps\tdd\complex-process\logic\Calculation\CalculationHandler.cs">

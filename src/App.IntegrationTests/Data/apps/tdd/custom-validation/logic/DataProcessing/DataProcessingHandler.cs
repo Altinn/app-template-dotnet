@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Altinn.App.Core.Interface;
 using Altinn.Platform.Storage.Interface.Models;
 
 //// using Altinn.App.Models; // <-- Uncomment this line to refer to app model(s)
@@ -12,7 +13,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
     /// <summary>
     /// Represents a business logic class responsible for running calculations on an instance.
     /// </summary>
-    public class DataProcessingHandler
+    public class DataProcessingHandler: IDataProcessor
     {
         /// <summary>
         /// Perform data processing on data read. When reading data from App API
