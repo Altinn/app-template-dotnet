@@ -13,6 +13,7 @@ using Altinn.Common.PEP.Clients;
 using AltinnCore.Authentication.JwtCookie;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +28,8 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 var builder = WebApplication.CreateBuilder(args);
 
 ConfigureServices(builder.Services, builder.Configuration);
+
+ConfigureWebHostBuilder(builder.WebHost);
 
 var app = builder.Build();
 
@@ -125,6 +128,11 @@ void ConfigureServices(IServiceCollection services, IConfiguration config)
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Altinn App Api", Version = "v1" });
         IncludeXmlComments(c);
     });
+}
+
+void ConfigureWebHostBuilder(IWebHostBuilder builder)
+{
+    builder.ConfigureAppWebHost(args);
 }
 
 void Configure()
