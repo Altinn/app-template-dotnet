@@ -4,8 +4,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Altinn.App;
+using Altinn.App.Core.Models.Validation;
 using Altinn.App.IntegrationTests;
-using Altinn.App.Services.Models.Validation;
 using App.IntegrationTests.Utils;
 
 using Newtonsoft.Json;

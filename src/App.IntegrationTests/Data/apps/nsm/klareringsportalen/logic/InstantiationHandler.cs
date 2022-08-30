@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Altinn.App.Core.Interface;
-using Altinn.App.Models; // Uncomment this line to refer to app model(s)
-using Altinn.App.Services.Interface;
-using Altinn.App.Services.Models.Validation;
+using Altinn.App.Core.Models.Validation;
 using Altinn.Platform.Storage.Interface.Models;
 using App.IntegrationTests.Mocks.Apps.nsm.klareringsportalen.models;
 using Adresse = App.IntegrationTests.Mocks.Apps.nsm.klareringsportalen.models.Adresse;

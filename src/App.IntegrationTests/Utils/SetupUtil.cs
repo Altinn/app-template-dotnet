@@ -5,19 +5,18 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Altinn.App;
-using Altinn.App.Common.Models;
-using Altinn.App.Core.EFormidling.Extensions;
+using Altinn.App.Core.Configuration;
 using Altinn.App.Core.EFormidling.Implementation;
 using Altinn.App.Core.EFormidling.Interface;
+using Altinn.App.Core.Features.Options;
+using Altinn.App.Core.Features.Pdf;
+using Altinn.App.Core.Features.Texts;
+using Altinn.App.Core.Features.Validation;
 using Altinn.App.Core.Interface;
+using Altinn.App.Core.Models;
 using Altinn.App.IntegrationTests;
 using Altinn.App.IntegrationTests.Mocks.Authentication;
-using Altinn.App.PlatformServices.Interface;
-using Altinn.App.PlatformServices.Models;
-using Altinn.App.PlatformServices.Options;
-using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
-using Altinn.App.Services.Interface;
 using Altinn.Common.EFormidlingClient;
 using Altinn.Platform.Authentication.Maskinporten;
 using AltinnCore.Authentication.JwtCookie;
@@ -216,7 +215,7 @@ namespace App.IntegrationTests.Utils
 
         public static void AddAuthCookie(HttpRequestMessage requestMessage, string token, string xsrfToken = null)
         {
-            requestMessage.Headers.Add("Cookie", Altinn.App.Services.Constants.General.RuntimeCookieName + "=" + token);
+            requestMessage.Headers.Add("Cookie", Altinn.App.Core.Constants.General.RuntimeCookieName + "=" + token);
             if (xsrfToken != null)
             {
                 requestMessage.Headers.Add("X-XSRF-TOKEN", xsrfToken);

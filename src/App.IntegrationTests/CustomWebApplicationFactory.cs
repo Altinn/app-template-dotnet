@@ -1,5 +1,5 @@
 using System.Linq;
-using Altinn.App.PlatformServices.Options;
+using Altinn.App.Core.Features.Options;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;

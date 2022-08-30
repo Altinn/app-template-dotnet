@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Altinn.App;
+using Altinn.App.Core.Models.Validation;
 using Altinn.App.IntegrationTests;
-using Altinn.App.Services.Models.Validation;
 using Altinn.Platform.Storage.Interface.Models;
 
 using App.IntegrationTests.Mocks.Apps.tdd.sirius;

@@ -5,9 +5,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Altinn.App;
-using Altinn.App.Common.Models;
+using Altinn.App.Core.Interface;
+using Altinn.App.Core.Models;
 using Altinn.App.IntegrationTests;
-using Altinn.App.Services.Interface;
 using Altinn.Platform.Storage.Interface.Models;
 
 using App.IntegrationTests.Utils;
@@ -198,7 +198,8 @@ namespace App.IntegrationTests.ApiTests
             Assert.Contains(calculationResult.ChangedFields.Keys, k => k == "OpplysningerOmArbeidstakerengrp8819.Skjemainstansgrp8854.TestRepeatinggrp123[0].value");
             Assert.Equal(555, Convert.ToInt32(calculationResult.ChangedFields["OpplysningerOmArbeidstakerengrp8819.Skjemainstansgrp8854.TestRepeatinggrp123[0].value"]));
             Assert.Equal(1000, Convert.ToInt32(calculationResult.ChangedFields["OpplysningerOmArbeidstakerengrp8819.Skjemainstansgrp8854.Journalnummerdatadef33316.value"]));
-            Assert.Null(calculationResult.ChangedFields["OpplysningerOmArbeidstakerengrp8819.Skjemainstansgrp8854.IdentifikasjonsnummerKravdatadef33317"]);
+            Assert.Null(calculationResult.ChangedFields["OpplysningerOmArbeidstakerengrp8819.Skjemainstansgrp8854.IdentifikasjonsnummerKravdatadef33317.orid"]);
+            Assert.Null(calculationResult.ChangedFields["OpplysningerOmArbeidstakerengrp8819.Skjemainstansgrp8854.IdentifikasjonsnummerKravdatadef33317.value"]);
         }
 
         [Fact]

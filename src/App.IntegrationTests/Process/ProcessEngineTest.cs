@@ -1,10 +1,9 @@
 using System;
 using System.IO;
-
+using Altinn.App.Core.Configuration;
 using Altinn.App.Core.Implementation;
 using Altinn.App.Core.Infrastructure.Clients.Storage;
 using Altinn.App.Core.Models;
-using Altinn.App.Services.Configuration;
 using Altinn.Platform.Storage.Interface.Models;
 using Microsoft.Extensions.Options;
 using Xunit;

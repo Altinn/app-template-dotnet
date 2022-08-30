@@ -3,8 +3,8 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Altinn.App;
+using Altinn.App.Core.Configuration;
 using Altinn.App.IntegrationTests;
-using Altinn.App.Services.Configuration;
 using App.IntegrationTests.Utils;
 using App.IntegrationTestsRef.Models;
 

@@ -10,8 +10,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Altinn.App;
 using Altinn.App.Api.Models;
+using Altinn.App.Core.Models.Validation;
 using Altinn.App.IntegrationTests;
-using Altinn.App.Services.Models.Validation;
 using Altinn.Platform.Storage.Interface.Models;
 
 using App.IntegrationTests.Mocks.Apps.tdd.endring_av_navn;

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Altinn.App.Common.Models;
-using Altinn.App.PlatformServices.Interface;
+using Altinn.App.Core.Features.Pdf;
+using Altinn.App.Core.Models;
 using App.IntegrationTestsRef.Data.apps.dibk.nabovarsel;
 
 #pragma warning disable SA1300 // Element should begin with upper-case letter

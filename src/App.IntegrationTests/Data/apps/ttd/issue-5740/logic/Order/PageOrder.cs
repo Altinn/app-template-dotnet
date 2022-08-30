@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Altinn.App.PlatformServices.Models;
-using Altinn.App.Services.Interface;
+using Altinn.App.Core.Interface;
+using Altinn.App.Core.Models;
 
 #pragma warning disable SA1300 // Element should begin with upper-case letter
 namespace App.IntegrationTests.Mocks.Apps.Ttd.Issue5740

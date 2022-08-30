@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Altinn.App.Core.Configuration;
 using Altinn.App.Core.Interface;
-using Altinn.App.Services.Configuration;
 using Altinn.Platform.Storage.Interface.Models;
 
 using Microsoft.AspNetCore.Http;

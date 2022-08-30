@@ -9,12 +9,14 @@ using System.Text;
 using System.Threading;
 
 using Altinn.App;
+using Altinn.App.Core.Configuration;
+using Altinn.App.Core.Features.Pdf;
+using Altinn.App.Core.Features.Texts;
+using Altinn.App.Core.Features.Validation;
 using Altinn.App.Core.Interface;
+using Altinn.App.Core.Models.Validation;
 using Altinn.App.IntegrationTests.Mocks.Authentication;
-using Altinn.App.Services.Configuration;
 using Altinn.App.Services.Implementation;
-using Altinn.App.Services.Interface;
-using Altinn.App.Services.Models.Validation;
 using Altinn.Common.PEP.Interfaces;
 using Altinn.Platform.Authentication.Maskinporten;
 using Altinn.Platform.Storage.Interface.Models;

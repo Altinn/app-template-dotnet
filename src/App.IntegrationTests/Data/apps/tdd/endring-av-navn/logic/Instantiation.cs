@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Altinn.App.Core.Interface;
-using Altinn.App.Services.Models.Validation;
+using Altinn.App.Core.Models.Validation;
 using Altinn.Platform.Storage.Interface.Models;
 
 #pragma warning disable SA1300 // Element should begin with upper-case letter
