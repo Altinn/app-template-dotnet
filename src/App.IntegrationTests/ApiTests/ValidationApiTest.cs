@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-
+using Altinn.App;
 using Altinn.App.IntegrationTests;
 using Altinn.App.Services.Models.Validation;
 using App.IntegrationTests.Utils;
@@ -13,11 +13,11 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.ApiTests
 {
-    public class ValidationApiTest : IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel>>
+    public class ValidationApiTest : IClassFixture<CustomWebApplicationFactory<AppModel>>
     {
-        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> _factory;
+        private readonly CustomWebApplicationFactory<AppModel> _factory;
 
-        public ValidationApiTest(CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> factory)
+        public ValidationApiTest(CustomWebApplicationFactory<AppModel> factory)
         {
             _factory = factory;
         }

@@ -16,11 +16,11 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.EndToEndTests
 {
-    public class NsmKlareringsportalenEndToEndTests : IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel>>
+    public class NsmKlareringsportalenEndToEndTests : IClassFixture<CustomWebApplicationFactory<AppModel>>
     {
-        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> _factory;
+        private readonly CustomWebApplicationFactory<AppModel> _factory;
 
-        public NsmKlareringsportalenEndToEndTests(CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> factory)
+        public NsmKlareringsportalenEndToEndTests(CustomWebApplicationFactory<AppModel> factory)
         {
             _factory = factory;
         }

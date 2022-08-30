@@ -39,13 +39,13 @@ namespace App.IntegrationTests.Utils
     public static class SetupUtil
     {
         public static HttpClient GetTestClient(
-            CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> customFactory,
+            CustomWebApplicationFactory<AppModel> customFactory,
             string org,
             string app,            
             Mock<IData> dataMock = null,
             bool allowRedirect = true)
         {
-            WebApplicationFactory<Altinn.App.AppLogic.AppModel> factory = customFactory.WithWebHostBuilder(builder =>
+            WebApplicationFactory<AppModel> factory = customFactory.WithWebHostBuilder(builder =>
             {
                 string path = GetAppPath(org, app);
                 builder.ConfigureAppConfiguration((context, conf) =>

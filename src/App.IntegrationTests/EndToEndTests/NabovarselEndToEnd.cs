@@ -21,11 +21,11 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.EndToEndTests
 {
-    public class NabovarselEndToEnd : IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel>>
+    public class NabovarselEndToEnd : IClassFixture<CustomWebApplicationFactory<AppModel>>
     {
-        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> _factory;
+        private readonly CustomWebApplicationFactory<AppModel> _factory;
 
-        public NabovarselEndToEnd(CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> factory)
+        public NabovarselEndToEnd(CustomWebApplicationFactory<AppModel> factory)
         {
             _factory = factory;
         }

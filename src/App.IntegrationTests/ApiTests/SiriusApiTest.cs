@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-
+using Altinn.App;
 using Altinn.App.IntegrationTests;
 using Altinn.App.Services.Models.Validation;
 using Altinn.Platform.Storage.Interface.Models;
@@ -20,11 +20,11 @@ using Xunit;
 
 namespace App.IntegrationTests.ApiTests
 {
-    public class SiriusApiTest: IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel>>
+    public class SiriusApiTest: IClassFixture<CustomWebApplicationFactory<AppModel>>
     {
-        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> _factory;
+        private readonly CustomWebApplicationFactory<AppModel> _factory;
 
-        public SiriusApiTest(CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> factory)
+        public SiriusApiTest(CustomWebApplicationFactory<AppModel> factory)
         {
             _factory = factory;
         }

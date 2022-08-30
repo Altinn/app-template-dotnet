@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using Altinn.App;
 using Altinn.App.Api.Controllers;
 using Altinn.App.Api.Extensions;
 using Altinn.App.Api.Infrastructure.Filters;
@@ -65,7 +66,7 @@ void ConfigureServices(IServiceCollection services, IConfiguration config)
     services.AddAltinnAppServices(config, builder.Environment);
 
     // Altinn App Model implementation service (The concrete implementation of IAppModel for this app)
-    services.AddTransient<IAppModel, Altinn.App.AppLogic.AppModel>();
+    services.AddTransient<IAppModel, AppModel>();
 
     services.Configure<KestrelServerOptions>(options =>
     {

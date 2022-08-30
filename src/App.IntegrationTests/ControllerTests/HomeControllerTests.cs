@@ -4,20 +4,19 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-
+using Altinn.App;
 using Altinn.App.IntegrationTests;
-
 using App.IntegrationTests.Utils;
 
 using Xunit;
 
 namespace App.IntegrationTests.ControllerTests
 {
-    public class HomeControllerTests : IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel>>
+    public class HomeControllerTests : IClassFixture<CustomWebApplicationFactory<AppModel>>
     {
-        private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> _factory;
+        private readonly CustomWebApplicationFactory<AppModel> _factory;
 
-        public HomeControllerTests(CustomWebApplicationFactory<Altinn.App.AppLogic.AppModel> factory)
+        public HomeControllerTests(CustomWebApplicationFactory<AppModel> factory)
         {
             _factory = factory;
         }
