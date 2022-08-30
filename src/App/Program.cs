@@ -6,7 +6,7 @@ using Altinn.App.Api.Controllers;
 using Altinn.App.Api.Extensions;
 using Altinn.App.Api.Infrastructure.Filters;
 using Altinn.App.Core.Extensions;
-using Altinn.App.Core.Health;
+using Altinn.App.Api.Infrastructure.Health;
 using Altinn.App.Core.Interface;
 using Altinn.App.PlatformServices.Extensions;
 using Altinn.Common.PEP.Authorization;
