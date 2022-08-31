@@ -38,7 +38,7 @@ namespace App.IntegrationTestsRef.ApiTests
 
             HttpClient client = GetClient();
 
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(
+            var httpRequestMessage = new HttpRequestMessage(
                 HttpMethod.Get,
                 $"/tdd/endring-av-navn/instances/1337/{InstanceGuid}/data/{dataGuid}/tags");
 
@@ -65,7 +65,7 @@ namespace App.IntegrationTestsRef.ApiTests
 
             HttpClient client = GetClient();
 
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(
+            var httpRequestMessage = new HttpRequestMessage(
                 HttpMethod.Get,
                 $"/tdd/endring-av-navn/instances/1337/{InstanceGuid}/data/{dataGuid}/tags");
 
@@ -97,10 +97,12 @@ namespace App.IntegrationTestsRef.ApiTests
 
             HttpClient client = GetClient();
 
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(
+            var httpRequestMessage = new HttpRequestMessage(
                 HttpMethod.Post,
-                $"/tdd/endring-av-navn/instances/1337/{InstanceGuid}/data/{dataGuid}/tags");
-            httpRequestMessage.Content = JsonContent.Create(tagName);
+                $"/tdd/endring-av-navn/instances/1337/{InstanceGuid}/data/{dataGuid}/tags")
+            {
+                Content = JsonContent.Create(tagName)
+            };
 
             DataElement dataElement = CreateDataElement(dataGuid, new List<string> { "cat", "lion" });
 
@@ -133,10 +135,12 @@ namespace App.IntegrationTestsRef.ApiTests
 
             HttpClient client = GetClient();
 
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(
+            var httpRequestMessage = new HttpRequestMessage(
                 HttpMethod.Post,
-                $"/tdd/endring-av-navn/instances/1337/{InstanceGuid}/data/{dataGuid}/tags");
-            httpRequestMessage.Content = JsonContent.Create(tagName);
+                $"/tdd/endring-av-navn/instances/1337/{InstanceGuid}/data/{dataGuid}/tags")
+            {
+                Content = JsonContent.Create(tagName)
+            };
 
             DataElement dataElement = CreateDataElement(dataGuid, new List<string> { "cat", "lion" });
 
@@ -159,7 +163,7 @@ namespace App.IntegrationTestsRef.ApiTests
 
             HttpClient client = GetClient();
 
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(
+            var httpRequestMessage = new HttpRequestMessage(
                 HttpMethod.Delete,
                 $"/tdd/endring-av-navn/instances/1337/{InstanceGuid}/data/{dataGuid}/tags/{tagName}");
 

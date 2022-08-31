@@ -12,7 +12,7 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.ApiTests
 {
-    public class ApplicationSettingsApiTest: IClassFixture<CustomWebApplicationFactory<AppModel>>
+    public class ApplicationSettingsApiTest : IClassFixture<CustomWebApplicationFactory<AppModel>>
     {
         private readonly CustomWebApplicationFactory<AppModel> _factory;
 

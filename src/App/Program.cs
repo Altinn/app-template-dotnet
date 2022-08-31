@@ -25,13 +25,13 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Linq;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 ConfigureServices(builder.Services, builder.Configuration);
 
 ConfigureWebHostBuilder(builder.WebHost);
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 Configure();
 
@@ -57,11 +57,11 @@ void ConfigureServices(IServiceCollection services, IConfiguration config)
 
     // HttpClients for platform functionality. Registered as HttpClients so default HttpClientFactory is used
     services.AddHttpClient<AuthorizationApiClient>();
-    
+
     // ##############################################################################################################
     // # Add your services below here                                                                               #
     // ##############################################################################################################
-    
+
     // ##############################################################################################################
     // # End of your services                                                                                       #
     // ##############################################################################################################
@@ -186,6 +186,6 @@ void IncludeXmlComments(SwaggerGenOptions options)
 string GetApplicationId()
 {
     string appMetaDataString = File.ReadAllText("config/applicationmetadata.json");
-    JObject appMetadataJObject = JObject.Parse(appMetaDataString);
+    var appMetadataJObject = JObject.Parse(appMetaDataString);
     return appMetadataJObject.SelectToken("id").Value<string>();
 }

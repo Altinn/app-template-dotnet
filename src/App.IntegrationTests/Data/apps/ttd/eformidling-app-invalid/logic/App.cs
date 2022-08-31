@@ -14,19 +14,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidlingInvalid
         /// <summary>
         /// Initialize a new instance of the <see cref="App"/> class.
         /// </summary>
-        /// <param name="appResourcesService">A service with access to local resources.</param>
         /// <param name="logger">A logger from the built in LoggingFactory.</param>
-        /// <param name="dataService">A service with access to data storage.</param>
-        /// <param name="pdfService">A service with access to the PDF generator.</param>
-        /// <param name="profileService">A service with access to profile information.</param>
-        /// <param name="registerService">A service with access to register information.</param>
-        /// <param name="prefillService">A service with access to prefill mechanisms.</param>
-        /// <param name="instanceService">A service with access to instances</param>
-        /// <param name="httpContextAccessor">A context accessor</param>
-        /// <param name="efor">A client for eFormidling integration</param>
-        /// <param name="appsettings">Application settings</param>
-        /// <param name="platformSettings">Platform settings</param>
-        /// <param name="tokenGenerator">A service for generating access tokens</param>
         public App(ILogger<App> logger)
         {
             _logger = logger;
@@ -37,7 +25,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidlingInvalid
         {
             _logger.LogInformation($"CreateNewAppModel {classRef}");
 
-            Type appType = Type.GetType(classRef);
+            var appType = Type.GetType(classRef);
             return Activator.CreateInstance(appType);
         }
 

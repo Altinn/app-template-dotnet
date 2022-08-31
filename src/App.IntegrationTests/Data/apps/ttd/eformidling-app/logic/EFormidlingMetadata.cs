@@ -11,11 +11,11 @@ using Altinn.Platform.Storage.Interface.Models;
 
 namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidling
 {
-    public class EFormidlingMetadata: IEFormidlingMetadata
+    public class EFormidlingMetadata : IEFormidlingMetadata
     {
         public async Task<(string MetadataFilename, Stream Metadata)> GenerateEFormidlingMetadata(Instance instance)
         {
-             Arkivmelding arkivmelding = new Arkivmelding
+            var arkivmelding = new Arkivmelding
             {
                 AntallFiler = 1,
                 Tidspunkt = DateTime.Now.ToString(),
@@ -68,14 +68,14 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.EFormidling
                 },
             };
 
-            MemoryStream stream = new MemoryStream();
+            var stream = new MemoryStream();
 
-            XmlSerializer serializer = new XmlSerializer(typeof(Arkivmelding));
+            var serializer = new XmlSerializer(typeof(Arkivmelding));
 
             serializer.Serialize(stream, arkivmelding);
             stream.Position = 0;
 
-            StreamContent streamContent = new StreamContent(stream);
+            var streamContent = new StreamContent(stream);
             streamContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
 
             return await Task.FromResult(("arkivmelding.xml", stream));

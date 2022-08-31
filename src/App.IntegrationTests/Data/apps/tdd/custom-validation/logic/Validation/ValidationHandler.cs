@@ -13,10 +13,10 @@ using Microsoft.Extensions.Primitives;
 namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
 #pragma warning restore SA1300 // Element should begin with upper-case letter
 {
-    public class ValidationHandler: IInstanceValidator
+    public class ValidationHandler : IInstanceValidator
     {
-        private IHttpContextAccessor _httpContextAccessor;
-        private GeneralSettings _settings;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly GeneralSettings _settings;
         private readonly string validationField = "opplysningerOmArbeidstakerengrp8819.skjemainstansgrp8854.journalnummerdatadef33316.value";
         private readonly string validationMessage = "Value cannot be 1234";
 
@@ -26,11 +26,13 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
             _settings = settings.Value;
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task ValidateData(object instance, ModelStateDictionary validationResults)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             if (instance.GetType() == typeof(Skjema))
             {
-                Skjema model = (Skjema)instance;
+                var model = (Skjema)instance;
 
                 _httpContextAccessor.HttpContext.Request.Headers
                     .TryGetValue("ValidationTriggerField", out StringValues value);

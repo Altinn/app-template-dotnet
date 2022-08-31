@@ -9,10 +9,10 @@ using Altinn.Platform.Storage.Interface.Models;
 namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
 #pragma warning restore SA1300 // Element should begin with upper-case letter
 {
-    public class InstantiationHandler: IInstantiation
+    public class InstantiationHandler : IInstantiation
     {
-        private IProfile _profileService;
-        private IRegister _registerService;
+        private readonly IProfile _profileService;
+        private readonly IRegister _registerService;
 
         public InstantiationHandler(IProfile profileService, IRegister registerService)
         {
@@ -20,9 +20,12 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
             _registerService = registerService;
         }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task<InstantiationValidationResult> Validation(Instance instance)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             DateTime now = DateTime.Now;
+#pragma warning disable IDE0046 // Convert to conditional expression
             if (now.Hour < 15)
             {
                 return new InstantiationValidationResult()
@@ -31,6 +34,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
                     Message = "ERROR: Instantiation not possible before 3PM."
                 };
             }
+#pragma warning restore IDE0046 // Convert to conditional expression
 
             return null;
         }
@@ -44,11 +48,13 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
         /// <param name="instance">The instance object</param>
         /// <param name="data">The data created</param>
         /// <param name="prefill">Prefill data</param>
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public async Task DataCreation(Instance instance, object data, Dictionary<string, string> prefill)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             if (data.GetType() == typeof(Skjema))
             {
-                Skjema model = (Skjema)data;
+                var model = (Skjema)data;
                 string navn = "Test Test 123";
 
                 if (model.Foretakgrp8820 == null)
