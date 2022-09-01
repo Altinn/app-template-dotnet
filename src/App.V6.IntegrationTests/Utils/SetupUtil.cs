@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Altinn.App;
 using Altinn.App.Common.Models;
 using Altinn.App.IntegrationTests;
 using Altinn.App.IntegrationTests.Mocks.Authentication;
@@ -17,18 +10,21 @@ using Altinn.App.Services.Interface;
 using Altinn.Common.EFormidlingClient;
 using Altinn.Platform.Authentication.Maskinporten;
 using AltinnCore.Authentication.JwtCookie;
-
 using App.IntegrationTests.Mocks.Services;
 using App.IntegrationTestsRef.Data.apps.tdd.sirius.services;
 using App.IntegrationTestsRef.Mocks.Services;
-
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace App.IntegrationTests.Utils
 {
@@ -37,7 +33,7 @@ namespace App.IntegrationTests.Utils
         public static HttpClient GetTestClient(
             CustomWebApplicationFactory<Altinn.App.AppLogic.App> customFactory,
             string org,
-            string app,            
+            string app,
             Mock<IData> dataMock = null,
             bool allowRedirect = true)
         {
@@ -49,7 +45,7 @@ namespace App.IntegrationTests.Utils
                         conf.AddJsonFile(path + "appsettings.json");
                     });
 
-                var configuration = new ConfigurationBuilder()
+                IConfigurationRoot configuration = new ConfigurationBuilder()
                     .AddJsonFile(path + "appsettings.json")
                     .Build();
 
@@ -90,7 +86,7 @@ namespace App.IntegrationTests.Utils
 
                     services.AddSingleton<ISigningKeysRetriever, SigningKeysRetrieverStub>();
                     services.AddSingleton<IPostConfigureOptions<JwtCookieOptions>, JwtCookiePostConfigureOptionsStub>();
-                    var defaultProviderService = services.Where(s => s.ServiceType == typeof(IAppOptionsProvider)).FirstOrDefault();
+                    ServiceDescriptor defaultProviderService = services.FirstOrDefault(s => s.ServiceType == typeof(IAppOptionsProvider));
                     if (defaultProviderService == null)
                     {
                         services.AddTransient<IAppOptionsProvider, DefaultAppOptionsProvider>();
@@ -178,7 +174,7 @@ namespace App.IntegrationTests.Utils
             {
                 AllowAutoRedirect = allowRedirect
             };
-            factory.Server.AllowSynchronousIO = true;            
+            factory.Server.AllowSynchronousIO = true;
             return factory.CreateClient(opts);
         }
 
@@ -193,13 +189,13 @@ namespace App.IntegrationTests.Utils
 
         public static string GetXsrfCookieValue(HttpResponseMessage response)
         {
-            List<string> cookieHeaders = response.Headers.GetValues("Set-Cookie").ToList();
+            var cookieHeaders = response.Headers.GetValues("Set-Cookie").ToList();
 
             foreach (string cookieHeader in cookieHeaders)
             {
                 if (cookieHeader.StartsWith("XSRF-TOKEN"))
                 {
-                    return cookieHeader.Substring(11).Split(";")[0];
+                    return cookieHeader[11..].Split(";")[0];
                 }
             }
 

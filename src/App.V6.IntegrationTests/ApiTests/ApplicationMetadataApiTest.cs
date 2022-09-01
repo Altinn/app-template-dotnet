@@ -1,16 +1,13 @@
+using Altinn.App.IntegrationTests;
+using App.IntegrationTests.Utils;
 using System.Net;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
-using Altinn.App.Api.Models;
-using Altinn.App.IntegrationTests;
-
-using App.IntegrationTests.Utils;
 using Xunit;
 
 namespace App.IntegrationTestsRef.ApiTests
 {
-    public class ApplicationMetadataApiTest: IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.App>>
+    public class ApplicationMetadataApiTest : IClassFixture<CustomWebApplicationFactory<Altinn.App.AppLogic.App>>
     {
         private readonly CustomWebApplicationFactory<Altinn.App.AppLogic.App> _factory;
 
@@ -29,14 +26,14 @@ namespace App.IntegrationTestsRef.ApiTests
             HttpClient client = SetupUtil.GetTestClient(_factory, "ttd", "model-validation");
 
             string requestUri = "/ttd/model-validation/api/v1/applicationmetadata";
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri)
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri)
             {
             };
 
             HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
 
             string responseContent = await response.Content.ReadAsStringAsync();
-          
+
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Contains("ttd/model-validation", responseContent);
         }
@@ -51,14 +48,14 @@ namespace App.IntegrationTestsRef.ApiTests
             HttpClient client = SetupUtil.GetTestClient(_factory, "ttd", "model-validation");
 
             string requestUri = "/ttd/dummyApp/api/v1/applicationmetadata";
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri)
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri)
             {
             };
 
             HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
 
             string responseContent = await response.Content.ReadAsStringAsync();
-          
+
             Assert.Equal(HttpStatusCode.Conflict, response.StatusCode);
             Assert.Contains("ttd/model-validation", responseContent);
         }
@@ -73,14 +70,14 @@ namespace App.IntegrationTestsRef.ApiTests
             HttpClient client = SetupUtil.GetTestClient(_factory, "ttd", "model-validation");
 
             string requestUri = "/dummyOrg/dummyApp/api/v1/applicationmetadata?checkOrgApp=false";
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri)
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri)
             {
             };
 
             HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
 
             string responseContent = await response.Content.ReadAsStringAsync();
-          
+
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Contains("ttd/model-validation", responseContent);
         }
@@ -95,14 +92,14 @@ namespace App.IntegrationTestsRef.ApiTests
             HttpClient client = SetupUtil.GetTestClient(_factory, "ttd", "model-validation");
 
             string requestUri = "/ttd/model-validation/api/v1/meta/authorizationpolicy";
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri)
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri)
             {
             };
 
             HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
 
             string responseContent = await response.Content.ReadAsStringAsync();
-          
+
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Contains("xacml:Policy", responseContent);
         }
@@ -117,7 +114,7 @@ namespace App.IntegrationTestsRef.ApiTests
             HttpClient client = SetupUtil.GetTestClient(_factory, "ttd", "model-validation");
 
             string requestUri = "/ttd/model-validation/api/v1/meta/process";
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri)
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri)
             {
             };
 
