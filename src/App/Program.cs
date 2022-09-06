@@ -22,6 +22,17 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
+void RegisterCustomAppServices(IServiceCollection services, IConfiguration config)
+{
+    // Register your apps custom service implementations here.
+    // Example: 
+    // services.AddTransient<IPageOrder, MyAppCustomPageOrder>();
+}
+
+// ###########################################################################
+// # Unless you are sure what you are doing do not change the following code #
+// ###########################################################################
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 ConfigureServices(builder.Services, builder.Configuration);
@@ -55,13 +66,9 @@ void ConfigureServices(IServiceCollection services, IConfiguration config)
     // HttpClients for platform functionality. Registered as HttpClients so default HttpClientFactory is used
     services.AddHttpClient<AuthorizationApiClient>();
 
-    // ##############################################################################################################
-    // # Add your services below here                                                                               #
-    // ##############################################################################################################
-
-    // ##############################################################################################################
-    // # End of your services                                                                                       #
-    // ##############################################################################################################
+    // Register custom implementations for this application
+    RegisterCustomAppServices(services, config);
+    
     services.AddAltinnAppServices(config, builder.Environment);
 
     // Altinn App Model implementation service (The concrete implementation of IAppModel for this app)
