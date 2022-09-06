@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Altinn.App;
 using Altinn.App.Core.Models.Validation;
+using Altinn.App.Generated.Model;
 using Altinn.App.IntegrationTests;
 using App.IntegrationTests.Utils;
 

@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Altinn.App;
 using Altinn.App.Api.Models;
+using Altinn.App.Generated.Model;
 using Altinn.App.IntegrationTests;
 using Altinn.Platform.Storage.Interface.Models;
 

@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Altinn.App;
+using Altinn.App.Generated.Model;
 using Altinn.App.IntegrationTests;
 using Altinn.Platform.Storage.Interface.Models;
 using App.IntegrationTests.Utils;

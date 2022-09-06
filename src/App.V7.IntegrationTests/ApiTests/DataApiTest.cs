@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Altinn.App;
 using Altinn.App.Core.Interface;
 using Altinn.App.Core.Models;
+using Altinn.App.Generated.Model;
 using Altinn.App.IntegrationTests;
 using Altinn.Platform.Storage.Interface.Models;
 

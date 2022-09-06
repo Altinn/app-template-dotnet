@@ -15,6 +15,7 @@ using Altinn.App.Core.Features.Texts;
 using Altinn.App.Core.Features.Validation;
 using Altinn.App.Core.Interface;
 using Altinn.App.Core.Models.Validation;
+using Altinn.App.Generated.Model;
 using Altinn.App.IntegrationTests.Mocks.Authentication;
 using Altinn.App.Services.Implementation;
 using Altinn.Common.PEP.Interfaces;

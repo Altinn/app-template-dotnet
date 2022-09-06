@@ -1,13 +1,13 @@
 using System;
 using System.IO;
 using System.Reflection;
-using Altinn.App;
 using Altinn.App.Api.Controllers;
 using Altinn.App.Api.Extensions;
 using Altinn.App.Api.Infrastructure.Filters;
 using Altinn.App.Api.Infrastructure.Health;
 using Altinn.App.Core.Extensions;
 using Altinn.App.Core.Interface;
+using Altinn.App.Generated.Model;
 using Altinn.Common.PEP.Authorization;
 using Altinn.Common.PEP.Clients;
 using AltinnCore.Authentication.JwtCookie;

@@ -6,6 +6,7 @@ using System.Text;
 using System.Xml.Serialization;
 
 using Altinn.App;
+using Altinn.App.Generated.Model;
 using Altinn.App.IntegrationTests;
 using Altinn.Platform.Storage.Interface.Models;
 using App.IntegrationTests.Mocks.Apps.nsm.klareringsportalen.models;

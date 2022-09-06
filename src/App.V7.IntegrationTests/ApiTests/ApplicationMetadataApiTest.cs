@@ -3,6 +3,7 @@ using System.Net.Http;
 
 using System.Threading.Tasks;
 using Altinn.App;
+using Altinn.App.Generated.Model;
 using Altinn.App.IntegrationTests;
 using App.IntegrationTests.Utils;
 using Xunit;
