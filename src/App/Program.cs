@@ -1,8 +1,7 @@
 using System;
-using System.IO;
-using System.Reflection;
 using Altinn.App.Api.Controllers;
 using Altinn.App.Api.Extensions;
+using Altinn.App.Api.Helpers;
 using Altinn.App.Api.Infrastructure.Filters;
 using Altinn.App.Api.Infrastructure.Health;
 using Altinn.App.Core.Extensions;
@@ -22,8 +21,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Newtonsoft.Json.Linq;
-using Swashbuckle.AspNetCore.SwaggerGen;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -126,7 +123,7 @@ void ConfigureServices(IServiceCollection services, IConfiguration config)
     services.AddSwaggerGen(c =>
     {
         c.SwaggerDoc("v1", new OpenApiInfo { Title = "Altinn App Api", Version = "v1" });
-        IncludeXmlComments(c);
+        StartupHelper.IncludeXmlComments(c.IncludeXmlComments);
     });
 }
 
@@ -142,7 +139,7 @@ void Configure()
         app.UseDeveloperExceptionPage();
     }
 
-    string applicationId = GetApplicationId();
+    string applicationId = StartupHelper.GetApplicationId();
     if (!string.IsNullOrEmpty(applicationId))
     {
         app.UseSwagger(o => o.RouteTemplate = applicationId + "/swagger/{documentName}/swagger.json");
@@ -165,27 +162,4 @@ void Configure()
         endpoints.MapControllers();
     });
     app.UseHealthChecks("/health");
-}
-
-void IncludeXmlComments(SwaggerGenOptions options)
-{
-    try
-    {
-        string fileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-        string fullFilePath = Path.Combine(AppContext.BaseDirectory, fileName);
-        options.IncludeXmlComments(fullFilePath);
-        string fullFilePathApi = Path.Combine(AppContext.BaseDirectory, "Altinn.App.Api.xml");
-        options.IncludeXmlComments(fullFilePathApi);
-    }
-    catch
-    {
-        // Swagger will not have the xml-documentation to describe the api's.
-    }
-}
-
-string GetApplicationId()
-{
-    string appMetaDataString = File.ReadAllText("config/applicationmetadata.json");
-    var appMetadataJObject = JObject.Parse(appMetaDataString);
-    return appMetadataJObject.SelectToken("id").Value<string>();
 }
