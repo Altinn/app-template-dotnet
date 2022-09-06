@@ -7,17 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Altinn.App.Api" Version="7.0.0-preview.4">
+    <PackageReference Include="Altinn.App.Api" Version="7.0.0-preview.6">
       <CopyToOutputDirectory>lib\$(TargetFramework)\*.xml</CopyToOutputDirectory>
     </PackageReference>
-    <PackageReference Include="Altinn.App.Core" Version="7.0.0-preview.4" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Altinn.App.Core" Version="7.0.0-preview.6"/>
+    <PackageReference Include="Altinn.App.SourceGenerator" Version="7.0.0-preview.6" PrivateAssets="all" ExcludeAssets="runtime;compile"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1"/>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\" />
-    <Folder Include="wwwroot\script\" />
+    <Folder Include="wwwroot\css\"/>
+    <Folder Include="wwwroot\script\"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -39,8 +40,8 @@
 
   <Target Name="CopyXMLFromPackagesForBuild" AfterTargets="Build">
     <ItemGroup>
-      <PackageReferenceFiles Condition="%(PackageReference.CopyToOutputDirectory) != ''" Include="$(NugetPackageRoot)$([MSBuild]::Escape('%(PackageReference.Identity)').ToLower())/%(PackageReference.Version)/%(PackageReference.CopyToOutputDirectory)" />
+      <PackageReferenceFiles Condition="%(PackageReference.CopyToOutputDirectory) != ''" Include="$(NugetPackageRoot)$([MSBuild]::Escape('%(PackageReference.Identity)').ToLower())/%(PackageReference.Version)/%(PackageReference.CopyToOutputDirectory)"/>
     </ItemGroup>
-    <Copy SourceFiles="@(PackageReferenceFiles)" DestinationFolder="$(OutDir)" />
+    <Copy SourceFiles="@(PackageReferenceFiles)" DestinationFolder="$(OutDir)"/>
   </Target>
 </Project>
