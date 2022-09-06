@@ -6,8 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Altinn.App.Api" Version="7.0.0-preview.6" />
-    <PackageReference Include="Altinn.App.Core" Version="7.0.0-preview.6" />
+    <ProjectReference Include="..\App\AppRef.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.7.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
@@ -184,10 +186,6 @@
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\App\AppRef.csproj" />
   </ItemGroup>
 
 </Project>
