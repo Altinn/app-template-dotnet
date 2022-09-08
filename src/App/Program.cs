@@ -1,32 +1,19 @@
-using System;
 using Altinn.App.Api.Controllers;
 using Altinn.App.Api.Extensions;
 using Altinn.App.Api.Helpers;
-using Altinn.App.Api.Infrastructure.Filters;
-using Altinn.App.Api.Infrastructure.Health;
-using Altinn.App.Core.Extensions;
 using Altinn.App.Core.Interface;
 using Altinn.App.Generated.Model;
-using Altinn.Common.PEP.Authorization;
-using Altinn.Common.PEP.Clients;
-using AltinnCore.Authentication.JwtCookie;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 void RegisterCustomAppServices(IServiceCollection services, IConfiguration config)
 {
     // Register your apps custom service implementations here.
-    // Example: 
-    // services.AddTransient<IPageOrder, MyAppCustomPageOrder>();
+    // TODO: Link to documentation
 }
 
 // ###########################################################################
@@ -56,75 +43,15 @@ void ConfigureServices(IServiceCollection services, IConfiguration config)
         {
             options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
         });
-    services.AddMemoryCache();
-    services.AddHealthChecks().AddCheck<HealthCheck>("default_health_check");
-
-    // Dot net services
-    services.AddSingleton<IAuthorizationHandler, AppAccessHandler>();
-    services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
-    // HttpClients for platform functionality. Registered as HttpClients so default HttpClientFactory is used
-    services.AddHttpClient<AuthorizationApiClient>();
 
     // Register custom implementations for this application
     RegisterCustomAppServices(services, config);
-    
+
+    // Register services required to run this as an Altinn application
     services.AddAltinnAppServices(config, builder.Environment);
 
     // Altinn App Model implementation service (The concrete implementation of IAppModel for this app)
     services.AddTransient<IAppModel, AppModel>();
-
-    services.Configure<KestrelServerOptions>(options =>
-    {
-        options.AllowSynchronousIO = true;
-    });
-
-    services.ConfigureDataProtection();
-
-    services.AddAuthentication(JwtCookieDefaults.AuthenticationScheme)
-        .AddJwtCookie(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                RequireExpirationTime = true,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero
-            };
-            options.JwtCookieName = Altinn.App.Core.Constants.General.RuntimeCookieName;
-            options.MetadataAddress = config["AppSettings:OpenIdWellKnownEndpoint"];
-            if (builder.Environment.IsDevelopment())
-            {
-                options.RequireHttpsMetadata = false;
-            }
-        });
-
-    services.AddAuthorization(options =>
-    {
-        options.AddPolicy("InstanceRead", policy => policy.Requirements.Add(new AppAccessRequirement("read")));
-        options.AddPolicy("InstanceWrite", policy => policy.Requirements.Add(new AppAccessRequirement("write")));
-        options.AddPolicy("InstanceDelete", policy => policy.Requirements.Add(new AppAccessRequirement("delete")));
-        options.AddPolicy("InstanceInstantiate", policy => policy.Requirements.Add(new AppAccessRequirement("instantiate")));
-        options.AddPolicy("InstanceComplete", policy => policy.Requirements.Add(new AppAccessRequirement("complete")));
-    });
-
-    services.AddAntiforgery(options =>
-    {
-        // asp .net core expects two types of tokens: One that is attached to the request as header, and the other one as cookie.
-        // The values of the tokens are not the same and both need to be present and valid in a "unsafe" request.
-
-        // Axios which we are using for client-side automatically extracts the value from the cookie named XSRF-TOKEN. We are setting this cookie in the UserController.
-        // We will therefore have two token cookies. One that contains the .net core cookie token; And one that is the request token and is added as a header in requests.
-        // The tokens are based on the logged-in user and must be updated if the user changes.
-        // https://docs.microsoft.com/en-us/aspnet/core/security/anti-request-forgery?view=aspnetcore-3.1
-        // https://github.com/axios/axios/blob/master/lib/defaults.js
-        options.Cookie.Name = "AS-XSRF-TOKEN";
-        options.HeaderName = "X-XSRF-TOKEN";
-    });
-
-    services.TryAddSingleton<ValidateAntiforgeryTokenIfAuthCookieAuthorizationFilter>();
 
     // Add Swagger support (Swashbuckle)
     services.AddSwaggerGen(c =>
