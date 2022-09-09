@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Altinn.App.Api" Version="7.0.0-preview.6">
+    <PackageReference Include="Altinn.App.Api" Version="7.0.0-preview.7">
       <CopyToOutputDirectory>lib\$(TargetFramework)\*.xml</CopyToOutputDirectory>
     </PackageReference>
-    <PackageReference Include="Altinn.App.Core" Version="7.0.0-preview.6"/>
-    <PackageReference Include="Altinn.App.SourceGenerator" Version="7.0.0-preview.6" PrivateAssets="all" ExcludeAssets="runtime;compile"/>
+    <PackageReference Include="Altinn.App.Core" Version="7.0.0-preview.7"/>
+    <PackageReference Include="Altinn.App.SourceGenerator" Version="7.0.0-preview.7" PrivateAssets="all" ExcludeAssets="runtime;compile"/>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0"/>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1"/>
   </ItemGroup>
