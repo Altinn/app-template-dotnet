@@ -1,4 +1,3 @@
-using Altinn.App.Api.Controllers;
 using Altinn.App.Api.Extensions;
 using Altinn.App.Api.Helpers;
 using Altinn.App.Core.Interface;
