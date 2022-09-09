@@ -34,15 +34,7 @@ app.Run();
 
 void ConfigureServices(IServiceCollection services, IConfiguration config)
 {
-    // Add API controllers from Altinn.App.Api
-    IMvcBuilder mvcBuilder = services.AddControllersWithViews();
-    mvcBuilder
-        .AddApplicationPart(typeof(InstancesController).Assembly)
-        .AddXmlSerializerFormatters()
-        .AddJsonOptions(options =>
-        {
-            options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
-        });
+    services.AddAltinnAppControllersWithViews();
 
     // Register custom implementations for this application
     RegisterCustomAppServices(services, config);
