@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Altinn.App.Core.Features.Instantiation;
+using Altinn.App.Core.Features;
 using Altinn.App.Core.Interface;
 using Altinn.App.Core.Models.Validation;
 using Altinn.Platform.Storage.Interface.Models;
@@ -10,7 +10,7 @@ using Altinn.Platform.Storage.Interface.Models;
 namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
 #pragma warning restore SA1300 // Element should begin with upper-case letter
 {
-    public class InstantiationHandler : IInstantiation
+    public class InstantiationHandler : IInstantiationProcessor, IInstantiationValidator
     {
         private readonly IProfile _profileService;
         private readonly IRegister _registerService;
@@ -22,7 +22,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.custom_validation
         }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        public async Task<InstantiationValidationResult> Validation(Instance instance)
+        public async Task<InstantiationValidationResult> Validate(Instance instance)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
             DateTime now = DateTime.Now;

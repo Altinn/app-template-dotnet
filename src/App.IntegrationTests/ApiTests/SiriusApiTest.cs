@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Altinn.App;
+using Altinn.App.Core.Internal.AppModel;
 using Altinn.App.Core.Models.Validation;
-using Altinn.App.Generated.Model;
 using Altinn.App.IntegrationTests;
 using Altinn.Platform.Storage.Interface.Models;
 
@@ -21,11 +21,11 @@ using Xunit;
 
 namespace App.IntegrationTests.ApiTests
 {
-    public class SiriusApiTest: IClassFixture<CustomWebApplicationFactory<AppModel>>
+    public class SiriusApiTest: IClassFixture<CustomWebApplicationFactory<TestDummy>>
     {
-        private readonly CustomWebApplicationFactory<AppModel> _factory;
+        private readonly CustomWebApplicationFactory<TestDummy> _factory;
 
-        public SiriusApiTest(CustomWebApplicationFactory<AppModel> factory)
+        public SiriusApiTest(CustomWebApplicationFactory<TestDummy> factory)
         {
             _factory = factory;
         }

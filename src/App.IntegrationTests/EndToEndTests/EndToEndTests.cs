@@ -7,15 +7,15 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
-
 using Altinn.App;
 using Altinn.App.Core.Configuration;
-using Altinn.App.Core.Features.Pdf;
-using Altinn.App.Core.Features.Texts;
+using Altinn.App.Core.Features;
 using Altinn.App.Core.Features.Validation;
 using Altinn.App.Core.Interface;
+using Altinn.App.Core.Internal.AppModel;
+using Altinn.App.Core.Internal.Pdf;
+using Altinn.App.Core.Internal.Texts;
 using Altinn.App.Core.Models.Validation;
-using Altinn.App.Generated.Model;
 using Altinn.App.IntegrationTests.Mocks.Authentication;
 using Altinn.App.Services.Implementation;
 using Altinn.Common.PEP.Interfaces;
@@ -38,9 +38,9 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.EndToEndTests
 {
-    public class EndToEndTests : IClassFixture<WebApplicationFactory<AppModel>>
+    public class EndToEndTests : IClassFixture<WebApplicationFactory<TestDummy>>
     {
-        private readonly WebApplicationFactory<AppModel> _factory;
+        private readonly WebApplicationFactory<TestDummy> _factory;
 
         private string org;
         private string app;
@@ -53,7 +53,7 @@ namespace App.IntegrationTestsRef.EndToEndTests
         private readonly Dictionary<string, DataElement> dataElements = new Dictionary<string, DataElement>();
         private readonly Dictionary<string, object> dataBlobs = new Dictionary<string, object>();
 
-        public EndToEndTests(WebApplicationFactory<AppModel> factory)
+        public EndToEndTests(WebApplicationFactory<TestDummy> factory)
         {
             _factory = factory;
         }
@@ -276,7 +276,7 @@ namespace App.IntegrationTestsRef.EndToEndTests
                         return dataBlobs[dataId.ToString()];
                     });
 
-            WebApplicationFactory<AppModel> factory = _factory.WithWebHostBuilder(builder =>
+            WebApplicationFactory<TestDummy> factory = _factory.WithWebHostBuilder(builder =>
             {
                 string unitTestFolder = Path.GetDirectoryName(new Uri(typeof(InstanceMockSI).Assembly.Location).LocalPath);
                 string path = Path.Combine(unitTestFolder, $"../../../Data/apps/{org}/{app}/");

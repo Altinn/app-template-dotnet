@@ -1,5 +1,5 @@
 using System;
-using Altinn.App.Core.Interface;
+using Altinn.App.Core.Internal.AppModel;
 
 #pragma warning disable SA1300 // Element should begin with upper-case letter
 #pragma warning disable IDE0130 // Namespace does not match folder structure

@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Altinn.App;
-using Altinn.App.Generated.Model;
+using Altinn.App.Core.Internal.AppModel;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 
@@ -13,15 +13,15 @@ namespace App.IntegrationTestsRef.CommonTests.Health
     /// <summary>
     /// Health check 
     /// </summary>
-    public class HealthCheckTests : IClassFixture<WebApplicationFactory<AppModel>>
+    public class HealthCheckTests : IClassFixture<WebApplicationFactory<TestDummy>>
     {
-        private readonly WebApplicationFactory<AppModel> _factory;
+        private readonly WebApplicationFactory<TestDummy> _factory;
 
         /// <summary>
         /// Default constructor
         /// </summary>
         /// <param name="factory">The web applicaiton factory</param>
-        public HealthCheckTests(WebApplicationFactory<AppModel> factory)
+        public HealthCheckTests(WebApplicationFactory<TestDummy> factory)
         {
             _factory = factory;
         }

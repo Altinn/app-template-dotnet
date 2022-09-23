@@ -1,7 +1,5 @@
 using Altinn.App.Api.Extensions;
 using Altinn.App.Api.Helpers;
-using Altinn.App.Core.Interface;
-using Altinn.App.Generated.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -40,9 +38,6 @@ void ConfigureServices(IServiceCollection services, IConfiguration config)
 
     // Register services required to run this as an Altinn application
     services.AddAltinnAppServices(config, builder.Environment);
-
-    // Altinn App Model implementation service (The concrete implementation of IAppModel for this app)
-    services.AddTransient<IAppModel, AppModel>();
 
     // Add Swagger support (Swashbuckle)
     services.AddSwaggerGen(c =>

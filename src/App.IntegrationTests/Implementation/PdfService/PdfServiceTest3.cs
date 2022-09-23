@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Altinn.App.Core.Configuration;
+using Altinn.App.Core.Features;
 using Altinn.App.Core.Features.Options;
 using Altinn.App.Core.Models;
 using Altinn.Platform.Storage.Interface.Models;
@@ -23,7 +24,7 @@ namespace App.IntegrationTestsRef.Implementation.PdfService
         {
             // Arrange
             string postedPdfContextJson = string.Empty;
-            Altinn.App.Core.Features.Pdf.PdfService pdfService = BuildPdfService((requestMessage, cancellationToken) =>
+            Altinn.App.Core.Internal.Pdf.PdfService pdfService = BuildPdfService((requestMessage, cancellationToken) =>
             {
                 postedPdfContextJson = requestMessage.Content.ReadAsStringAsync(cancellationToken).Result;
             });

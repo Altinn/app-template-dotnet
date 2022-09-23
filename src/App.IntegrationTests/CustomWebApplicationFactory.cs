@@ -1,4 +1,5 @@
 using System.Linq;
+using Altinn.App.Core.Features;
 using Altinn.App.Core.Features.Options;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;

@@ -6,7 +6,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Altinn.App;
-using Altinn.App.Generated.Model;
+using Altinn.App.Core.Internal.AppModel;
 using Altinn.App.IntegrationTests;
 using Altinn.Platform.Storage.Interface.Models;
 
@@ -18,11 +18,11 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.AppBase
 {
-    public class AppBaseTest : IClassFixture<CustomWebApplicationFactory<AppModel>>
+    public class AppBaseTest : IClassFixture<CustomWebApplicationFactory<TestDummy>>
     {
-        private readonly CustomWebApplicationFactory<AppModel> _factory;
+        private readonly CustomWebApplicationFactory<TestDummy> _factory;
 
-        public AppBaseTest(CustomWebApplicationFactory<AppModel> factory)
+        public AppBaseTest(CustomWebApplicationFactory<TestDummy> factory)
         {
             _factory = factory;
         }

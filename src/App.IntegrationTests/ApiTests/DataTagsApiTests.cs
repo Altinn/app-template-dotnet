@@ -8,7 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Altinn.App;
 using Altinn.App.Api.Models;
-using Altinn.App.Generated.Model;
+using Altinn.App.Core.Internal.AppModel;
 using Altinn.App.IntegrationTests;
 using Altinn.Platform.Storage.Interface.Models;
 
@@ -18,15 +18,15 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.ApiTests
 {
-    public class DataTagsApiTests : IClassFixture<CustomWebApplicationFactory<AppModel>>
+    public class DataTagsApiTests : IClassFixture<CustomWebApplicationFactory<TestDummy>>
     {
         private const string Org = "tdd";
         private const string App = "endring-av-navn";
         private const string InstanceGuid = "9bca707e-466d-4565-9497-317f379d046e";
 
-        private readonly CustomWebApplicationFactory<AppModel> _factory;
+        private readonly CustomWebApplicationFactory<TestDummy> _factory;
 
-        public DataTagsApiTests(CustomWebApplicationFactory<AppModel> factory)
+        public DataTagsApiTests(CustomWebApplicationFactory<TestDummy> factory)
         {
             _factory = factory;
         }

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Altinn.App;
 using Altinn.App.Core.Interface;
 using Altinn.App.Core.Models;
-using Altinn.App.Generated.Model;
 using Altinn.App.IntegrationTests;
 using Altinn.Platform.Storage.Interface.Models;
 
@@ -21,11 +20,11 @@ using Xunit;
 
 namespace App.IntegrationTests.ApiTests
 {
-    public class DataApiTest : IClassFixture<CustomWebApplicationFactory<AppModel>>
+    public class DataApiTest : IClassFixture<CustomWebApplicationFactory<TestDummy>>
     {
-        private readonly CustomWebApplicationFactory<AppModel> _factory;
+        private readonly CustomWebApplicationFactory<TestDummy> _factory;
         
-        public DataApiTest(CustomWebApplicationFactory<AppModel> factory)
+        public DataApiTest(CustomWebApplicationFactory<TestDummy> factory)
         {
             _factory = factory;
         }

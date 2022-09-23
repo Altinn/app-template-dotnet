@@ -1,5 +1,5 @@
 using System;
-using Altinn.App.Core.Interface;
+using Altinn.App.Core.Internal.AppModel;
 
 #pragma warning disable SA1300 // Element should begin with upper-case letter
 namespace App.IntegrationTests.Mocks.Apps.tdd.endring_av_navn

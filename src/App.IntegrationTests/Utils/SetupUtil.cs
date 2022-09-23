@@ -8,16 +8,14 @@ using Altinn.App;
 using Altinn.App.Core.Configuration;
 using Altinn.App.Core.EFormidling.Implementation;
 using Altinn.App.Core.EFormidling.Interface;
-using Altinn.App.Core.Features.DataProcessing;
-using Altinn.App.Core.Features.Instantiation;
+using Altinn.App.Core.Features;
 using Altinn.App.Core.Features.Options;
-using Altinn.App.Core.Features.PageOrder;
-using Altinn.App.Core.Features.Pdf;
-using Altinn.App.Core.Features.Texts;
 using Altinn.App.Core.Features.Validation;
 using Altinn.App.Core.Interface;
+using Altinn.App.Core.Internal.AppModel;
+using Altinn.App.Core.Internal.Pdf;
+using Altinn.App.Core.Internal.Texts;
 using Altinn.App.Core.Models;
-using Altinn.App.Generated.Model;
 using Altinn.App.IntegrationTests;
 using Altinn.App.IntegrationTests.Mocks.Authentication;
 using Altinn.App.Services.Implementation;
@@ -42,13 +40,13 @@ namespace App.IntegrationTests.Utils
     public static class SetupUtil
     {
         public static HttpClient GetTestClient(
-            CustomWebApplicationFactory<AppModel> customFactory,
+            CustomWebApplicationFactory<TestDummy> customFactory,
             string org,
             string app,            
             Mock<IData> dataMock = null,
             bool allowRedirect = true)
         {
-            WebApplicationFactory<AppModel> factory = customFactory.WithWebHostBuilder(builder =>
+            WebApplicationFactory<TestDummy> factory = customFactory.WithWebHostBuilder(builder =>
             {
                 string path = GetAppPath(org, app);
                 builder.ConfigureAppConfiguration((context, conf) =>
@@ -109,19 +107,21 @@ namespace App.IntegrationTests.Utils
                     {
                         case "endring-av-navn":
                             services.AddTransient<IAppModel, Mocks.Apps.tdd.endring_av_navn.AltinnApp>();
-                            services.AddTransient<IInstantiation, Mocks.Apps.tdd.endring_av_navn.Instantiation>();
+                            services.AddTransient<IInstantiationProcessor, Mocks.Apps.tdd.endring_av_navn.Instantiation>();
                             services.AddTransient<IAppOptionsProvider, Mocks.Apps.Ttd.EndringAvNavn.Options.CarbrandsAppOptionsProvider>();
                             services.AddTransient<IAppOptionsProvider, Mocks.Apps.Ttd.EndringAvNavn.Options.WeekdaysAppOptionsProvider>();
                             break;
                         case "custom-validation":
                             services.AddTransient<IAppModel, Mocks.Apps.tdd.custom_validation.AltinnApp>();
-                            services.AddTransient<IInstantiation, Mocks.Apps.tdd.custom_validation.InstantiationHandler>();
+                            services.AddTransient<IInstantiationValidator, Mocks.Apps.tdd.custom_validation.InstantiationHandler>();
+                            services.AddTransient<IInstantiationProcessor, Mocks.Apps.tdd.custom_validation.InstantiationHandler>();
                             services.AddTransient<IInstanceValidator, Mocks.Apps.tdd.custom_validation.ValidationHandler>();
                             services.AddTransient<IDataProcessor, Mocks.Apps.tdd.custom_validation.DataProcessingHandler>();
                             break;
                         case "task-validation":
                             services.AddTransient<IAppModel, Mocks.Apps.tdd.task_validation.AltinnApp>();
-                            services.AddTransient<IInstantiation, Mocks.Apps.tdd.task_validation.InstantiationHandler>();
+                            services.AddTransient<IInstantiationValidator, Mocks.Apps.tdd.task_validation.InstantiationHandler>();
+                            services.AddTransient<IInstantiationProcessor, Mocks.Apps.tdd.task_validation.InstantiationHandler>();
                             services.AddTransient<IInstanceValidator, Mocks.Apps.tdd.task_validation.ValidationHandler>();
                             break;
                         case "platform-fails":
@@ -130,7 +130,8 @@ namespace App.IntegrationTests.Utils
                             break;
                         case "contributor-restriction":
                             services.AddTransient<IAppModel, Mocks.Apps.tdd.contributer_restriction.AltinnApp>();
-                            services.AddTransient<IInstantiation, Mocks.Apps.tdd.contributer_restriction.InstantiationHandler>();
+                            services.AddTransient<IInstantiationValidator, Mocks.Apps.tdd.contributer_restriction.InstantiationHandler>();
+                            services.AddTransient<IInstantiationProcessor, Mocks.Apps.tdd.contributer_restriction.InstantiationHandler>();
                             break;
                         case "sirius":
                             services.AddSingleton<ISiriusApi, SiriusAPI>();
@@ -141,7 +142,7 @@ namespace App.IntegrationTests.Utils
                             break;
                         case "events":
                             services.AddTransient<IAppModel, Mocks.Apps.ttd.events.AltinnApp>();
-                            services.AddTransient<IInstantiation, Mocks.Apps.ttd.events.InstantiationHandler>();
+                            services.AddTransient<IInstantiationProcessor, Mocks.Apps.ttd.events.InstantiationHandler>();
                             break;
                         case "autodelete-true":
                             services.AddTransient<IAppModel, Mocks.Apps.tdd.autodelete_true.AppModel>();
@@ -153,7 +154,8 @@ namespace App.IntegrationTests.Utils
                             break;
                         case "klareringsportalen":
                             services.AddTransient<IAppModel, Mocks.Apps.nsm.klareringsportalen.AppLogic.App>();
-                            services.AddTransient<IInstantiation, Mocks.Apps.nsm.klareringsportalen.AppLogic.InstantiationHandler>();
+                            services.AddTransient<IInstantiationValidator, Mocks.Apps.nsm.klareringsportalen.AppLogic.InstantiationHandler>();
+                            services.AddTransient<IInstantiationProcessor, Mocks.Apps.nsm.klareringsportalen.AppLogic.InstantiationHandler>();
                             break;
                         case "issue-5740":
                             services.AddTransient<IAppModel, Mocks.Apps.Ttd.Issue5740.App>();
@@ -181,7 +183,8 @@ namespace App.IntegrationTests.Utils
                         case "model-validation":
                             services.AddTransient<IAppModel, Mocks.Apps.ttd.model_validation.AltinnApp>();
                             services.AddTransient<IDataProcessor, Mocks.Apps.ttd.model_validation.CalculationHandler>();
-                            services.AddTransient<IInstantiation, Mocks.Apps.ttd.model_validation.InstantiationHandler>();
+                            services.AddTransient<IInstantiationValidator, Mocks.Apps.ttd.model_validation.InstantiationHandler>();
+                            services.AddTransient<IInstantiationProcessor, Mocks.Apps.ttd.model_validation.InstantiationHandler>();
                             services.AddTransient<IInstanceValidator, Mocks.Apps.ttd.model_validation.ValidationHandler>();
                             break;
                         case "dayplanner":

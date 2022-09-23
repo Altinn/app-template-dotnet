@@ -3,9 +3,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Altinn.App;
-using Altinn.App.Generated.Model;
+using Altinn.App.Core.Internal.AppModel;
 using Altinn.App.IntegrationTests;
-using Altinn.Platform.Storage.Interface.Models;
 
 using App.IntegrationTests.Utils;
 
@@ -15,11 +14,11 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.ApiTests
 {
-    public class RedirectApiTest : IClassFixture<CustomWebApplicationFactory<AppModel>>
+    public class RedirectApiTest : IClassFixture<CustomWebApplicationFactory<TestDummy>>
     {
-        private readonly CustomWebApplicationFactory<AppModel> _factory;
+        private readonly CustomWebApplicationFactory<TestDummy> _factory;
 
-        public RedirectApiTest(CustomWebApplicationFactory<AppModel> factory)
+        public RedirectApiTest(CustomWebApplicationFactory<TestDummy> factory)
         {
             _factory = factory;
         }

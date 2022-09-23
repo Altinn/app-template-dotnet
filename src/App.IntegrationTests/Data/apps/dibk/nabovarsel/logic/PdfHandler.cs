@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Altinn.App.Core.Features.Pdf;
+using Altinn.App.Core.Features;
 using Altinn.App.Core.Models;
 using App.IntegrationTestsRef.Data.apps.dibk.nabovarsel;
 

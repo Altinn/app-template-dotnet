@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Altinn.App.Core.Features;
 using Altinn.App.Core.Interface;
 using Altinn.Platform.Storage.Interface.Models;
 using App.IntegrationTestsRef.Data.apps.tdd.sirius.services;

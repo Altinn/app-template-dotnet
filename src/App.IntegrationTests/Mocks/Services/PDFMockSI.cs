@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Altinn.App.Core.Features.Pdf;
+using Altinn.App.Core.Internal.Pdf;
 using Altinn.App.Core.Models;
 
 namespace App.IntegrationTestsRef.Mocks.Services

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Altinn.App.Core.Features.Instantiation;
+using Altinn.App.Core.Features;
 using Altinn.App.Core.Interface;
 using Altinn.App.Core.Models.Validation;
 using Altinn.Platform.Storage.Interface.Models;
@@ -19,7 +19,7 @@ namespace App.IntegrationTests.Mocks.Apps.nsm.klareringsportalen.AppLogic
     /// <summary>
     /// Represents a business logic class responsible for running logic related to instantiation.
     /// </summary>
-    public class InstantiationHandler : IInstantiation
+    public class InstantiationHandler : IInstantiationValidator, IInstantiationProcessor
     {
         private readonly IProfile _profileService;
         private readonly IRegister _registerService;
@@ -48,7 +48,7 @@ namespace App.IntegrationTests.Mocks.Apps.nsm.klareringsportalen.AppLogic
         /// </example>
         /// <param name="instance">The instance being validated</param>
         /// <returns>The validation result object (null if no errors) </returns>
-        public async Task<InstantiationValidationResult> Validation(Instance instance)
+        public async Task<InstantiationValidationResult> Validate(Instance instance)
         {
             return await Task.FromResult((InstantiationValidationResult)null);
         }

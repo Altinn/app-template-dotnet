@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using Altinn.App.Core.Features.DataProcessing;
+using Altinn.App.Core.Features;
 using Altinn.Platform.Storage.Interface.Models;
 using App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless.Models;
 

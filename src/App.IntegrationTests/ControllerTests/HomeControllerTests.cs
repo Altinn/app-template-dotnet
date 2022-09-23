@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Altinn.App;
-using Altinn.App.Generated.Model;
+using Altinn.App.Core.Internal.AppModel;
 using Altinn.App.IntegrationTests;
 using App.IntegrationTests.Utils;
 
@@ -13,11 +13,11 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.ControllerTests
 {
-    public class HomeControllerTests : IClassFixture<CustomWebApplicationFactory<AppModel>>
+    public class HomeControllerTests : IClassFixture<CustomWebApplicationFactory<TestDummy>>
     {
-        private readonly CustomWebApplicationFactory<AppModel> _factory;
+        private readonly CustomWebApplicationFactory<TestDummy> _factory;
 
-        public HomeControllerTests(CustomWebApplicationFactory<AppModel> factory)
+        public HomeControllerTests(CustomWebApplicationFactory<TestDummy> factory)
         {
             _factory = factory;
         }

@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Altinn.App;
-using Altinn.App.Generated.Model;
+using Altinn.App.Core.Internal.AppModel;
 using Altinn.App.IntegrationTests;
 using Altinn.Platform.Register.Models;
 using App.IntegrationTests.Utils;
@@ -13,11 +13,11 @@ using Xunit;
 
 namespace App.IntegrationTestsRef.ApiTests
 {
-    public class AuthorizationApiTests : IClassFixture<CustomWebApplicationFactory<AppModel>>
+    public class AuthorizationApiTests : IClassFixture<CustomWebApplicationFactory<TestDummy>>
     {
-        private readonly CustomWebApplicationFactory<AppModel> _factory;
+        private readonly CustomWebApplicationFactory<TestDummy> _factory;
 
-        public AuthorizationApiTests(CustomWebApplicationFactory<AppModel> factory)
+        public AuthorizationApiTests(CustomWebApplicationFactory<TestDummy> factory)
         {
             _factory = factory;
         }

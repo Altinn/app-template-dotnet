@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Altinn.App;
-using Altinn.App.Generated.Model;
+using Altinn.App.Core.Internal.AppModel;
 using Altinn.App.IntegrationTests;
 using App.IntegrationTests.Utils;
 
@@ -18,11 +18,11 @@ namespace App.IntegrationTestsRef.ApiTests
     /// <summary>
     /// Test clas for PagesController
     /// </summary>
-    public class PagesApiTest : IClassFixture<CustomWebApplicationFactory<AppModel>>
+    public class PagesApiTest : IClassFixture<CustomWebApplicationFactory<TestDummy>>
     {
-        private readonly CustomWebApplicationFactory<AppModel> _factory;
+        private readonly CustomWebApplicationFactory<TestDummy> _factory;
 
-        public PagesApiTest(CustomWebApplicationFactory<AppModel> factory)
+        public PagesApiTest(CustomWebApplicationFactory<TestDummy> factory)
         {
             _factory = factory;
         }

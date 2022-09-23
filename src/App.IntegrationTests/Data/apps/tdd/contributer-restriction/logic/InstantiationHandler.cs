@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Altinn.App.Core.Features.Instantiation;
+using Altinn.App.Core.Features;
 using Altinn.App.Core.Interface;
 using Altinn.App.Core.Models.Validation;
 using Altinn.Platform.Storage.Interface.Models;
@@ -10,7 +10,7 @@ using Altinn.Platform.Storage.Interface.Models;
 namespace App.IntegrationTests.Mocks.Apps.tdd.contributer_restriction
 #pragma warning restore SA1300 // Element should begin with upper-case letter
 {
-    public class InstantiationHandler: IInstantiation
+    public class InstantiationHandler: IInstantiationValidator, IInstantiationProcessor
     {
         private IProfile _profileService;
         private IRegister _registerService;
@@ -21,7 +21,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.contributer_restriction
             _registerService = registerService;
         }
 
-        public async Task<InstantiationValidationResult> Validation(Instance instance)
+        public async Task<InstantiationValidationResult> Validate(Instance instance)
         {
             DateTime now = DateTime.Now;
             if (now.Hour < 15)

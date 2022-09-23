@@ -1,20 +1,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Altinn.App.Core.Features.Instantiation;
-using Altinn.App.Core.Models.Validation;
+using Altinn.App.Core.Features;
 using Altinn.Platform.Storage.Interface.Models;
 
 #pragma warning disable SA1300 // Element should begin with upper-case letter
 namespace App.IntegrationTests.Mocks.Apps.tdd.endring_av_navn
 #pragma warning restore SA1300 // Element should begin with upper-case letter
 {
-    public class Instantiation: IInstantiation
+    public class Instantiation: IInstantiationProcessor
     {
-        public async Task<InstantiationValidationResult> Validation(Instance instance)
-        {
-            await Task.CompletedTask;
-            return null;
-        }
 
         public async Task DataCreation(Instance instance, object data, Dictionary<string, string> prefill)
         {

@@ -1,5 +1,5 @@
 using System;
-using Altinn.App.Core.Interface;
+using Altinn.App.Core.Internal.AppModel;
 using Microsoft.Extensions.Logging;
 
 namespace App.IntegrationTests.Mocks.Apps.Ttd.AnonymousStateless

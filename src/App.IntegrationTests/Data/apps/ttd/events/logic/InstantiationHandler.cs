@@ -1,15 +1,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Altinn.App.Core.Features.Instantiation;
+using Altinn.App.Core.Features;
 using Altinn.App.Core.Interface;
-using Altinn.App.Core.Models.Validation;
 using Altinn.Platform.Storage.Interface.Models;
 
 #pragma warning disable SA1300 // Element should begin with upper-case letter
 namespace App.IntegrationTests.Mocks.Apps.ttd.events
 #pragma warning restore SA1300 // Element should begin with upper-case letter
 {
-    public class InstantiationHandler: IInstantiation
+    public class InstantiationHandler: IInstantiationProcessor
     {
         private IProfile _profileService;
         private IRegister _registerService;
@@ -23,11 +22,6 @@ namespace App.IntegrationTests.Mocks.Apps.ttd.events
         {
             _profileService = profileService;
             _registerService = registerService;
-        }
-
-        public async Task<InstantiationValidationResult> Validation(Instance instance)
-        {
-            return await Task.FromResult((InstantiationValidationResult)null);
         }
 
         public async Task DataCreation(Instance instance, object data, Dictionary<string, string> prefill)

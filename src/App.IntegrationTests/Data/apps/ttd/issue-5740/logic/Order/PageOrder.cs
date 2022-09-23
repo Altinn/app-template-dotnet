@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Altinn.App.Core.Features.PageOrder;
+using Altinn.App.Core.Features;
 using Altinn.App.Core.Models;
 
 #pragma warning disable SA1300 // Element should begin with upper-case letter
