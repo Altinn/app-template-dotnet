@@ -32,9 +32,20 @@ namespace App.IntegrationTests.Mocks.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public Task<bool> DeleteBinaryData(string org, string app, int instanceOwnerPartyId, Guid instanceGuid, Guid dataGuid)
+        public async Task<bool> DeleteBinaryData(string org, string app, int instanceOwnerPartyId, Guid instanceGuid, Guid dataGuid)
         {
-            throw new NotImplementedException();
+            string dataPath = TestDataUtil.GetDataBlobPath(org, app, instanceOwnerPartyId, instanceGuid, dataGuid);
+            string dataRef = TestDataUtil.GetDataElementPath(org, app, instanceOwnerPartyId, instanceGuid, dataGuid);
+            try
+            {
+                File.Delete(dataPath);
+                File.Delete(dataRef);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public async Task<bool> DeleteData(string org, string app, int instanceOwnerPartyId, Guid instanceGuid, Guid dataGuid, bool delayed)
@@ -88,9 +99,29 @@ namespace App.IntegrationTests.Mocks.Services
             return Task.FromResult(ms);
         }
 
-        public Task<List<AttachmentList>> GetBinaryDataList(string org, string app, int instanceOwnerPartyId, Guid instanceGuid)
+        public async Task<List<AttachmentList>> GetBinaryDataList(string org, string app, int instanceOwnerPartyId, Guid instanceGuid)
         {
-            throw new NotImplementedException();
+            var dataElements = GetDataElements(org, app, instanceOwnerPartyId, instanceGuid);
+            List<AttachmentList> list = new List<AttachmentList>();
+            foreach (DataElement dataElement in dataElements)
+            {
+                AttachmentList al = new AttachmentList()
+                {
+                    Type = dataElement.DataType,
+                    Attachments = new List<Attachment>()
+                    {
+                        new Attachment()
+                        {
+                            Id = dataElement.Id,
+                            Name = dataElement.Filename,
+                            Size = dataElement.Size
+                        }
+                    }
+                };
+                list.Add(al);
+            }
+
+            return list;
         }
 
         public Task<object> GetFormData(Guid instanceGuid, Type type, string org, string app, int instanceOwnerPartyId, Guid dataId)
