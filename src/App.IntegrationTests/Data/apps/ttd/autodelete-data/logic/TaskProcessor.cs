@@ -27,5 +27,10 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.AutoDeleteData
 
             await Task.CompletedTask;
         }
+
+        public async Task ProcessTaskAbandon(string taskId, Instance instance)
+        {
+            await Task.CompletedTask;
+        }
     }
 }

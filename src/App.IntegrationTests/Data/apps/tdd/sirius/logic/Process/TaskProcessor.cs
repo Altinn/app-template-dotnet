@@ -37,5 +37,10 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.sirius
                 }
             }
         }
+
+        public async Task ProcessTaskAbandon(string taskId, Instance instance)
+        {
+            await Task.CompletedTask;
+        }
     }
 }
