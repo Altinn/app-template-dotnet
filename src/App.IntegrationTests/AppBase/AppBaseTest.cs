@@ -9,18 +9,17 @@ using Altinn.App;
 using Altinn.App.Core.Internal.AppModel;
 using Altinn.App.IntegrationTests;
 using Altinn.Platform.Storage.Interface.Models;
-
 using App.IntegrationTests.Utils;
-
+using FluentAssertions;
 using Newtonsoft.Json;
-
 using Xunit;
 
 namespace App.IntegrationTestsRef.AppBase
 {
-    public class AppBaseTest : IClassFixture<CustomWebApplicationFactory<TestDummy>>
+    public class AppBaseTest : IClassFixture<CustomWebApplicationFactory<TestDummy>>, IDisposable
     {
         private readonly CustomWebApplicationFactory<TestDummy> _factory;
+        private Instance instance;
 
         public AppBaseTest(CustomWebApplicationFactory<TestDummy> factory)
         {
@@ -159,6 +158,47 @@ namespace App.IntegrationTestsRef.AppBase
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.Null(processState.CurrentTask);
             Assert.NotNull(processState.Ended);
+        }
+
+        [Fact]
+        public async void ProcessTaskAbandon_Is_Called_and_data_removed_on_process_abandon()
+        {
+            string token = PrincipalUtil.GetToken(1337);
+
+            HttpClient client = SetupUtil.GetTestClient(_factory, "ttd", "abandon-task");
+
+            instance = await CreateInstance("ttd", "abandon-task");
+
+            string instancePath = $"/ttd/abandon-task/instances/{instance.Id}";
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpRequestMessage httpRequestMessage =
+                new HttpRequestMessage(HttpMethod.Put, $"{instancePath}/process/next");
+            HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
+
+            response.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, $"{instancePath}/process/next");
+            response = await client.SendAsync(httpRequestMessage);
+
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            var responseContent = await response.Content.ReadAsStringAsync();
+            responseContent.Should().Be("[\"EndEvent_1\",\"Task_1\"]");
+
+            httpRequestMessage =
+                new HttpRequestMessage(HttpMethod.Put, $"{instancePath}/process/next?elementId=Task_1");
+            response = await client.SendAsync(httpRequestMessage);
+
+            response.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+            HttpRequestMessage httpRequestMessage1 = new HttpRequestMessage(HttpMethod.Get, $"{instancePath}");
+            HttpResponseMessage response1 = await client.SendAsync(httpRequestMessage1);
+            Instance actual = JsonConvert.DeserializeObject<Instance>(await response1.Content.ReadAsStringAsync());
+
+            Assert.Single(actual.Data);
+            Assert.Null(actual.Data.FirstOrDefault(de => de.DataType == "default"));
         }
 
         [Fact]
@@ -416,6 +456,11 @@ namespace App.IntegrationTestsRef.AppBase
         private void DeleteInstance(Instance instance)
         {
             TestDataUtil.DeleteInstanceAndData(instance.Org, instance.AppId.Split("/")[1], int.Parse(instance.InstanceOwner.PartyId), Guid.Parse(instance.Id.Split('/')[1]));
+        }
+
+        public void Dispose()
+        {
+            DeleteInstance(instance);
         }
     }
 }
