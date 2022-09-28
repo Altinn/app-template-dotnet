@@ -6,7 +6,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Altinn.App;
-using Altinn.App.Core.Internal.AppModel;
 using Altinn.App.IntegrationTests;
 using Altinn.Platform.Storage.Interface.Models;
 using App.IntegrationTests.Utils;
@@ -33,7 +32,7 @@ namespace App.IntegrationTestsRef.AppBase
 
             HttpClient client = SetupUtil.GetTestClient(_factory, "tdd", "endring-av-navn");
 
-            Instance instance = await CreateInstance("tdd", "endring-av-navn");
+            instance = await CreateInstance("tdd", "endring-av-navn");
 
             // 1) Assert that process is started.
             Assert.NotNull(instance.Process);
@@ -47,9 +46,7 @@ namespace App.IntegrationTestsRef.AppBase
             HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
 
             string responseC = await response.Content.ReadAsStringAsync();
-
-            DeleteInstance(instance);
-
+            
             response.EnsureSuccessStatusCode();
 
             ProcessState process = JsonConvert.DeserializeObject<ProcessState>(responseC);
@@ -73,8 +70,7 @@ namespace App.IntegrationTestsRef.AppBase
             string expectedValue = "Sophie Salt";
 
             // Act
-            Instance instance = await CreateInstance(org, app);
-            DeleteInstance(instance);
+            instance = await CreateInstance(org, app);
 
             // Assert
             Assert.NotNull(instance.PresentationTexts);
@@ -95,8 +91,7 @@ namespace App.IntegrationTestsRef.AppBase
             string expectedValue = "Sophie Salt";
 
             // Act
-            Instance instance = await CreateInstance(org, app);
-            DeleteInstance(instance);
+            instance = await CreateInstance(org, app);
 
             // Assert
             Assert.NotNull(instance.DataValues);
@@ -112,7 +107,7 @@ namespace App.IntegrationTestsRef.AppBase
 
             HttpClient client = SetupUtil.GetTestClient(_factory, "tdd", "endring-av-navn");
 
-            Instance instance = await CreateInstance("tdd", "endring-av-navn");
+            instance = await CreateInstance("tdd", "endring-av-navn");
 
             string instancePath = $"/tdd/endring-av-navn/instances/{instance.Id}";
 
@@ -128,8 +123,6 @@ namespace App.IntegrationTestsRef.AppBase
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
             Assert.NotNull(instanceWData.Data);
-
-            DeleteInstance(instance);
         }
 
         [Fact]
@@ -139,15 +132,13 @@ namespace App.IntegrationTestsRef.AppBase
 
             HttpClient client = SetupUtil.GetTestClient(_factory, "tdd", "endring-av-navn");
 
-            Instance instance = await CreateInstance("tdd", "endring-av-navn");
+            instance = await CreateInstance("tdd", "endring-av-navn");
 
             string instancePath = $"/tdd/endring-av-navn/instances/{instance.Id}";
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, $"{instancePath}/process/next");
             HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
-
-            DeleteInstance(instance);
 
             string responseContent = await response.Content.ReadAsStringAsync();
 
@@ -208,30 +199,20 @@ namespace App.IntegrationTestsRef.AppBase
 
             HttpClient client = SetupUtil.GetTestClient(_factory, "ttd", "autodelete-data");
 
-            Instance instance = await CreateInstance("ttd", "autodelete-data");
+            instance = await CreateInstance("ttd", "autodelete-data");
 
             string instancePath = $"/ttd/autodelete-data/instances/{instance.Id}";
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, $"{instancePath}/process/next");
             HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
-
-            try
-            {
-                response.EnsureSuccessStatusCode();
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            }
-            catch
-            {
-                DeleteInstance(instance);
-                throw;
-            }
+            
+            response.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
             HttpRequestMessage httpRequestMessage1 = new HttpRequestMessage(HttpMethod.Get, $"{instancePath}");
             HttpResponseMessage response1 = await client.SendAsync(httpRequestMessage1);
             Instance actual = JsonConvert.DeserializeObject<Instance>(await response1.Content.ReadAsStringAsync());
-
-            DeleteInstance(instance);
 
             Assert.Single(actual.Data);
             Assert.Null(actual.Data.FirstOrDefault(de => de.DataType == "default"));
@@ -287,15 +268,13 @@ namespace App.IntegrationTestsRef.AppBase
 
             HttpClient client = SetupUtil.GetTestClient(_factory, "tdd", "dynamic-options-pdf");
 
-            Instance instance = await CreateInstance("tdd", "dynamic-options-pdf");
+            instance = await CreateInstance("tdd", "dynamic-options-pdf");
 
             string instancePath = $"/tdd/dynamic-options-pdf/instances/{instance.Id}";
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, $"{instancePath}/process/next");
             HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
-
-            DeleteInstance(instance);
 
             string responseContent = await response.Content.ReadAsStringAsync();
 
@@ -315,15 +294,13 @@ namespace App.IntegrationTestsRef.AppBase
 
             HttpClient client = SetupUtil.GetTestClient(_factory, "ttd", "eformidling-app");
 
-            Instance instance = await CreateInstance("ttd", "eformidling-app");
+            instance = await CreateInstance("ttd", "eformidling-app");
 
             string instancePath = $"/ttd/eformidling-app/instances/{instance.Id}";
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, $"{instancePath}/process/completeProcess");
             HttpResponseMessage response = await client.SendAsync(httpRequestMessage);
-
-            DeleteInstance(instance);
 
             string responseContent = await response.Content.ReadAsStringAsync();
 
@@ -342,7 +319,7 @@ namespace App.IntegrationTestsRef.AppBase
             string token = PrincipalUtil.GetToken(1337);
             HttpClient client = SetupUtil.GetTestClient(_factory, "ttd", "eformidling-app-invalid");
 
-            Instance instance = await CreateInstance("ttd", "eformidling-app-invalid");
+            instance = await CreateInstance("ttd", "eformidling-app-invalid");
 
             string instancePath = $"/ttd/eformidling-app-invalid/instances/{instance.Id}";
 
@@ -350,7 +327,6 @@ namespace App.IntegrationTestsRef.AppBase
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, $"{instancePath}/process/completeProcess");
 
             HttpResponseMessage res = await client.SendAsync(httpRequestMessage);
-            DeleteInstance(instance);
 
             Assert.Equal(HttpStatusCode.InternalServerError, res.StatusCode);
         }
@@ -363,7 +339,7 @@ namespace App.IntegrationTestsRef.AppBase
             HttpClient client = SetupUtil.GetTestClient(_factory, "tdd", "endring-av-navn");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            Instance instance = await CreateInstance("tdd", "endring-av-navn");
+            instance = await CreateInstance("tdd", "endring-av-navn");
             string instancePath = $"/tdd/endring-av-navn/instances/{instance.Id}";
 
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, $"{instancePath}/process/completeProcess");
@@ -384,8 +360,6 @@ namespace App.IntegrationTestsRef.AppBase
             Assert.NotNull(archivedInstance);
             Assert.NotNull(archivedInstance.Status.Archived);
             Assert.Null(archivedInstance.Status.HardDeleted);
-
-            DeleteInstance(instance);
         }
 
         [Fact]
@@ -396,7 +370,7 @@ namespace App.IntegrationTestsRef.AppBase
             HttpClient client = SetupUtil.GetTestClient(_factory, "tdd", "autodelete-true");
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            Instance instance = await CreateInstance("tdd", "autodelete-true");
+            instance = await CreateInstance("tdd", "autodelete-true");
             string instancePath = $"/tdd/autodelete-true/instances/{instance.Id}";
 
             HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Put, $"{instancePath}/process/completeProcess");
@@ -417,8 +391,6 @@ namespace App.IntegrationTestsRef.AppBase
             Assert.NotNull(archivedInstance);
             Assert.NotNull(archivedInstance.Status.Archived);
             Assert.NotNull(archivedInstance.Status.HardDeleted);
-
-            DeleteInstance(instance);
         }
 
         private async Task<Instance> CreateInstance(string org, string app)
@@ -458,9 +430,15 @@ namespace App.IntegrationTestsRef.AppBase
             TestDataUtil.DeleteInstanceAndData(instance.Org, instance.AppId.Split("/")[1], int.Parse(instance.InstanceOwner.PartyId), Guid.Parse(instance.Id.Split('/')[1]));
         }
 
+        /// <summary>
+        /// Delete instance, if instance not null, after test has exited
+        /// </summary>
         public void Dispose()
         {
-            DeleteInstance(instance);
+            if (instance != null)
+            {
+                DeleteInstance(instance);
+            }
         }
     }
 }
