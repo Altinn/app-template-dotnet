@@ -201,6 +201,10 @@ namespace App.IntegrationTests.Utils
                             services.AddTransient<IAppModel, Mocks.Apps.Ttd.AnonymousStateless.App>();
                             services.AddTransient<IDataProcessor, Mocks.Apps.Ttd.AnonymousStateless.DataProcessingHandler>();
                             break;
+                        case "abandon-task":
+                            services.AddTransient<IAppModel, Mocks.Apps.Ttd.Abandon.App>();
+                            services.AddTransient<ITaskProcessor, Mocks.Apps.Ttd.Abandon.TaskProcessor>();
+                            break;
                         case "autodelete-data":
                         case "confirm-autodelete-data":
                             services.AddTransient<IAppModel, Mocks.Apps.Ttd.AutoDeleteData.App>();
