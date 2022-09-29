@@ -34,18 +34,7 @@ namespace App.IntegrationTests.Mocks.Services
 
         public async Task<bool> DeleteBinaryData(string org, string app, int instanceOwnerPartyId, Guid instanceGuid, Guid dataGuid)
         {
-            string dataPath = TestDataUtil.GetDataBlobPath(org, app, instanceOwnerPartyId, instanceGuid, dataGuid);
-            string dataRef = TestDataUtil.GetDataElementPath(org, app, instanceOwnerPartyId, instanceGuid, dataGuid);
-            try
-            {
-                File.Delete(dataPath);
-                File.Delete(dataRef);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            return await DeleteData(org, app, instanceOwnerPartyId, instanceGuid, dataGuid, false);
         }
 
         public async Task<bool> DeleteData(string org, string app, int instanceOwnerPartyId, Guid instanceGuid, Guid dataGuid, bool delayed)

@@ -7,29 +7,24 @@ using Microsoft.AspNetCore.Http;
 
 namespace App.IntegrationTests.Mocks.Apps.Ttd.DataFieldsApp
 {
-    public class TaskProcessor: ITaskProcessor
+    public class ProcessTaskEnd: IProcessTaskEnd
     {
         private readonly IInstance _instanceService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         
-        public TaskProcessor(IInstance instanceService, IHttpContextAccessor httpContextAccessor)
+        public ProcessTaskEnd(IInstance instanceService, IHttpContextAccessor httpContextAccessor)
         {
             _instanceService = instanceService;
             _httpContextAccessor = httpContextAccessor;
         }
         
-        public async Task ProcessTaskEnd(string taskId, Instance instance)
+        public async Task HandleEvent(string taskId, Instance instance)
         {
             var customDataValues = new DataValues() { Values = new System.Collections.Generic.Dictionary<string, string>() { { "customKey", "customValue" } } };
             var instanceIdentifier = InstanceIdentifier.CreateFromUrl(_httpContextAccessor.HttpContext.Request.Path.Value);
 
             await _instanceService.UpdateDataValues(instanceIdentifier.InstanceOwnerPartyId, instanceIdentifier.InstanceGuid, customDataValues);
 
-            await Task.CompletedTask;
-        }
-
-        public async Task ProcessTaskAbandon(string taskId, Instance instance)
-        {
             await Task.CompletedTask;
         }
     }

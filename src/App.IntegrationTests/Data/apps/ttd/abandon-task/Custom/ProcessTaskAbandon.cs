@@ -6,16 +6,16 @@ using Altinn.Platform.Storage.Interface.Models;
 
 namespace App.IntegrationTests.Mocks.Apps.Ttd.Abandon;
 
-public class TaskProcessor : ITaskProcessor
+public class ProcessTaskAbandon : IProcessTaskAbandon
 {
     private readonly IData _dataClient;
 
 
-    public TaskProcessor(IData dataClient)
+    public ProcessTaskAbandon(IData dataClient)
     {
         _dataClient = dataClient;
     }
-    public async Task ProcessTaskAbandon(string taskId, Instance instance)
+    public async Task HandleEvent(string taskId, Instance instance)
     {
         if (taskId.Equals("Task_2"))
         {
@@ -30,14 +30,9 @@ public class TaskProcessor : ITaskProcessor
                 foreach (var a in al.Attachments)
                 {
                     Guid dataGuid = Guid.Parse(a.Id);
-                    await _dataClient.DeleteBinaryData(org, app, partyId, instanceId, dataGuid);
+                    await _dataClient.DeleteData(org, app, partyId, instanceId, dataGuid, false);
                 }
             });
         }
-    }
-
-    public async Task ProcessTaskEnd(string taskId, Instance instance)
-    {
-        await Task.CompletedTask;
     }
 }
