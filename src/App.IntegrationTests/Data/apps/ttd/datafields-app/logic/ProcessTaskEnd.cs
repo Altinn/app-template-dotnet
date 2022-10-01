@@ -18,7 +18,7 @@ namespace App.IntegrationTests.Mocks.Apps.Ttd.DataFieldsApp
             _httpContextAccessor = httpContextAccessor;
         }
         
-        public async Task HandleEvent(string taskId, Instance instance)
+        public async Task End(string taskId, Instance instance)
         {
             var customDataValues = new DataValues() { Values = new System.Collections.Generic.Dictionary<string, string>() { { "customKey", "customValue" } } };
             var instanceIdentifier = InstanceIdentifier.CreateFromUrl(_httpContextAccessor.HttpContext.Request.Path.Value);

@@ -22,7 +22,7 @@ namespace App.IntegrationTests.Mocks.Apps.tdd.sirius
             _siriusApi = siriusApi;    
         }
         
-        public async Task HandleEvent(string taskId, Instance instance)
+        public async Task End(string taskId, Instance instance)
         {
             // Transfer from Task_1 to Task_2, need to download the PDF from tax.
             if (taskId.Equals("Task_1"))

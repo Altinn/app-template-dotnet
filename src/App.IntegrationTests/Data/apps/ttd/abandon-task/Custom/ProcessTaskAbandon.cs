@@ -15,7 +15,8 @@ public class ProcessTaskAbandon : IProcessTaskAbandon
     {
         _dataClient = dataClient;
     }
-    public async Task HandleEvent(string taskId, Instance instance)
+    
+    public async Task Abandon(string taskId, Instance instance)
     {
         if (taskId.Equals("Task_2"))
         {
