@@ -23,11 +23,11 @@ jobs:
           cd src/
           rsync . -rv --exclude-from=.releaseignore --exclude-from=.gitignore /tmp/release
           cd /tmp/release
-          zip -r ${{ github.event.repository.name }}.zip .
-          sha512sum ${{ github.event.repository.name }}.zip > ${{ github.event.repository.name }}.sha512sums.txt
+          zip -r ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip .
+          sha512sum ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip > ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.sha512sums.txt
       - name: Update release
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            /tmp/release/${{ github.event.repository.name }}.zip
-            /tmp/release/${{ github.event.repository.name }}.sha512sums.txt
+            /tmp/release/${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip
+            /tmp/release/${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.sha512sums.txt
