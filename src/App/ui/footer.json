@@ -5,7 +5,7 @@
       "type": "Link",
       "icon": "information",
       "title": "general.accessibility",
-      "target": "https://www.altinn.no/om-altinn/tilgjengelighet/"
+      "target": "general.accessibility_url"
     }
   ]
 }
