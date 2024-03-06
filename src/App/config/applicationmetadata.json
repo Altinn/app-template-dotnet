@@ -40,7 +40,5 @@
     "person": true,
     "subUnit": true
   },
-  "autoDeleteOnProcessEnd": false,
-  "created": "2019-09-16T22:22:22",
-  "createdBy": "username"
+  "autoDeleteOnProcessEnd": false
 }
