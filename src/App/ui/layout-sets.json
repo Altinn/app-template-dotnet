@@ -3,7 +3,7 @@
   "sets": [
     {
       "id": "sidegruppe",
-      "dataType": "datamodell",
+      "dataType": "model",
       "tasks": ["Task_1"]
     }
   ],
