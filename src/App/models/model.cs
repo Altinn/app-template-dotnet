@@ -6,10 +6,10 @@ using System.Text.Json.Serialization;
 using System.Xml.Serialization;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
-namespace Altinn.App.Models.datamodell
+namespace Altinn.App.Models.model
 {
-  [XmlRoot(ElementName="datamodell")]
-  public class datamodell
+  [XmlRoot(ElementName="model")]
+  public class model
   {
     [XmlElement("property1", Order = 1)]
     [JsonProperty("property1")]
