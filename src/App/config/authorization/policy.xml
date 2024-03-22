@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xacml:Policy PolicyId="urn:altinn:policyid:1" Version="1.0" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-overrides" xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17">
+<xacml:Policy PolicyId="urn:altinn:resource:app_[ORG]_[APP]:policyid:1" Version="1.0" RuleCombiningAlgId="urn:oasis:names:tc:xacml:3.0:rule-combining-algorithm:deny-overrides" xmlns:xacml="urn:oasis:names:tc:xacml:3.0:core:schema:wd-17">
   <xacml:Target />
-  <xacml:Rule RuleId="urn:altinn:example:ruleid:1" Effect="Permit">
+  <xacml:Rule RuleId="urn:altinn:resource:app_[ORG]_[APP]:policyid:1:ruleid:1" Effect="Permit">
     <xacml:Description>A rule giving user with role REGNA or DAGL the right to instantiate, read, write and delete an instance of a given app of [ORG]/[APP]</xacml:Description>
     <xacml:Target>
       <xacml:AnyOf>
@@ -58,13 +58,13 @@
       </xacml:AnyOf>
     </xacml:Target>
   </xacml:Rule>
-  <xacml:Rule RuleId="urn:altinn:example:ruleid:2" Effect="Permit">
+  <xacml:Rule RuleId="urn:altinn:resource:app_[ORG]_[APP]:policyid:1:ruleid:2" Effect="Permit">
     <xacml:Description>A rule giving the app owner [ORG] the right to instantiate, read, write and complete an instance of a given app of [ORG]/[APP]</xacml:Description>
     <xacml:Target>
       <xacml:AnyOf>
         <xacml:AllOf>
           <xacml:Match MatchId="urn:oasis:names:tc:xacml:3.0:function:string-equal-ignore-case">
-            <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">[org]</xacml:AttributeValue>
+            <xacml:AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">[ORG]</xacml:AttributeValue>
             <xacml:AttributeDesignator AttributeId="urn:altinn:org" Category="urn:oasis:names:tc:xacml:1.0:subject-category:access-subject" DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="false" />
           </xacml:Match>
         </xacml:AllOf>
