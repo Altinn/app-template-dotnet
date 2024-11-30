@@ -26,7 +26,7 @@ jobs:
           zip -r ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip .
           sha512sum ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip > ${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.sha512sums.txt
       - name: Update release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             /tmp/release/${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.zip
