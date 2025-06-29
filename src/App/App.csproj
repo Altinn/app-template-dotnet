@@ -28,6 +28,7 @@
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591;1998</NoWarn>
+    <WarningsAsErrors>CS4014</WarningsAsErrors>
   </PropertyGroup>
   <Target Name="CopyXMLFromPackagesForBuild" AfterTargets="Build">
     <ItemGroup>
